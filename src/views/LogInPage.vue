@@ -148,6 +148,7 @@
 							}
 						} else {
 							if (this.username == "admin" && this.password == "admin") {
+								this.$router.push("/admin");
 							} else {
 								this.snackbar = true;
 								this.errorMessage = "Incorrect credentials";
