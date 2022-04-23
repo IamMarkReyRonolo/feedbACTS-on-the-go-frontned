@@ -25,4 +25,8 @@
 	};
 </script>
 
-<style scoped></style>
+<style scoped>
+	.adminPage {
+		overflow-y: hidden;
+	}
+</style>
