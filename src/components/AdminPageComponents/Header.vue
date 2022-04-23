@@ -7,7 +7,7 @@
 					<div class="time">10:00 AM</div>
 					<div class="date">Friday, March 30, 2022</div>
 				</div>
-				<v-btn text dark><span>Log Out</span> </v-btn>
+				<v-btn text dark><span>Settings</span> </v-btn>
 			</div>
 			<div class="navCon">
 				<div class="leftCon">
@@ -19,9 +19,30 @@
 							<h1>E-Buzzer Trash Collection</h1>
 						</div>
 						<div class="navs">
-							<div class="nav"><v-btn>Dashboard</v-btn></div>
-							<div class="nav"><v-btn text dark>Teachers</v-btn></div>
-							<div class="nav"><v-btn text dark>Disposal History</v-btn></div>
+							<div class="nav">
+								<v-btn
+									:text="!clickedDashboard"
+									:dark="!clickedDashboard"
+									@click="navigate('dashboard')"
+									>Dashboard</v-btn
+								>
+							</div>
+							<div class="nav">
+								<v-btn
+									:text="!clickedTeachers"
+									:dark="!clickedTeachers"
+									@click="navigate('teachers')"
+									>Teachers</v-btn
+								>
+							</div>
+							<div class="nav">
+								<v-btn
+									:text="!clickedHistory"
+									:dark="!clickedHistory"
+									@click="navigate('history')"
+									>Disposal History</v-btn
+								>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -38,10 +59,17 @@
 		</div>
 		<div class="mobileView">
 			<div class="upmostPart">
-				<div class="mLogoCon">
-					<img src="../../assets/recycling.png" alt="" />
+				<div class="upperLeft">
+					<div class="mLogoCon">
+						<img src="../../assets/recycling.png" alt="" />
+					</div>
+					<p>E-Buzzer Trash Collection</p>
 				</div>
-				<p>E-Buzzer Trash Collection</p>
+				<div class="upperRight">
+					<v-btn text small dark fab>
+						<v-icon> mdi-cog </v-icon>
+					</v-btn>
+				</div>
 			</div>
 
 			<div class="middlePart">
@@ -61,15 +89,61 @@
 			<div class="lowerPart">
 				<h2>RECENT ACTIVITY</h2>
 				<div class="categories">
-					<div class="cat"><v-btn rounded small> All </v-btn></div>
 					<div class="cat">
-						<v-btn rounded small text dark> Plastic </v-btn>
+						<v-btn
+							rounded
+							small
+							:text="!clickedAll"
+							:dark="!clickedAll"
+							@click="selectCategory('all')"
+						>
+							All
+						</v-btn>
 					</div>
-					<div class="cat"><v-btn rounded small text dark> Paper </v-btn></div>
 					<div class="cat">
-						<v-btn rounded small text dark> Cellophanes </v-btn>
+						<v-btn
+							rounded
+							small
+							:text="!clickedPlastic"
+							:dark="!clickedPlastic"
+							@click="selectCategory('plastic')"
+						>
+							Plastic
+						</v-btn>
 					</div>
-					<div class="cat"><v-btn rounded small text dark> Others </v-btn></div>
+					<div class="cat">
+						<v-btn
+							rounded
+							small
+							:text="!clickedPaper"
+							:dark="!clickedPaper"
+							@click="selectCategory('paper')"
+						>
+							Paper
+						</v-btn>
+					</div>
+					<div class="cat">
+						<v-btn
+							rounded
+							small
+							:text="!clickedCellophanes"
+							:dark="!clickedCellophanes"
+							@click="selectCategory('cellophanes')"
+						>
+							Cellophanes
+						</v-btn>
+					</div>
+					<div class="cat">
+						<v-btn
+							rounded
+							small
+							:text="!clickedOthers"
+							:dark="!clickedOthers"
+							@click="selectCategory('others')"
+						>
+							Others
+						</v-btn>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -79,7 +153,66 @@
 <script>
 	export default {
 		components: {},
-		data: () => ({}),
+		data: () => ({
+			clickedDashboard: true,
+			clickedTeachers: false,
+			clickedHistory: false,
+			clickedAll: true,
+			clickedPlastic: false,
+			clickedPaper: false,
+			clickedCellophanes: false,
+			clickedOthers: false,
+		}),
+		methods: {
+			navigate(routeName) {
+				if (routeName == "dashboard") {
+					this.clickedDashboard = true;
+					this.clickedTeachers = false;
+					this.clickedHistory = false;
+				} else if (routeName == "teachers") {
+					this.clickedDashboard = false;
+					this.clickedTeachers = true;
+					this.clickedHistory = false;
+				} else {
+					this.clickedDashboard = false;
+					this.clickedTeachers = false;
+					this.clickedHistory = true;
+				}
+			},
+			selectCategory(category) {
+				if (category == "all") {
+					this.clickedAll = true;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "plastic") {
+					this.clickedAll = false;
+					this.clickedPlastic = true;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "paper") {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = true;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "cellophanes") {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = true;
+					this.clickedOthers = false;
+				} else {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = true;
+				}
+			},
+		},
 	};
 </script>
 
@@ -212,7 +345,7 @@
 
 		.upmostPart {
 			display: flex;
-			justify-content: flex-start;
+			justify-content: space-between;
 			align-items: center;
 		}
 
@@ -226,11 +359,17 @@
 			font-weight: 500;
 		}
 
+		.upperLeft {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
 		.middlePart {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 20px 10px;
+			padding: 10px 10px;
 		}
 
 		.middlePart h2 {
