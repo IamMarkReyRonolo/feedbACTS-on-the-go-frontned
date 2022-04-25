@@ -14,7 +14,45 @@
 					<v-row no-gutters>
 						<v-col cols="12" lg="8">
 							<div class="leftCon">
-								<div class="tableCon"></div>
+								<div class="tableCon">
+									<div class="tableHeader">
+										<h2>Recent Activity</h2>
+										<v-btn class="addTrashBtn" color="#064635" dark
+											>Record New Activity</v-btn
+										>
+									</div>
+
+									<div class="tableData">
+										<div class="dataHeader">
+											<div class="leftC">
+												<v-btn text color="#064635" small>Date</v-btn>
+												<v-btn text color="#064635" small>Time</v-btn
+												><v-btn text color="#064635" small>Teacher</v-btn>
+											</div>
+											<div class="rightC">
+												<v-btn text color="#064635" small>Category</v-btn>
+											</div>
+										</div>
+										<div class="allDataCon">
+											<v-btn
+												class="actualData"
+												v-for="n in 20"
+												:key="n"
+												outlined
+												color="#5AA67A"
+											>
+												<div class="leftCD">
+													<div text color="#064635" small>03/25/2022</div>
+													<div text color="#064635" small>10:30 AM</div>
+													<div text color="#064635" small>Juan Dela Cruz</div>
+												</div>
+												<div class="rightCD">
+													<div text color="#064635" small>Plastic</div>
+												</div>
+											</v-btn>
+										</div>
+									</div>
+								</div>
 							</div>
 						</v-col>
 						<v-col cols="12" lg="4">
@@ -70,7 +108,7 @@
 										<div class="reportCon">
 											<v-btn
 												x-large
-												color="success"
+												color="#5AA67A"
 												dark
 												class="disposeBtn"
 												outlined
@@ -158,6 +196,10 @@
 		align-items: center;
 	}
 
+	.titleCon {
+		color: #064635;
+	}
+
 	.mainView {
 		display: flex;
 		justify-content: center;
@@ -176,9 +218,75 @@
 
 	.tableCon {
 		height: 500px;
-		background-color: white;
+		/* background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 20px;
+		border-radius: 20px; */
+		padding: 20px;
+	}
+
+	.tableHeader {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		text-align: right;
+	}
+
+	.tableHeader h2 {
+		color: #064635;
+	}
+
+	.tableData {
+		height: 95%;
+		padding: 10px;
+	}
+
+	.dataHeader,
+	.actualData {
+		text-align: left;
+		display: flex;
+		width: 100%;
+	}
+
+	.allDataCon {
+		overflow-y: auto;
+		height: 90%;
+	}
+
+	.actualData {
+		margin: 1px 0px;
+		background-color: white;
+	}
+
+	/* .leftC,
+	.rightC {
+		border: 1px solid black;
+	} */
+
+	.leftC {
+		width: 90%;
+	}
+
+	.leftC .v-btn {
+		padding: 0px 40px;
+	}
+
+	.rightC {
+		width: 20%;
+		text-align: center;
+	}
+
+	.leftCD {
+		width: 90%;
+		display: flex;
+	}
+
+	.leftCD div {
+		padding: 0px 15px;
+	}
+
+	.rightCD {
+		padding: 0px 5px;
+		text-align: center;
 	}
 
 	.dataCon {
