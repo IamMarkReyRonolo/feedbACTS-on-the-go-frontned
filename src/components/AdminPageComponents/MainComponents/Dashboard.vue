@@ -61,6 +61,11 @@
 							<div class="categoryColumn">Plastic</div>
 						</v-btn>
 					</div>
+					<div class="addBtn">
+						<v-btn color="success" fab large dark>
+							<v-icon>mdi-pencil</v-icon>
+						</v-btn>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -214,6 +219,12 @@
 
 		.activity .teacherColumn {
 			font-weight: bolder;
+		}
+
+		.addBtn {
+			position: fixed;
+			right: 25px;
+			bottom: 30px;
 		}
 	}
 </style>
