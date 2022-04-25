@@ -40,7 +40,7 @@
 									:text="!clickedHistory"
 									:dark="!clickedHistory"
 									@click="navigate('history')"
-									>Disposal History</v-btn
+									>Report History</v-btn
 								>
 							</div>
 						</div>

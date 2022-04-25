@@ -21,10 +21,68 @@
 							<div class="rightCon">
 								<v-row no-gutters>
 									<v-col cols="12" sm="8" lg="12">
-										<div class="dataCon"></div>
+										<div class="dataCon">
+											<div class="contributorsTable">
+												<div class="topNavBtns">
+													<v-btn
+														rounded
+														small
+														dark
+														color="#064635"
+														margin="padding: 0px 5px"
+														>Top Contributors</v-btn
+													>
+													<v-btn
+														rounded
+														small
+														dark
+														color="#064635"
+														text
+														margin="padding: 0px 5px"
+														>Trash Status</v-btn
+													>
+												</div>
+												<h2>Top Contributors</h2>
+												<div class="contributors">
+													<v-btn
+														color="#5AA67A"
+														outlined
+														class="contributor"
+														v-for="n in 5"
+														:key="n"
+														large
+													>
+														<div class="innerCon">
+															<v-icon style="padding: 0px 10px"
+																>mdi-account-circle-outline</v-icon
+															>
+															Juan Dela Cruz
+														</div>
+
+														<div class="noOfAct">5 activities</div>
+													</v-btn>
+												</div>
+											</div>
+											<div class="statusTable"></div>
+										</div>
 									</v-col>
 									<v-col cols="12" sm="4" lg="12">
-										<div class="reportCon"></div>
+										<div class="reportCon">
+											<v-btn
+												x-large
+												color="success"
+												dark
+												class="disposeBtn"
+												outlined
+											>
+												Generate report</v-btn
+											>
+											<p>
+												<v-icon small style="padding: 0px 5px"
+													>mdi-alert-circle-outline</v-icon
+												>Generate report after the last report until today.
+											</p>
+										</div>
 									</v-col>
 								</v-row>
 							</div>
@@ -127,15 +185,62 @@
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 20px;
-		height: 320px;
+		height: 340px;
 	}
 
 	.reportCon {
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 20px;
-		height: 160px;
+		height: 140px;
 		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.reportCon p {
+		padding: 10px;
+		margin: 0px;
+		font-size: 12px;
+	}
+
+	.topNavBtns {
+		display: flex;
+	}
+
+	.contributorsTable {
+		padding: 20px;
+		text-align: left;
+	}
+
+	.contributorsTable h2 {
+		margin: 10px 5px;
+		font-size: 20px;
+		color: #65c18c;
+	}
+
+	.contributor {
+		text-align: left;
+		width: 100%;
+		padding: 10px;
+		margin: 1px;
+	}
+
+	.contributors .v-btn {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.innerCon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.noOfAct {
+		font-size: 12px;
 	}
 
 	@media only screen and (max-width: 1260px) {
