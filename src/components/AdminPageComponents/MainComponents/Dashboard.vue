@@ -25,12 +25,19 @@
 									<div class="tableData">
 										<div class="dataHeader">
 											<div class="leftC">
-												<v-btn text color="#064635" small>Date</v-btn>
-												<v-btn text color="#064635" small>Time</v-btn
-												><v-btn text color="#064635" small>Teacher</v-btn>
+												<v-btn text color="#064635" small
+													><v-icon>mdi-calendar</v-icon> Date</v-btn
+												>
+												<v-btn text color="#064635" small
+													><v-icon>mdi-clock</v-icon>Time</v-btn
+												><v-btn text color="#064635" small
+													><v-icon>mdi-account</v-icon>Teacher</v-btn
+												>
 											</div>
 											<div class="rightC">
-												<v-btn text color="#064635" small>Category</v-btn>
+												<v-btn text color="#064635" small
+													><v-icon>mdi-recycle</v-icon>Category</v-btn
+												>
 											</div>
 										</div>
 										<div class="allDataCon">
@@ -65,43 +72,77 @@
 													<v-btn
 														rounded
 														small
-														dark
 														color="#064635"
 														margin="padding: 0px 5px"
+														:dark="displayContributor"
+														:text="!displayContributor"
+														@click="displayContributor = true"
 														>Top Contributors</v-btn
 													>
 													<v-btn
 														rounded
 														small
-														dark
 														color="#064635"
-														text
+														:dark="!displayContributor"
+														:text="displayContributor"
+														@click="displayContributor = false"
 														margin="padding: 0px 5px"
 														>Trash Status</v-btn
 													>
 												</div>
-												<h2>Top Contributors</h2>
-												<div class="contributors">
-													<v-btn
-														color="#5AA67A"
-														outlined
-														class="contributor"
-														v-for="n in 5"
-														:key="n"
-														large
-													>
-														<div class="innerCon">
-															<v-icon style="padding: 0px 10px"
-																>mdi-account-circle-outline</v-icon
-															>
-															Juan Dela Cruz
-														</div>
+												<div
+													class="contributorSection"
+													v-if="displayContributor"
+												>
+													<h2>Top Contributors</h2>
+													<div class="contributors">
+														<v-btn
+															color="#5AA67A"
+															outlined
+															class="contributor"
+															v-for="n in 5"
+															:key="n"
+															large
+														>
+															<div class="innerCon">
+																<v-icon style="padding: 0px 10px"
+																	>mdi-account-circle</v-icon
+																>
+																Juan Dela Cruz
+															</div>
 
-														<div class="noOfAct">5 activities</div>
-													</v-btn>
+															<div class="noOfAct">5 activities</div>
+														</v-btn>
+													</div>
+												</div>
+												<div
+													class="trashStatusSection"
+													v-if="!displayContributor"
+												>
+													<h2>Trash Status</h2>
+													<div class="contributors">
+														<v-btn
+															color="#5AA67A"
+															outlined
+															class="contributor"
+															v-for="(trash, index) in trashCategory"
+															:key="index"
+															large
+														>
+															<div class="innerCon">
+																<v-icon style="padding: 0px 10px">{{
+																	trash.icon
+																}}</v-icon>
+																{{ trash.trashCategory }}
+															</div>
+
+															<div class="noOfAct">
+																{{ trash.activity }} activities
+															</div>
+														</v-btn>
+													</div>
 												</div>
 											</div>
-											<div class="statusTable"></div>
 										</div>
 									</v-col>
 									<v-col cols="12" sm="4" lg="12">
@@ -118,7 +159,7 @@
 											<p>
 												<v-icon small style="padding: 0px 5px"
 													>mdi-alert-circle-outline</v-icon
-												>Generate report after the last report until today.
+												>Generate report starting after the most recent report.
 											</p>
 										</div>
 									</v-col>
@@ -177,6 +218,29 @@
 			fetched: true,
 			loading: false,
 			error: false,
+			displayContributor: true,
+			trashCategory: [
+				{
+					icon: "mdi-recycle",
+					trashCategory: "Plastic",
+					activity: 10,
+				},
+				{
+					icon: "mdi-paper-roll",
+					trashCategory: "Paper",
+					activity: 8,
+				},
+				{
+					icon: "mdi-recycle-variant",
+					trashCategory: "Cellophane",
+					activity: 5,
+				},
+				{
+					icon: "mdi-more",
+					trashCategory: "Others",
+					activity: 5,
+				},
+			],
 		}),
 	};
 </script>
@@ -245,6 +309,7 @@
 		text-align: left;
 		display: flex;
 		width: 100%;
+		padding: 10px 0px;
 	}
 
 	.allDataCon {
@@ -281,7 +346,7 @@
 	}
 
 	.leftCD div {
-		padding: 0px 15px;
+		padding: 0px 20px;
 	}
 
 	.rightCD {
@@ -323,7 +388,8 @@
 		text-align: left;
 	}
 
-	.contributorsTable h2 {
+	.contributorsTable h2,
+	.trashStatusSection h2 {
 		margin: 10px 5px;
 		font-size: 20px;
 		color: #65c18c;
@@ -349,6 +415,8 @@
 
 	.noOfAct {
 		font-size: 12px;
+		color: #fdc00b;
+		font-weight: bold;
 	}
 
 	@media only screen and (max-width: 1260px) {
