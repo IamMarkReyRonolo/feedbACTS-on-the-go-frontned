@@ -199,7 +199,7 @@
 						</v-btn>
 					</div>
 					<div class="addBtn">
-						<v-btn color="success" fab large dark>
+						<v-btn color="success" fab large dark @click="recordActivity">
 							<v-icon>mdi-pencil</v-icon>
 						</v-btn>
 					</div>
@@ -242,6 +242,11 @@
 				},
 			],
 		}),
+		methods: {
+			recordActivity() {
+				this.$router.push("/recordActivity");
+			},
+		},
 	};
 </script>
 
