@@ -3,13 +3,31 @@
 		<div class="pageHeader">
 			<h2>Teachers</h2>
 			<div class="headerBtns">
-				<v-btn rounded small color="#064635" :dark="true"
-					>Contribution table</v-btn
-				>
-				<v-btn rounded small text>All Teachers</v-btn>
+				<div class="navBtns">
+					<v-btn
+						rounded
+						small
+						color="#064635"
+						:dark="selectContributionTable"
+						:text="!selectContributionTable"
+						@click="selectContributionTable = true"
+						>Contribution table</v-btn
+					>
+					<v-btn
+						rounded
+						small
+						color="#064635"
+						:dark="!selectContributionTable"
+						:text="selectContributionTable"
+						@click="selectContributionTable = false"
+						>All Teachers</v-btn
+					>
+				</div>
+
+				<v-btn color="#064635" dark>Add New Teacher</v-btn>
 			</div>
 		</div>
-		<div class="contributionCon">
+		<div class="contributionCon" v-if="selectContributionTable">
 			<div class="contributionTable">
 				<div class="contributionHeader">
 					<div class="teacherCon">
@@ -65,6 +83,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="allTeachersCon" v-if="!selectContributionTable">
+			<div class="searchBarCon">
+				<v-text-field
+					label="Search Teacher"
+					rounded
+					solo
+					prepend-inner-icon="mdi-account-search"
+					color="success"
+				></v-text-field>
+			</div>
+			<div class="allTeachers">
+				<div class="teacher" v-for="(teacher, index) in teachers" :key="index">
+					<div class="avatarCon">
+						<v-avatar size="70px" color="success"
+							><v-icon dark size="60px"> mdi-account </v-icon></v-avatar
+						>
+					</div>
+					<div class="detailsCon">
+						<div class="teacherName">Juan Dela Cruz</div>
+						<div class="gender">Male</div>
+						<div class="btnCon">
+							<v-btn rounded outlined color="#5AA67A" small>View Teacher</v-btn>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -72,6 +117,93 @@
 	export default {
 		components: {},
 		data: () => ({
+			selectContributionTable: true,
+			teachers: [
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+				{
+					teacher: "Juan Dela Cruz",
+					gender: "Male",
+				},
+			],
 			contribData: [
 				{
 					teacher: "Juan Dela Cruz",
@@ -191,6 +323,11 @@
 		color: #064635;
 		padding-bottom: 10px;
 	}
+	.headerBtns {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
 	.headerBtns .v-btn {
 		margin-right: 10px;
@@ -257,6 +394,60 @@
 	.contributionList .data .categories div {
 		width: 25%;
 		text-align: center;
+	}
+
+	.allTeachers {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.teacher {
+		background-color: white;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		border-radius: 20px;
+		padding: 20px;
+		width: 300px;
+		height: 200px;
+		min-height: 180px;
+		min-width: 300px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #064635;
+		margin: 10px;
+	}
+
+	.avatarCon {
+		width: 40%;
+		text-align: center;
+	}
+
+	.detailsCon {
+		padding-top: 20px;
+		width: 60%;
+	}
+
+	.teacherName {
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.gender {
+		font-size: 14px;
+	}
+
+	.btnCon {
+		text-align: right;
+	}
+	.btnCon .v-btn {
+		margin-bottom: -40px;
+	}
+
+	.searchBarCon {
+		width: 400px;
+		margin: auto;
 	}
 
 	@media only screen and (max-width: 1100px) {
