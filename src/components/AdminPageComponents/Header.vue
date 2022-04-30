@@ -169,14 +169,17 @@
 					this.clickedDashboard = true;
 					this.clickedTeachers = false;
 					this.clickedHistory = false;
+					this.$router.push("/admin/");
 				} else if (routeName == "teachers") {
 					this.clickedDashboard = false;
 					this.clickedTeachers = true;
 					this.clickedHistory = false;
+					this.$router.push("/admin/teachers");
 				} else {
 					this.clickedDashboard = false;
 					this.clickedTeachers = false;
 					this.clickedHistory = true;
+					this.$router.push("/admin/history");
 				}
 			},
 			selectCategory(category) {

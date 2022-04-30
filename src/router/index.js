@@ -6,6 +6,8 @@ import AdminPage from "../views/AdminPage.vue";
 
 import Dashboard from "../components/AdminPageComponents/MainComponents/Dashboard.vue";
 import RecordActivity from "../components/AdminPageComponents/MainComponents/RecordActivity.vue";
+import TeacherPage from "../components/AdminPageComponents/MainComponents/TeacherPage.vue";
+import HistoryPage from "../components/AdminPageComponents/MainComponents/HistoryPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -25,11 +27,11 @@ const routes = [
 			},
 			{
 				path: "teachers",
-				// component: UserPosts,
+				component: TeacherPage,
 			},
 			{
 				path: "history",
-				// component: UserPosts,
+				component: HistoryPage,
 			},
 		],
 	},
