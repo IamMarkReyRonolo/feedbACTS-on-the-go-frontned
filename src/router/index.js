@@ -21,14 +21,17 @@ const routes = [
 		component: AdminPage,
 		children: [
 			{
+				name: "dashboard",
 				path: "/",
 				component: Dashboard,
 			},
 			{
+				name: "teachers",
 				path: "teachers",
 				component: TeacherPage,
 			},
 			{
+				name: "history",
 				path: "history",
 				component: HistoryPage,
 			},

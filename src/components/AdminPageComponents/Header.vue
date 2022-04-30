@@ -18,6 +18,7 @@
 						<div class="appTitle">
 							<h1>E-Buzzer Trash Collection</h1>
 						</div>
+						{{ getName }}
 						<div class="navs">
 							<div class="nav">
 								<v-btn
@@ -213,6 +214,24 @@
 					this.clickedPaper = false;
 					this.clickedCellophanes = false;
 					this.clickedOthers = true;
+				}
+			},
+		},
+		computed: {
+			getName: function () {
+				const routeN = this.$router.currentRoute.name;
+				if (routeN == "dashboard") {
+					this.clickedDashboard = true;
+					this.clickedTeachers = false;
+					this.clickedHistory = false;
+				} else if (routeN == "teachers") {
+					this.clickedDashboard = false;
+					this.clickedTeachers = true;
+					this.clickedHistory = false;
+				} else if (routeN == "history") {
+					this.clickedDashboard = false;
+					this.clickedTeachers = false;
+					this.clickedHistory = true;
 				}
 			},
 		},
