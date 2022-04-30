@@ -35,7 +35,7 @@
 					</div>
 					<div class="totalCon">
 						<v-btn text color="#064635" small>
-							<v-icon>mdi-folder</v-icon><span>Total Trash Activity</span>
+							<v-icon>mdi-trash-can</v-icon><span>Total Trash Activity</span>
 						</v-btn>
 					</div>
 				</div>

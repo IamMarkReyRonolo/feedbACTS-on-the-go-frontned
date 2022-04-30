@@ -34,7 +34,7 @@
 									</div>
 									<div class="rightC">
 										<v-btn text color="#064635" small
-											><v-icon>mdi-recycle</v-icon>Category</v-btn
+											><v-icon>mdi-trash-can</v-icon>Category</v-btn
 										>
 									</div>
 								</div>
@@ -85,7 +85,7 @@
 												:text="displayContributor"
 												@click="displayContributor = false"
 												margin="padding: 0px 5px"
-												>Trash Status</v-btn
+												>Trash Accumulated Overtime</v-btn
 											>
 										</div>
 										<div class="contributorSection" v-if="displayContributor">
@@ -111,13 +111,13 @@
 											</div>
 										</div>
 										<div class="trashStatusSection" v-if="!displayContributor">
-											<h2>Trash Status</h2>
+											<h2>Trash Accumulated Overtime</h2>
 											<div class="contributors">
 												<v-btn
 													color="#5AA67A"
 													outlined
 													class="contributor"
-													v-for="(trash, index) in trashCategory"
+													v-for="(trash, index) in totalTrashAccumulated"
 													:key="index"
 													large
 												>
@@ -151,7 +151,8 @@
 									<p>
 										<v-icon small style="padding: 0px 5px"
 											>mdi-alert-circle-outline</v-icon
-										>Generate report starting after the most recent report.
+										>Generate report will show the summary report of the
+										activities between the dates provided.
 									</p>
 								</div>
 							</v-col>
@@ -192,6 +193,22 @@
 			],
 		}),
 		methods: {},
+		computed: {
+			totalTrashAccumulated: function () {
+				let total = 0;
+				this.trashCategory.forEach((trash) => {
+					total += trash.activity;
+				});
+
+				this.trashCategory.push({
+					icon: "mdi-trash-can",
+					trashCategory: "Total",
+					activity: total,
+				});
+
+				return this.trashCategory;
+			},
+		},
 	};
 </script>
 
