@@ -76,8 +76,10 @@
 					<v-row no-gutters class="rowCon">
 						<v-col cols="12" md="6">
 							<div class="details">
-								<h1 class="titleHeader">E-Buzzer Trash</h1>
-								<div class="subTitle">Trash Monitoring System</div>
+								<h1 class="titleHeader">
+									Feedbacking and Concurrent Tracking System
+								</h1>
+								<div class="subTitle">Disposal of Solid Waste Materials</div>
 								<div class="sub">
 									An initiative of Sacub National High School
 								</div>
@@ -274,6 +276,12 @@
 		/* For mobile phones: */
 		.logInContainer {
 			border-bottom: 10px solid #5aa67a;
+		}
+
+		.details {
+			display: flex;
+			text-align: center;
+			flex-direction: column;
 		}
 	}
 </style>

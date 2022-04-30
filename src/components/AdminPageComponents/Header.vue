@@ -16,7 +16,7 @@
 					</div>
 					<div class="mainNavs">
 						<div class="appTitle">
-							<h1>E-Buzzer Trash Collection</h1>
+							<h1>Feedbacking and Concurrent Tracking System</h1>
 						</div>
 						{{ getName }}
 						<div class="navs">
@@ -64,7 +64,7 @@
 					<div class="mLogoCon">
 						<img src="../../assets/recycling.png" alt="" />
 					</div>
-					<p>E-Buzzer Trash Collection</p>
+					<p>Feedbacking and Concurrent Tracking System</p>
 				</div>
 				<div class="upperRight">
 					<v-btn text small dark fab>
@@ -303,6 +303,7 @@
 	.appTitle {
 		text-align: left;
 		padding: 10px 0px;
+		font-size: 12px;
 	}
 
 	.navs {
