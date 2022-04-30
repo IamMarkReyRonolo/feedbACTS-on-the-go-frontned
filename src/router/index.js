@@ -18,7 +18,6 @@ const routes = [
 	},
 	{
 		path: "/admin",
-		name: "admin",
 		component: AdminPage,
 		children: [
 			{
