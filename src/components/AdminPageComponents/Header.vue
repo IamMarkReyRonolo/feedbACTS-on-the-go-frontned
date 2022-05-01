@@ -88,7 +88,7 @@
 			</div>
 
 			<div class="lowerPart">
-				<h2>RECENT ACTIVITY</h2>
+				<h2>RECENT ACTIVITIES</h2>
 				<div class="categories">
 					<div class="cat">
 						<v-btn

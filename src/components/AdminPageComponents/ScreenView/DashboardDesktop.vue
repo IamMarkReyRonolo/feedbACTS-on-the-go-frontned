@@ -14,7 +14,7 @@
 					<div class="leftCon">
 						<div class="tableCon">
 							<div class="tableHeader">
-								<h2>Recent Activity</h2>
+								<h2>Recent Activities</h2>
 								<v-btn class="addTrashBtn" color="#064635" dark
 									>Record New Activity</v-btn
 								>
