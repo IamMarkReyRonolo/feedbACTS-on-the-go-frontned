@@ -43,8 +43,8 @@
 										class="actualData"
 										v-for="n in 20"
 										:key="n"
-										outlined
 										color="#5AA67A"
+										text
 									>
 										<div class="leftCD">
 											<div text color="#064635" small>03/25/2022</div>
@@ -52,7 +52,9 @@
 											<div text color="#064635" small>Juan Dela Cruz</div>
 										</div>
 										<div class="rightCD">
-											<div text color="#064635" small>Plastic</div>
+											<v-chip text color="#5AA67A" small dark>
+												<v-icon size="16px">mdi-recycle</v-icon>Plastic</v-chip
+											>
 										</div>
 									</v-btn>
 								</div>
@@ -119,7 +121,7 @@
 													class="contributor"
 													v-for="(trash, index) in totalTrashAccumulated"
 													:key="index"
-													large
+													x-large
 												>
 													<div class="innerCon">
 														<v-icon style="padding: 0px 10px">{{
@@ -181,11 +183,6 @@
 					activity: 8,
 				},
 				{
-					icon: "mdi-recycle-variant",
-					trashCategory: "Cellophane",
-					activity: 5,
-				},
-				{
 					icon: "mdi-more",
 					trashCategory: "Others",
 					activity: 5,
@@ -244,7 +241,7 @@
 	}
 
 	.tableCon {
-		height: 500px;
+		height: 600px;
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 20px;

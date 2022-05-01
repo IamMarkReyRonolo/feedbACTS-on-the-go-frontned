@@ -43,10 +43,7 @@
 						<v-btn text color="#064635" small>
 							<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
 						>
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-recycle-variant</v-icon>
-							<span>Cellophanes</span></v-btn
-						>
+
 						<v-btn text color="#064635" small>
 							<v-icon>mdi-more</v-icon><span>Others</span></v-btn
 						>
@@ -61,10 +58,11 @@
 				<div class="contributionList">
 					<v-btn
 						class="data"
-						outlined
+						text
 						color="#5AA67A"
 						v-for="(data, index) in contribData"
 						:key="index"
+						x-large
 					>
 						<div class="teacherCon">
 							<div>{{ data.teacher }}</div>
@@ -73,7 +71,7 @@
 						<div class="categories">
 							<div>{{ data.plastic }}</div>
 							<div>{{ data.paper }}</div>
-							<div>{{ data.cellophanes }}</div>
+
 							<div>{{ data.other }}</div>
 						</div>
 						<div class="totalCon">
@@ -96,7 +94,7 @@
 			<div class="allTeachers">
 				<div class="teacher" v-for="(teacher, index) in teachers" :key="index">
 					<div class="avatarCon">
-						<v-avatar size="70px" color="success"
+						<v-avatar size="70px" color="#5AA67A"
 							><v-icon dark size="60px"> mdi-account </v-icon></v-avatar
 						>
 					</div>
