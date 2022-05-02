@@ -7,7 +7,9 @@
 					<div class="time">10:00 AM</div>
 					<div class="date">Friday, March 30, 2022</div>
 				</div>
-				<v-btn text dark><span>Settings</span> </v-btn>
+				<v-btn text dark @click="clickSettings = true"
+					><span>Settings</span>
+				</v-btn>
 			</div>
 			<div class="navCon">
 				<div class="leftCon">
@@ -67,7 +69,7 @@
 					<p>Feedbacking and Concurrent Tracking System</p>
 				</div>
 				<div class="upperRight">
-					<v-btn text small dark fab>
+					<v-btn text small dark fab @click="clickSettings = true">
 						<v-icon> mdi-cog </v-icon>
 					</v-btn>
 				</div>
@@ -93,7 +95,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							medium
+							small
 							:text="!clickedAll"
 							:dark="!clickedAll"
 							@click="selectCategory('all')"
@@ -104,7 +106,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							medium
+							small
 							:text="!clickedPlastic"
 							:dark="!clickedPlastic"
 							@click="selectCategory('plastic')"
@@ -115,7 +117,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							medium
+							small
 							:text="!clickedPaper"
 							:dark="!clickedPaper"
 							@click="selectCategory('paper')"
@@ -137,7 +139,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							medium
+							small
 							:text="!clickedOthers"
 							:dark="!clickedOthers"
 							@click="selectCategory('others')"
@@ -154,14 +156,29 @@
 			@cancelBuzzer="cancelBuzzer()"
 			@confirmBuzzer="confirmBuzzer()"
 		/>
+
+		<SettingsDialog
+			:clickSettings="clickSettings"
+			@closeSettings="closeSettings()"
+			@changePassword="changePassword()"
+		/>
+
+		<ChangePasswordDialog
+			:changePass="changePass"
+			@closeDialog="closeDialog()"
+		/>
 	</div>
 </template>
 
 <script>
 	import BuzzerConfirmation from "./PopUpComponents/BuzzerConfirmation.vue";
+	import SettingsDialog from "./PopUpComponents/SettingsDialog.vue";
+	import ChangePasswordDialog from "./PopUpComponents/ChangePasswordDialog.vue";
 	export default {
-		components: { BuzzerConfirmation },
+		components: { BuzzerConfirmation, SettingsDialog, ChangePasswordDialog },
 		data: () => ({
+			clickSettings: false,
+			changePass: false,
 			clickBuzzer: false,
 			clickedDashboard: true,
 			clickedTeachers: false,
@@ -179,6 +196,19 @@
 			confirmBuzzer() {
 				this.clickBuzzer = false;
 			},
+
+			closeSettings() {
+				this.clickSettings = false;
+			},
+			changePassword() {
+				this.clickSettings = false;
+				this.changePass = true;
+			},
+
+			closeDialog() {
+				this.changePass = false;
+			},
+
 			navigate(routeName) {
 				if (routeName == "dashboard") {
 					this.clickedDashboard = true;

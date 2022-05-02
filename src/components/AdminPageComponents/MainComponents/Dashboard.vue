@@ -39,7 +39,7 @@
 		}
 
 		.mobileView {
-			padding: 20px 0px;
+			padding: 10px 0px;
 			display: block;
 		}
 	}
