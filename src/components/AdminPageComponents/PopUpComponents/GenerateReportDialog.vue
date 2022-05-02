@@ -25,7 +25,7 @@
 					:dark="dates.length == 2"
 					:disabled="dates.length != 2"
 				>
-					Report
+					Generate Report
 				</v-btn>
 			</v-card-actions>
 		</v-card>
