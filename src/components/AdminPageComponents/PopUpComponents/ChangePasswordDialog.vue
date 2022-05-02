@@ -20,7 +20,7 @@
 					:append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
 					:type="show1 ? 'text' : 'password'"
 					@click:append="show1 = !show1"
-					:rules="shouldNotEvaluated0 ? '' : [rules.required]"
+					:rules="shouldNotEvaluated0 ? [] : [rules.required]"
 					v-model="currentPassword"
 					@click="shouldNotEvaluated0 = false"
 				></v-text-field>
@@ -32,7 +32,7 @@
 					:append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
 					:type="show2 ? 'text' : 'password'"
 					@click:append="show2 = !show2"
-					:rules="shouldNotEvaluated1 ? '' : [rules.required, rules.min]"
+					:rules="shouldNotEvaluated1 ? [] : [rules.required, rules.min]"
 					v-model="newPassword"
 					@click="shouldNotEvaluated1 = false"
 				></v-text-field>
@@ -44,7 +44,7 @@
 					:append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
 					:type="show3 ? 'text' : 'password'"
 					@click:append="show3 = !show3"
-					:rules="shouldNotEvaluated2 ? '' : [rules.required, rules.match]"
+					:rules="shouldNotEvaluated2 ? [] : [rules.required, rules.match]"
 					v-model="repeatPassword"
 					@click="shouldNotEvaluated2 = false"
 				></v-text-field>

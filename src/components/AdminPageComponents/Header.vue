@@ -153,7 +153,7 @@
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
-			@cancelBuzzer="cancelBuzzer()"
+			@closeBuzzer="closeBuzzer($event)"
 			@confirmBuzzer="confirmBuzzer()"
 		/>
 
@@ -190,7 +190,7 @@
 			clickedOthers: false,
 		}),
 		methods: {
-			cancelBuzzer() {
+			closeBuzzer(event) {
 				this.clickBuzzer = false;
 			},
 			confirmBuzzer() {
