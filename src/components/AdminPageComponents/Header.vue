@@ -80,7 +80,7 @@
 				</div>
 
 				<div class="right">
-					<v-btn fab dark color="#064635">
+					<v-btn fab dark color="#064635" @click="clickBuzzer = true">
 						<v-icon dark size="40px"> mdi-gesture-double-tap </v-icon>
 					</v-btn>
 					<span>Buzzer</span>
@@ -93,7 +93,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							small
+							medium
 							:text="!clickedAll"
 							:dark="!clickedAll"
 							@click="selectCategory('all')"
@@ -104,7 +104,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							small
+							medium
 							:text="!clickedPlastic"
 							:dark="!clickedPlastic"
 							@click="selectCategory('plastic')"
@@ -115,7 +115,7 @@
 					<div class="cat">
 						<v-btn
 							rounded
-							small
+							medium
 							:text="!clickedPaper"
 							:dark="!clickedPaper"
 							@click="selectCategory('paper')"
@@ -123,7 +123,7 @@
 							Paper
 						</v-btn>
 					</div>
-					<div class="cat">
+					<!-- <div class="cat">
 						<v-btn
 							rounded
 							small
@@ -133,11 +133,11 @@
 						>
 							Cellophanes
 						</v-btn>
-					</div>
+					</div> -->
 					<div class="cat">
 						<v-btn
 							rounded
-							small
+							medium
 							:text="!clickedOthers"
 							:dark="!clickedOthers"
 							@click="selectCategory('others')"
@@ -148,13 +148,21 @@
 				</div>
 			</div>
 		</div>
+
+		<BuzzerConfirmation
+			:clickBuzzer="clickBuzzer"
+			@cancel="cancel()"
+			@confirm="confirm()"
+		/>
 	</div>
 </template>
 
 <script>
+	import BuzzerConfirmation from "./PopUpComponents/BuzzerConfirmation.vue";
 	export default {
-		components: {},
+		components: { BuzzerConfirmation },
 		data: () => ({
+			clickBuzzer: false,
 			clickedDashboard: true,
 			clickedTeachers: false,
 			clickedHistory: false,
@@ -165,6 +173,12 @@
 			clickedOthers: false,
 		}),
 		methods: {
+			cancel() {
+				this.clickBuzzer = false;
+			},
+			confirm() {
+				this.clickBuzzer = false;
+			},
 			navigate(routeName) {
 				if (routeName == "dashboard") {
 					this.clickedDashboard = true;
@@ -423,6 +437,7 @@
 		.categories {
 			display: flex;
 			overflow-x: auto;
+			justify-content: center;
 			padding: 10px 0px;
 		}
 

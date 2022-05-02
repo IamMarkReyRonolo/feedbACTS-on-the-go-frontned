@@ -4,7 +4,7 @@
 			<div class="titleCon">
 				<h2>Dashboard</h2>
 			</div>
-			<v-btn color="#064635" dark
+			<v-btn color="#064635" dark @click="clickBuzzer = true"
 				><v-icon dark> mdi-gesture-double-tap </v-icon>Buzzer</v-btn
 			>
 		</div>
@@ -163,14 +163,22 @@
 				</v-col>
 			</v-row>
 		</div>
+
+		<BuzzerConfirmation
+			:clickBuzzer="clickBuzzer"
+			@cancel="cancel()"
+			@confirm="confirm()"
+		/>
 	</div>
 </template>
 
 <script>
+	import BuzzerConfirmation from "../PopUpComponents/BuzzerConfirmation.vue";
 	export default {
-		components: {},
+		components: { BuzzerConfirmation },
 		data: () => ({
 			displayContributor: true,
+			clickBuzzer: false,
 			trashCategory: [
 				{
 					icon: "mdi-recycle",
@@ -189,7 +197,14 @@
 				},
 			],
 		}),
-		methods: {},
+		methods: {
+			cancel() {
+				this.clickBuzzer = false;
+			},
+			confirm() {
+				this.clickBuzzer = false;
+			},
+		},
 		computed: {
 			totalTrashAccumulated: function () {
 				let total = 0;
