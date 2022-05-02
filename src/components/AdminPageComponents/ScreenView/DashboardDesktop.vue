@@ -100,6 +100,7 @@
 													v-for="n in 5"
 													:key="n"
 													large
+													to="teachers/profile"
 												>
 													<div class="innerCon">
 														<v-icon style="padding: 0px 10px"
