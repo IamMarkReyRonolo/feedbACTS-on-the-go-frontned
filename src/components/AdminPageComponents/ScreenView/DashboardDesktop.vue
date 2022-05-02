@@ -45,6 +45,7 @@
 										:key="n"
 										color="#5AA67A"
 										text
+										@click="moreDetails = true"
 									>
 										<div class="leftCD">
 											<div text color="#064635" small>03/25/2022</div>
@@ -175,18 +176,22 @@
 			:clickGenerateReport="clickGenerateReport"
 			@cancelReport="cancelReport()"
 		/>
+
+		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 	</div>
 </template>
 
 <script>
 	import BuzzerConfirmation from "../PopUpComponents/BuzzerConfirmation.vue";
 	import GenerateReportDialog from "../PopUpComponents/GenerateReportDialog.vue";
+	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	export default {
-		components: { BuzzerConfirmation, GenerateReportDialog },
+		components: { BuzzerConfirmation, GenerateReportDialog, MoreDetails },
 		data: () => ({
 			displayContributor: true,
 			clickBuzzer: false,
 			clickGenerateReport: false,
+			moreDetails: false,
 			trashCategory: [
 				{
 					icon: "mdi-recycle",
@@ -214,6 +219,9 @@
 			},
 			cancelReport() {
 				this.clickGenerateReport = false;
+			},
+			closeDetails() {
+				this.moreDetails = false;
 			},
 		},
 		computed: {

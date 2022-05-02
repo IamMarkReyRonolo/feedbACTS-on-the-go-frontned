@@ -79,7 +79,7 @@
 						</div>
 						<div class="tableList">
 							<div class="activity" v-for="n in 20" :key="n">
-								<v-btn text color="#5aa67a">
+								<v-btn text color="#5aa67a" @click="moreDetails = true">
 									<div class="con">
 										<span>03/20/2022</span>
 									</div>
@@ -103,13 +103,16 @@
 		</div>
 
 		<div class="mobileView"><DashboardMobile /></div>
+
+		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 	</div>
 </template>
 
 <script>
 	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
+	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	export default {
-		components: { DashboardMobile },
+		components: { DashboardMobile, MoreDetails },
 		data() {
 			return {
 				contribData: [
@@ -123,7 +126,14 @@
 						total: 5,
 					},
 				],
+				moreDetails: false,
 			};
+		},
+
+		methods: {
+			closeDetails() {
+				this.moreDetails = false;
+			},
 		},
 	};
 </script>

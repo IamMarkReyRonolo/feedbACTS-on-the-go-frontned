@@ -17,6 +17,7 @@
 					onmousedown="return false;"
 					large
 					outlined
+					@click="moreDetails = true"
 				>
 					<div class="dateColumn">03/25/22</div>
 					<div class="teacherColumn">Juan Dela Cruz</div>
@@ -29,16 +30,22 @@
 				</v-btn>
 			</div>
 		</div>
+
+		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 	</div>
 </template>
 
 <script>
+	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	export default {
-		components: {},
-		data: () => ({}),
+		components: { MoreDetails },
+		data: () => ({ moreDetails: false }),
 		methods: {
 			recordActivity() {
 				this.$router.push("/recordActivity");
+			},
+			closeDetails() {
+				this.moreDetails = false;
 			},
 		},
 	};
