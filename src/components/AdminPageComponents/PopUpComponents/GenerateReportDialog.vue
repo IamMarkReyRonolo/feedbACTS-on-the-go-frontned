@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="clickGenerateReport" max-width="320" persistent>
+	<v-dialog v-model="clickGenerateReport" max-width="350" persistent>
 		<v-card>
 			<v-card-title class="dialogTitle"> Generate Report </v-card-title>
 
@@ -11,7 +11,7 @@
 				<div class="label">To</div>
 				<input type="date" name="" id="" class="end" v-model="dates[1]" />
 			</div>
-
+			<br />
 			<v-card-actions>
 				<v-spacer></v-spacer>
 
@@ -72,7 +72,7 @@
 
 	.date {
 		text-align: left;
-		margin: 10px 20px;
+		margin: 10px 40px;
 	}
 
 	.date .label {
