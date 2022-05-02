@@ -11,11 +11,16 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 
-				<v-btn color="green darken-1" text @click="$emit('cancelBuzzer')">
+				<v-btn color="green darken-1" text @click="$emit('closeBuzzer', false)">
 					Cancel
 				</v-btn>
 
-				<v-btn color="green darken-1" @click="$emit('confirmBuzzer')" dark>
+				<v-btn
+					color="green darken-1"
+					@click="soundBuzzer"
+					dark
+					:loading="loading"
+				>
 					Agree
 				</v-btn>
 			</v-card-actions>
@@ -29,7 +34,19 @@
 			clickBuzzer: Boolean,
 		},
 		data() {
-			return {};
+			return {
+				loading: false,
+			};
+		},
+
+		methods: {
+			soundBuzzer() {
+				this.loading = true;
+				setTimeout(() => {
+					this.loading = false;
+					this.$emit("closeBuzzer", true);
+				}, 1000);
+			},
 		},
 	};
 </script>

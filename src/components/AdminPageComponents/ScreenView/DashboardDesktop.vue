@@ -167,8 +167,7 @@
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
-			@cancelBuzzer="cancelBuzzer()"
-			@confirmBuzzer="confirmBuzzer()"
+			@closeBuzzer="closeBuzzer($event)"
 		/>
 
 		<GenerateReportDialog
@@ -206,7 +205,7 @@
 			],
 		}),
 		methods: {
-			cancelBuzzer() {
+			closeBuzzer(showSnackbar) {
 				this.clickBuzzer = false;
 			},
 			confirmBuzzer() {
