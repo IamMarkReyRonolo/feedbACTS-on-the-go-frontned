@@ -173,7 +173,6 @@
 
 		<GenerateReportDialog
 			:clickGenerateReport="clickGenerateReport"
-			@generateReport="generateReport($event)"
 			@cancelReport="cancelReport()"
 		/>
 	</div>
@@ -212,11 +211,6 @@
 			},
 			confirmBuzzer() {
 				this.clickBuzzer = false;
-			},
-
-			generateReport(dates) {
-				alert(dates);
-				this.clickGenerateReport = false;
 			},
 			cancelReport() {
 				this.clickGenerateReport = false;

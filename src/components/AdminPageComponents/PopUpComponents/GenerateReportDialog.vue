@@ -15,15 +15,14 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 
-				<v-btn color="green darken-1" text @click="$emit('cancelReport')">
-					Cancel
-				</v-btn>
+				<v-btn color="green darken-1" text @click="cancel"> Cancel </v-btn>
 
 				<v-btn
 					color="green darken-1"
-					@click="$emit('generateReport', dates)"
+					@click="generateReport"
 					:dark="dates.length == 2"
 					:disabled="dates.length != 2"
+					:loading="loading"
 				>
 					Generate Report
 				</v-btn>
@@ -39,8 +38,24 @@
 		},
 		data() {
 			return {
+				loading: false,
 				dates: [],
 			};
+		},
+
+		methods: {
+			generateReport() {
+				this.loading = true;
+				setTimeout(() => {
+					console.log(this.dates);
+					this.dates = [];
+					this.loading = false;
+				}, 1000);
+			},
+			cancel() {
+				this.dates = [];
+				this.$emit("cancelReport");
+			},
 		},
 	};
 </script>
