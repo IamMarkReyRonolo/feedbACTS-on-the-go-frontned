@@ -147,6 +147,7 @@
 										dark
 										class="disposeBtn"
 										outlined
+										@click="clickGenerateReport = true"
 									>
 										Generate report</v-btn
 									>
@@ -166,19 +167,27 @@
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
-			@cancel="cancel()"
-			@confirm="confirm()"
+			@cancelBuzzer="cancelBuzzer()"
+			@confirmBuzzer="confirmBuzzer()"
+		/>
+
+		<GenerateReportDialog
+			:clickGenerateReport="clickBuzzer"
+			@cancel="cancelBuzzer()"
+			@confirm="cancelBuzzer()"
 		/>
 	</div>
 </template>
 
 <script>
 	import BuzzerConfirmation from "../PopUpComponents/BuzzerConfirmation.vue";
+	import GenerateReportDialog from "../PopUpComponents/GenerateReportDialog.vue";
 	export default {
-		components: { BuzzerConfirmation },
+		components: { BuzzerConfirmation, GenerateReportDialog },
 		data: () => ({
 			displayContributor: true,
 			clickBuzzer: false,
+			clickGenerateReport: false,
 			trashCategory: [
 				{
 					icon: "mdi-recycle",
@@ -198,10 +207,10 @@
 			],
 		}),
 		methods: {
-			cancel() {
+			cancelBuzzer() {
 				this.clickBuzzer = false;
 			},
-			confirm() {
+			confirmBuzzer() {
 				this.clickBuzzer = false;
 			},
 		},

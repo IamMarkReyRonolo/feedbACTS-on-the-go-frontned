@@ -151,8 +151,8 @@
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
-			@cancel="cancel()"
-			@confirm="confirm()"
+			@cancelBuzzer="cancelBuzzer()"
+			@confirmBuzzer="confirmBuzzer()"
 		/>
 	</div>
 </template>
@@ -173,10 +173,10 @@
 			clickedOthers: false,
 		}),
 		methods: {
-			cancel() {
+			cancelBuzzer() {
 				this.clickBuzzer = false;
 			},
-			confirm() {
+			confirmBuzzer() {
 				this.clickBuzzer = false;
 			},
 			navigate(routeName) {
