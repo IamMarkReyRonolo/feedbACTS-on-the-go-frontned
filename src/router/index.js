@@ -8,6 +8,7 @@ import Dashboard from "../components/AdminPageComponents/MainComponents/Dashboar
 import RecordActivity from "../components/AdminPageComponents/MainComponents/RecordActivity.vue";
 import TeacherPage from "../components/AdminPageComponents/MainComponents/TeacherPage.vue";
 import HistoryPage from "../components/AdminPageComponents/MainComponents/HistoryPage.vue";
+import TeacherProfile from "../components/AdminPageComponents/MainComponents/TeacherProfile.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
 				name: "teachers",
 				path: "teachers",
 				component: TeacherPage,
+			},
+			{
+				name: "teachers",
+				path: "teachers/profile",
+				component: TeacherProfile,
 			},
 			{
 				name: "history",

@@ -63,9 +63,10 @@
 						v-for="(data, index) in contribData"
 						:key="index"
 						x-large
+						to="teachers/profile"
 					>
 						<div class="teacherCon">
-							<div>{{ data.teacher }}</div>
+							<div><v-icon>mdi-account-circle</v-icon>{{ data.teacher }}</div>
 						</div>
 
 						<div class="categories">
@@ -102,7 +103,14 @@
 						<div class="teacherName">Juan Dela Cruz</div>
 						<div class="gender">Male</div>
 						<div class="btnCon">
-							<v-btn rounded outlined color="#5AA67A" small>View Teacher</v-btn>
+							<v-btn
+								rounded
+								outlined
+								color="#5AA67A"
+								small
+								to="teachers/profile"
+								>View Teacher</v-btn
+							>
 						</div>
 					</div>
 				</div>
@@ -456,6 +464,13 @@
 		.categories .v-btn span,
 		.totalCon .v-btn span {
 			display: none;
+		}
+		.contributionList .data .teacherCon div {
+			padding-left: 10px;
+		}
+
+		.contributionList .data .categories div {
+			padding-left: 20px;
 		}
 	}
 </style>
