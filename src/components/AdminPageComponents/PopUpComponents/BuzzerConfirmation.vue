@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="clickBuzzer" max-width="320">
+	<v-dialog v-model="clickBuzzer" max-width="320" persistent>
 		<v-card>
 			<v-card-title class="dialogTitle"> Sound the buzzer? </v-card-title>
 
