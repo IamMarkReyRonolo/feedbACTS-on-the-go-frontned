@@ -88,7 +88,7 @@
 												:text="displayContributor"
 												@click="displayContributor = false"
 												margin="padding: 0px 5px"
-												>Trash Accumulated Overtime</v-btn
+												>Total Trash</v-btn
 											>
 										</div>
 										<div class="contributorSection" v-if="displayContributor">
@@ -101,7 +101,7 @@
 													v-for="n in 5"
 													:key="n"
 													large
-													to="teachers/profile"
+													to="/admin/teachers/profile"
 												>
 													<div class="innerCon">
 														<v-icon style="padding: 0px 10px"
@@ -115,7 +115,7 @@
 											</div>
 										</div>
 										<div class="trashStatusSection" v-if="!displayContributor">
-											<h2>Trash Accumulated Overtime</h2>
+											<h2>Total Trash</h2>
 											<div class="contributors">
 												<v-btn
 													color="#5AA67A"
