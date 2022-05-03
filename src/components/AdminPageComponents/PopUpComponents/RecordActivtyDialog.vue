@@ -173,7 +173,8 @@
 
 			onDecode(result) {
 				try {
-					this.result = JSON.parse(JSON.parse(result));
+					this.result = JSON.parse(result);
+					console.log(this.result);
 					if ("teacher" in this.result && "code" in this.result) {
 						if (this.teachers.includes(this.result.teacher)) {
 							this.activity.teacher = this.result.teacher;

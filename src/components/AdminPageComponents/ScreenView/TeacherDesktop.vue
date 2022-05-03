@@ -24,7 +24,9 @@
 					>
 				</div>
 
-				<v-btn color="#064635" dark>Add New Teacher</v-btn>
+				<v-btn color="#064635" dark @click="addTeacher = true"
+					>Add New Teacher</v-btn
+				>
 			</div>
 		</div>
 		<div class="contributionCon" v-if="selectContributionTable">
@@ -116,13 +118,17 @@
 				</div>
 			</div>
 		</div>
+
+		<AddTeacher :addTeacher="addTeacher" @closeDialog="closeDialog()" />
 	</div>
 </template>
 
 <script>
+	import AddTeacher from "../PopUpComponents/AddTeacher.vue";
 	export default {
-		components: {},
+		components: { AddTeacher },
 		data: () => ({
+			addTeacher: false,
 			selectContributionTable: true,
 			teachers: [
 				{
@@ -317,6 +323,12 @@
 				},
 			],
 		}),
+
+		methods: {
+			closeDialog() {
+				this.addTeacher = false;
+			},
+		},
 	};
 </script>
 
