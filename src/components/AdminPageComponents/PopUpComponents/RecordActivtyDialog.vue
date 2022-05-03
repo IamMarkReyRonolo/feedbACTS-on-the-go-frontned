@@ -1,108 +1,111 @@
 <template>
-	<div class="recordActivtyCon">
-		<div class="closeBtn">
-			<v-btn fab x-small color="green darken-1" outlined @click="closeDialog">
-				<v-icon>mdi-close</v-icon>
-			</v-btn>
-		</div>
-		<br />
-		<br />
-		<div class="SelectOptionsDiv" v-if="!proceed">
-			<p class="error">{{ error }}</p>
-			<h2>Scan QR Code</h2>
-			<br />
-			<div class="camera">
-				<qrcode-stream
-					@decode="onDecode"
-					@init="onInit"
-					:track="paintOutline"
-				/>
+	<v-dialog v-model="recordActivity" max-width="400" persistent>
+		<div class="recordActivtyCon" v-if="recordActivity">
+			<div class="closeBtn">
+				<v-btn fab x-small color="green darken-1" outlined @click="closeDialog">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
 			</div>
-			<br />
-			<h2>Or</h2>
-			<br />
-			<v-btn large color="#5aa67a" dark @click="proceed = true"
-				>Manual Type Details</v-btn
-			>
-		</div>
-
-		<div class="actualRecording" v-if="proceed">
-			<h2>Record Activity</h2>
-			<br />
-			<div class="detail">
-				<v-select
-					label="Teacher"
-					outlined
-					color="#5aa67a"
-					dense
-					v-model="activity.teacher"
-					:items="teachers"
-					:disabled="isdisabled"
-					:rules="[rules.required]"
-				></v-select>
+			<div class="SelectOptionsDiv" v-if="!proceed">
+				<p class="error">{{ error }}</p>
+				<h2>Scan QR Code</h2>
+				<br />
+				<div class="camera">
+					<qrcode-stream
+						@decode="onDecode"
+						@init="onInit"
+						:track="paintOutline"
+					/>
+				</div>
+				<br />
+				<h2>Or</h2>
+				<br />
+				<v-btn large color="#5aa67a" dark @click="proceed = true"
+					>Manual Type Details</v-btn
+				>
 			</div>
 
-			<div class="detail">
-				<v-text-field
-					label="Teacher Code"
-					outlined
-					color="#5aa67a"
-					dense
-					v-model="activity.code"
-					:items="teachers"
-					:disabled="isdisabled"
-					:rules="[rules.required]"
-				></v-text-field>
-			</div>
-
-			<div class="detail">
-				<v-select
-					label="Category"
-					outlined
-					color="#5aa67a"
-					dense
-					v-model="activity.category"
-					:items="categories"
-					:rules="[rules.required]"
-				></v-select>
-			</div>
-
-			<div class="feedback">
+			<div class="actualRecording" v-if="proceed">
+				<h2>Record Activity</h2>
+				<br />
 				<div class="detail">
-					<v-textarea
-						label="Feedback"
+					<v-select
+						label="Teacher"
 						outlined
 						color="#5aa67a"
 						dense
-						no-resize
-						v-model="activity.feedback"
-					></v-textarea>
+						v-model="activity.teacher"
+						:items="teachers"
+						:disabled="isdisabled"
+						:rules="[rules.required]"
+					></v-select>
 				</div>
 
-				<div class="btn">
-					<v-btn large dark color="#5aa67a" outlined @click="goBack"
-						>Back</v-btn
-					>
-					<v-btn
-						large
-						:dark="allowed"
+				<div class="detail">
+					<v-text-field
+						label="Teacher Code"
+						outlined
 						color="#5aa67a"
-						:loading="loading"
-						@click="addActivity"
-						:disabled="!allowed"
-						>Add Activity</v-btn
-					>
+						dense
+						v-model="activity.code"
+						:items="teachers"
+						:disabled="isdisabled"
+						:rules="[rules.required]"
+					></v-text-field>
 				</div>
-				<br />
+
+				<div class="detail">
+					<v-select
+						label="Category"
+						outlined
+						color="#5aa67a"
+						dense
+						v-model="activity.category"
+						:items="categories"
+						:rules="[rules.required]"
+					></v-select>
+				</div>
+
+				<div class="feedback">
+					<div class="detail">
+						<v-textarea
+							label="Feedback"
+							outlined
+							color="#5aa67a"
+							dense
+							no-resize
+							v-model="activity.feedback"
+						></v-textarea>
+					</div>
+
+					<div class="btn">
+						<v-btn large dark color="#5aa67a" outlined @click="goBack"
+							>Back</v-btn
+						>
+						<v-btn
+							large
+							:dark="allowed"
+							color="#5aa67a"
+							:loading="loading"
+							@click="addActivity"
+							:disabled="!allowed"
+							>Add Activity</v-btn
+						>
+					</div>
+					<br />
+				</div>
 			</div>
 		</div>
-	</div>
+	</v-dialog>
 </template>
 
 <script>
 	import { QrcodeStream } from "vue-qrcode-reader";
 
 	export default {
+		props: {
+			recordActivity: Boolean,
+		},
 		components: { QrcodeStream },
 
 		data() {
@@ -142,7 +145,7 @@
 		methods: {
 			closeDialog() {
 				this.clear();
-				this.$router.push("/admin");
+				this.$emit("closeDialog");
 			},
 
 			clear() {
@@ -164,7 +167,7 @@
 				setTimeout(() => {
 					this.loading = false;
 					this.clear();
-					this.$router.push("/admin");
+					this.$emit("closeDialog");
 				}, 1000);
 			},
 
@@ -253,7 +256,7 @@
 	.recordActivtyCon {
 		background-color: white;
 		padding: 40px 10px;
-		height: 100vh;
+		height: 580px;
 	}
 	.error {
 		font-weight: bold;

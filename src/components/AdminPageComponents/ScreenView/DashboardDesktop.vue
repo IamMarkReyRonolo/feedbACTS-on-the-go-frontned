@@ -15,7 +15,11 @@
 						<div class="tableCon">
 							<div class="tableHeader">
 								<h2>Recent Activities</h2>
-								<v-btn class="addTrashBtn" color="#064635" dark
+								<v-btn
+									class="addTrashBtn"
+									color="#064635"
+									dark
+									@click="recordActivity = true"
 									>Record New Activity</v-btn
 								>
 							</div>
@@ -178,6 +182,11 @@
 		/>
 
 		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
+
+		<RecordActivityDialog
+			:recordActivity="recordActivity"
+			@closeDialog="closeDialog()"
+		/>
 	</div>
 </template>
 
@@ -185,13 +194,20 @@
 	import BuzzerConfirmation from "../PopUpComponents/BuzzerConfirmation.vue";
 	import GenerateReportDialog from "../PopUpComponents/GenerateReportDialog.vue";
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
+	import RecordActivityDialog from "../PopUpComponents/RecordActivtyDialog.vue";
 	export default {
-		components: { BuzzerConfirmation, GenerateReportDialog, MoreDetails },
+		components: {
+			BuzzerConfirmation,
+			GenerateReportDialog,
+			MoreDetails,
+			RecordActivityDialog,
+		},
 		data: () => ({
 			displayContributor: true,
 			clickBuzzer: false,
 			clickGenerateReport: false,
 			moreDetails: false,
+			recordActivity: false,
 			trashCategory: [
 				{
 					icon: "mdi-recycle",
@@ -222,6 +238,9 @@
 			},
 			closeDetails() {
 				this.moreDetails = false;
+			},
+			closeDialog() {
+				this.recordActivity = false;
 			},
 		},
 		computed: {
