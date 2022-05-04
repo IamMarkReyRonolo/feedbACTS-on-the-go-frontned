@@ -9,6 +9,8 @@ import RecordActivity from "../components/AdminPageComponents/MainComponents/Rec
 import TeacherPage from "../components/AdminPageComponents/MainComponents/TeacherPage.vue";
 import HistoryPage from "../components/AdminPageComponents/MainComponents/HistoryPage.vue";
 import TeacherProfile from "../components/AdminPageComponents/MainComponents/TeacherProfile.vue";
+
+import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCard.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -47,6 +49,11 @@ const routes = [
 	{
 		path: "/recordActivity",
 		component: RecordActivity,
+	},
+
+	{
+		path: "/printCard",
+		component: PrintCard,
 	},
 ];
 

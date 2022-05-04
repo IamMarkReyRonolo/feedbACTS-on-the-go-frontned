@@ -52,7 +52,7 @@
 						</div>
 
 						<div class="btn">
-							<v-btn small>Print FeedCTS Card</v-btn>
+							<v-btn small @click="printCard = true">Print FeedaCTS Card</v-btn>
 						</div>
 					</div>
 				</div>
@@ -123,6 +123,8 @@
 			@closeDeleteDialog="closeDeleteDialog()"
 			:teacher="teacher"
 		/>
+
+		<PrintCard :printCard="printCard" @closePrintCard="closePrintCard" />
 	</div>
 </template>
 
@@ -132,6 +134,7 @@
 	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
 	import EditTeacher from "../PopUpComponents/EditTeacher.vue";
 	import DeleteTeacher from "../PopUpComponents/DeleteTeacher.vue";
+	import PrintCard from "../PopUpComponents/PrintCard.vue";
 	export default {
 		components: {
 			DashboardMobile,
@@ -139,6 +142,7 @@
 			ViewQRCode,
 			EditTeacher,
 			DeleteTeacher,
+			PrintCard,
 		},
 		data() {
 			return {
@@ -165,6 +169,7 @@
 				showQR: false,
 				editTeacher: false,
 				deleteTeacher: false,
+				printCard: false,
 			};
 		},
 
@@ -180,6 +185,9 @@
 			},
 			closeDeleteDialog() {
 				this.deleteTeacher = false;
+			},
+			closePrintCard() {
+				this.printCard = false;
 			},
 		},
 
