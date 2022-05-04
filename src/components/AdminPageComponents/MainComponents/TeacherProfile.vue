@@ -8,8 +8,12 @@
 							<v-icon dark size="100px">mdi-account</v-icon></v-avatar
 						>
 						<div class="functionBtns">
-							<v-btn class="warning" x-small>Edit</v-btn>
-							<v-btn class="error" x-small>Delete</v-btn>
+							<v-btn class="warning" x-small @click="editTeacher = true"
+								>Edit</v-btn
+							>
+							<v-btn class="error" x-small @click="deleteTeacher = true"
+								>Delete</v-btn
+							>
 						</div>
 					</div>
 
@@ -108,6 +112,17 @@
 
 		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
+		<EditTeacher
+			:editTeacher="editTeacher"
+			@closeDialog="closeDialog()"
+			:teacher="teacher"
+		/>
+
+		<DeleteTeacher
+			:deleteTeacher="deleteTeacher"
+			@closeDeleteDialog="closeDeleteDialog()"
+			:teacher="teacher"
+		/>
 	</div>
 </template>
 
@@ -115,8 +130,16 @@
 	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
+	import EditTeacher from "../PopUpComponents/EditTeacher.vue";
+	import DeleteTeacher from "../PopUpComponents/DeleteTeacher.vue";
 	export default {
-		components: { DashboardMobile, MoreDetails, ViewQRCode },
+		components: {
+			DashboardMobile,
+			MoreDetails,
+			ViewQRCode,
+			EditTeacher,
+			DeleteTeacher,
+		},
 		data() {
 			return {
 				teacher: {
@@ -140,6 +163,8 @@
 				],
 				moreDetails: false,
 				showQR: false,
+				editTeacher: false,
+				deleteTeacher: false,
 			};
 		},
 
@@ -149,6 +174,12 @@
 			},
 			closeQR() {
 				this.showQR = false;
+			},
+			closeDialog() {
+				this.editTeacher = false;
+			},
+			closeDeleteDialog() {
+				this.deleteTeacher = false;
 			},
 		},
 
