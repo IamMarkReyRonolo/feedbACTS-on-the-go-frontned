@@ -42,11 +42,13 @@
 					</div>
 					<div class="detailsFunctionCon">
 						<div class="btn">
-							<v-btn small color="#5AA67A" dark>View QR Code</v-btn>
+							<v-btn small color="#5AA67A" dark @click="showQR = true"
+								>View QR Code</v-btn
+							>
 						</div>
 
 						<div class="btn">
-							<v-btn small>Print QR Code</v-btn>
+							<v-btn small>Print FeedCTS Card</v-btn>
 						</div>
 					</div>
 				</div>
@@ -105,16 +107,26 @@
 		<div class="mobileView"><DashboardMobile /></div>
 
 		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
+		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
 	</div>
 </template>
 
 <script>
 	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
+	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
 	export default {
-		components: { DashboardMobile, MoreDetails },
+		components: { DashboardMobile, MoreDetails, ViewQRCode },
 		data() {
 			return {
+				teacher: {
+					first_name: "Juan",
+					last_name: "Dela Cruz",
+					gender: "Male",
+					code: "codecode",
+					username: "iamjuan123",
+					password: "123123",
+				},
 				contribData: [
 					{
 						date: "03/23/2022",
@@ -127,12 +139,26 @@
 					},
 				],
 				moreDetails: false,
+				showQR: false,
 			};
 		},
 
 		methods: {
 			closeDetails() {
 				this.moreDetails = false;
+			},
+			closeQR() {
+				this.showQR = false;
+			},
+		},
+
+		computed: {
+			getQRValue: function () {
+				const qrValue = {
+					teacher: this.teacher.first_name + " " + this.teacher.last_name,
+					code: this.teacher.code,
+				};
+				return JSON.stringify(qrValue);
 			},
 		},
 	};

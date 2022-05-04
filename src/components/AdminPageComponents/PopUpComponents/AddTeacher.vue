@@ -84,18 +84,12 @@
 			</div>
 
 			<br />
-
-			<div class="qrcode" v-if="showQR">
-				<QrcodeVue :value="value" :size="size" level="H" />
-			</div>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
-	import QrcodeVue from "qrcode.vue";
 	export default {
-		components: { QrcodeVue },
 		props: {
 			addTeacher: Boolean,
 		},
@@ -111,9 +105,7 @@
 				},
 				gender: ["Male", "Female"],
 				show: false,
-				showQR: false,
-				value: "",
-				size: 300,
+
 				rules: {
 					required: (value) => !!value || "Required.",
 				},
@@ -125,19 +117,8 @@
 				this.loading = true;
 				setTimeout(() => {
 					this.loading = false;
-
-					const teacherName = `${this.teacher.first_name} ${this.teacher.last_name}`;
-					console.log(teacherName);
-
-					const data = {
-						teacher: teacherName,
-						code: "123123123",
-					};
-					console.log(data);
-					this.value = JSON.stringify(data);
-					this.showQR = true;
 					this.clearFields();
-					// this.$emit("closeDialog");
+					this.$emit("closeDialog");
 				}, 1000);
 			},
 
