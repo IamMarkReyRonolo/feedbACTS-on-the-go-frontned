@@ -111,13 +111,11 @@
 				this.loading = true;
 				setTimeout(() => {
 					this.loading = false;
-					this.clearFields();
 					this.$emit("closeDialog");
 				}, 1000);
 			},
 
 			close() {
-				this.clearFields();
 				this.$emit("closeDialog");
 			},
 
