@@ -3,9 +3,10 @@
 		<div class="desktopView">
 			<div class="upmostCon">
 				<p>Administrator</p>
+				{{ currentTime }}
 				<div class="upperDateTime">
-					<div class="time">10:00 AM</div>
-					<div class="date">Friday, March 30, 2022</div>
+					<div class="time">{{ time }}</div>
+					<div class="date">{{ currentDate }}</div>
 				</div>
 				<v-btn text dark @click="clickSettings = true"
 					><span>Settings</span>
@@ -54,8 +55,10 @@
 						<img src="../../assets/schedule.png" alt="" />
 					</div>
 					<div class="actualDateTime">
-						<div class="timeCon"><h1>10:00 AM</h1></div>
-						<div class="dateCon">Friday, March 30, 2022</div>
+						<div class="timeCon">
+							<h1>{{ time }}</h1>
+						</div>
+						<div class="dateCon">{{ currentDate }}</div>
 					</div>
 				</div>
 			</div>
@@ -188,7 +191,10 @@
 			clickedPaper: false,
 			clickedCellophanes: false,
 			clickedOthers: false,
+			timerIsOn: false,
+			time: "",
 		}),
+
 		methods: {
 			closeBuzzer(event) {
 				this.clickBuzzer = false;
@@ -261,6 +267,10 @@
 				}
 			},
 		},
+
+		created() {
+			this.timerIsOn = true;
+		},
 		computed: {
 			getName: function () {
 				const routeN = this.$router.currentRoute.name;
@@ -277,6 +287,42 @@
 					this.clickedTeachers = false;
 					this.clickedHistory = true;
 				}
+			},
+
+			currentTime: function () {
+				this.timerIsOn = true;
+				if (this.timerIsOn) {
+					setTimeout(() => {
+						let date = new Date();
+						let hh = date.getHours();
+						let mm = date.getMinutes();
+						let ss = date.getSeconds();
+						let session = "AM";
+
+						if (hh === 0) {
+							hh = 12;
+						}
+						if (hh > 12) {
+							hh = hh - 12;
+							session = "PM";
+						}
+
+						hh = hh < 10 ? "0" + hh : hh;
+						mm = mm < 10 ? "0" + mm : mm;
+						ss = ss < 10 ? "0" + ss : ss;
+
+						let time = hh + ":" + mm + ":" + ss + " " + session;
+
+						this.time = time;
+						this.timerIsOn = false;
+					}, 1000);
+				}
+			},
+
+			currentDate: function () {
+				let today = new Date();
+				today = today.toString().split(" ").splice(0, 4);
+				return today[0] + " " + today[1] + " " + today[2] + " " + today[3];
 			},
 		},
 	};
