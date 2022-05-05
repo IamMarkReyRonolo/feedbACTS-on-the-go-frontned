@@ -2,6 +2,17 @@
 	<div class="historyPage">
 		<div class="desktopView">
 			<h2>Report History</h2>
+			<br />
+			<div class="searchBarCon">
+				<v-text-field
+					label="Search Report"
+					rounded
+					solo
+					dense
+					prepend-inner-icon="mdi-archive-search"
+					color="success"
+				></v-text-field>
+			</div>
 			<div class="reportHistoryTable">
 				<div class="header">
 					<v-btn text color="#5AA67A" small
@@ -107,6 +118,11 @@
 		justify-content: flex-start;
 		display: flex;
 		align-items: center;
+	}
+
+	.searchBarCon {
+		width: 400px;
+		margin: auto;
 	}
 
 	@media only screen and (max-width: 1100px) {
