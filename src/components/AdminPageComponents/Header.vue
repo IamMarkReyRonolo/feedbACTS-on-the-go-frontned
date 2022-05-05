@@ -410,6 +410,10 @@
 		justify-content: center;
 	}
 
+	.timeCon {
+		width: 230px;
+	}
+
 	.actualDateTime {
 		padding: 0px 20px;
 	}
