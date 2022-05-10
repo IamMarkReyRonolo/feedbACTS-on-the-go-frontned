@@ -28,13 +28,37 @@
 				<div class="contentCon">
 					<div class="dataCon">
 						<div class="con1">
-							<div class="data"></div>
-							<div class="data"></div>
+							<div class="data">
+								<div class="categoryTitle">Plastic</div>
+								<div class="activityCount">
+									<div class="count">5</div>
+									<span>Activities</span>
+								</div>
+							</div>
+							<div class="data">
+								<div class="categoryTitle">Paper</div>
+								<div class="activityCount">
+									<div class="count">10</div>
+									<span>Activities</span>
+								</div>
+							</div>
 						</div>
 
 						<div class="con1">
-							<div class="data"></div>
-							<div class="data"></div>
+							<div class="data">
+								<div class="categoryTitle">Others</div>
+								<div class="activityCount">
+									<div class="count">2</div>
+									<span>Activities</span>
+								</div>
+							</div>
+							<div class="data">
+								<div class="categoryTitle">Total Trash</div>
+								<div class="activityCount">
+									<div class="count">17</div>
+									<span>Activities</span>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="totalTrashCon">
@@ -152,22 +176,46 @@
 									<div
 										class="data printableData"
 										style="width: 100px; height: 100px; margin: 10px"
-									></div>
+									>
+										<div class="categoryTitle">Plastic</div>
+										<div class="activityCount">
+											<div class="count">5</div>
+											<span>Activities</span>
+										</div>
+									</div>
 									<div
 										class="data printableData"
 										style="width: 100px; height: 100px; margin: 10px"
-									></div>
+									>
+										<div class="categoryTitle">Paper</div>
+										<div class="activityCount">
+											<div class="count">10</div>
+											<span>Activities</span>
+										</div>
+									</div>
 								</div>
 
 								<div class="con1">
 									<div
 										class="data printableData"
 										style="width: 100px; height: 100px; margin: 10px"
-									></div>
+									>
+										<div class="categoryTitle">Others</div>
+										<div class="activityCount">
+											<div class="count">2</div>
+											<span>Activities</span>
+										</div>
+									</div>
 									<div
 										class="data printableData"
 										style="width: 100px; height: 100px; margin: 10px"
-									></div>
+									>
+										<div class="categoryTitle">Total Trash</div>
+										<div class="activityCount">
+											<div class="count">17</div>
+											<span>Activities</span>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="totalTrashCon printablePie">
@@ -428,15 +476,27 @@
 		border: 1px solid #5aa67a;
 	}
 
-	/* .totalTrashCon .data {
-		width: 200px;
-		height: 150px;
-		margin: 20px;
-		border-radius: 20px;
-		background-color: white;
-		border: 1px solid #5aa67a;
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	} */
+	.con1 .data {
+		display: block;
+		text-align: center;
+	}
+
+	.categoryTitle {
+		padding: 10px;
+		font-weight: bold;
+		color: #5aa67a;
+	}
+
+	.count {
+		font-weight: bold;
+		font-size: 40px;
+		color: #fdc00b;
+	}
+
+	.activityCount span {
+		color: #5aa67a;
+		font-size: 14px;
+	}
 	.contributionTable {
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -521,6 +581,24 @@
 	.printableData {
 		width: 100px;
 		height: 100px;
+	}
+
+	.printableData .categoryTitle {
+		padding: 5px;
+		font-weight: bold;
+		color: #5aa67a;
+		font-weight: 12px;
+	}
+
+	.printableData .activityCount .count {
+		font-weight: bold;
+		font-size: 28px;
+		color: #fdc00b;
+	}
+
+	.printableData .activityCount span {
+		color: #5aa67a;
+		font-size: 10px;
 	}
 
 	.printablePie {
