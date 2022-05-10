@@ -1,296 +1,300 @@
 <template>
 	<div class="report">
-		<div class="reportCon">
-			<h2>Report</h2>
+		<div class="desktopView">
+			<div class="reportCon">
+				<h2>Report</h2>
 
-			<div class="sec">
-				<h3>Title: Monthly Report</h3>
-				<br />
-				<div class="subtitle" style="color: #064635">
-					<b>Date</b>: March 20, 2022 - April 1, 2022
-				</div>
-				<br />
-				<div class="subtitle" style="color: #064635">
-					<b>Description</b>: Lorem ipsum dolor sit amet consectetur adipisicing
-					elit. Architecto blanditiis inventore, unde ut id provident culpa
-					maxime commodi voluptas labore.
-				</div>
-			</div>
-			<div class="sec">
-				<h3>Trash Activity</h3>
-				<div class="stats">
-					<LineChart />
-				</div>
-			</div>
-
-			<div class="sec">
-				<h3>Total Trash Collected</h3>
-				<div class="contentCon">
-					<div class="dataCon">
-						<div class="con1">
-							<div class="data">
-								<div class="categoryTitle">Plastic</div>
-								<div class="activityCount">
-									<div class="count">5</div>
-									<span>Activities</span>
-								</div>
-							</div>
-							<div class="data">
-								<div class="categoryTitle">Paper</div>
-								<div class="activityCount">
-									<div class="count">10</div>
-									<span>Activities</span>
-								</div>
-							</div>
-						</div>
-
-						<div class="con1">
-							<div class="data">
-								<div class="categoryTitle">Others</div>
-								<div class="activityCount">
-									<div class="count">2</div>
-									<span>Activities</span>
-								</div>
-							</div>
-							<div class="data">
-								<div class="categoryTitle">Total Trash</div>
-								<div class="activityCount">
-									<div class="count">17</div>
-									<span>Activities</span>
-								</div>
-							</div>
-						</div>
+				<div class="sec">
+					<h3>Title: Monthly Report</h3>
+					<br />
+					<div class="subtitle" style="color: #064635">
+						<b>Date</b>: March 20, 2022 - April 1, 2022
 					</div>
-					<div class="totalTrashCon">
-						<Pie />
+					<br />
+					<div class="subtitle" style="color: #064635">
+						<b>Description</b>: Lorem ipsum dolor sit amet consectetur
+						adipisicing elit. Architecto blanditiis inventore, unde ut id
+						provident culpa maxime commodi voluptas labore.
 					</div>
 				</div>
-			</div>
+				<div class="sec">
+					<h3>Trash Activity</h3>
+					<div class="stats">
+						<LineChart />
+					</div>
+				</div>
 
-			<div class="sec">
-				<h3>Contribution Table</h3>
-				<div class="contributionCon">
-					<div class="contributionTable">
-						<div class="contributionHeader">
-							<div class="teacherCon">
-								<v-btn text color="#064635" small>
-									<v-icon>mdi-account</v-icon>Teacher name</v-btn
-								>
-							</div>
-
-							<div class="categories">
-								<v-btn text color="#064635" small>
-									<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
-								>
-								<v-btn text color="#064635" small>
-									<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
-								>
-
-								<v-btn text color="#064635" small>
-									<v-icon>mdi-more</v-icon><span>Others</span></v-btn
-								>
-							</div>
-							<div class="totalCon">
-								<v-btn text color="#064635" small>
-									<v-icon>mdi-trash-can</v-icon><span>Total Trash</span>
-								</v-btn>
-							</div>
-						</div>
-
-						<div class="contributionList">
-							<v-btn
-								class="data"
-								text
-								color="#5AA67A"
-								v-for="(data, index) in contribData"
-								:key="index"
-								x-large
-								to="teachers/profile"
-							>
-								<div class="teacherCon">
-									<div>
-										<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
+				<div class="sec">
+					<h3>Total Trash Collected</h3>
+					<div class="contentCon">
+						<div class="dataCon">
+							<div class="con1">
+								<div class="data">
+									<div class="categoryTitle">Plastic</div>
+									<div class="activityCount">
+										<div class="count">5</div>
+										<span>Activities</span>
 									</div>
+								</div>
+								<div class="data">
+									<div class="categoryTitle">Paper</div>
+									<div class="activityCount">
+										<div class="count">10</div>
+										<span>Activities</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="con1">
+								<div class="data">
+									<div class="categoryTitle">Others</div>
+									<div class="activityCount">
+										<div class="count">2</div>
+										<span>Activities</span>
+									</div>
+								</div>
+								<div class="data">
+									<div class="categoryTitle">Total Trash</div>
+									<div class="activityCount">
+										<div class="count">17</div>
+										<span>Activities</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="totalTrashCon">
+							<Pie />
+						</div>
+					</div>
+				</div>
+
+				<div class="sec">
+					<h3>Contribution Table</h3>
+					<div class="contributionCon">
+						<div class="contributionTable">
+							<div class="contributionHeader">
+								<div class="teacherCon">
+									<v-btn text color="#064635" small>
+										<v-icon>mdi-account</v-icon>Teacher name</v-btn
+									>
 								</div>
 
 								<div class="categories">
-									<div>{{ data.plastic }}</div>
-									<div>{{ data.paper }}</div>
+									<v-btn text color="#064635" small>
+										<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
+									>
+									<v-btn text color="#064635" small>
+										<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
+									>
 
-									<div>{{ data.other }}</div>
+									<v-btn text color="#064635" small>
+										<v-icon>mdi-more</v-icon><span>Others</span></v-btn
+									>
 								</div>
 								<div class="totalCon">
-									<div>{{ data.total }}</div>
+									<v-btn text color="#064635" small>
+										<v-icon>mdi-trash-can</v-icon><span>Total Trash</span>
+									</v-btn>
 								</div>
-							</v-btn>
+							</div>
+
+							<div class="contributionList">
+								<v-btn
+									class="data"
+									text
+									color="#5AA67A"
+									v-for="(data, index) in contribData"
+									:key="index"
+									x-large
+									to="teachers/profile"
+								>
+									<div class="teacherCon">
+										<div>
+											<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
+										</div>
+									</div>
+
+									<div class="categories">
+										<div>{{ data.plastic }}</div>
+										<div>{{ data.paper }}</div>
+
+										<div>{{ data.other }}</div>
+									</div>
+									<div class="totalCon">
+										<div>{{ data.total }}</div>
+									</div>
+								</v-btn>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<v-btn @click="generateReport" color="#5aa67a" dark> Print Report</v-btn>
+			<br />
+			<br />
+			<br />
+			<VueHtml2pdf
+				:show-layout="false"
+				:float-layout="true"
+				:enable-download="true"
+				filename="Report"
+				:pdf-quality="2"
+				:manual-pagination="false"
+				pdf-format="legal"
+				pdf-orientation="portrait"
+				ref="html2Pdf"
+			>
+				<section slot="pdf-content">
+					<div class="reportCon">
+						<h2>Report</h2>
 
-		<v-btn @click="generateReport" color="#5aa67a" dark> Print Report</v-btn>
-		<br />
-		<br />
-		<br />
-		<VueHtml2pdf
-			:show-layout="false"
-			:float-layout="true"
-			:enable-download="true"
-			filename="Report"
-			:pdf-quality="2"
-			:manual-pagination="false"
-			pdf-format="legal"
-			pdf-orientation="portrait"
-			ref="html2Pdf"
-		>
-			<section slot="pdf-content">
-				<div class="reportCon">
-					<h2>Report</h2>
-
-					<div class="sec">
-						<h3>Title: Monthly Report</h3>
-						<br />
-						<div class="subtitle" style="color: #064635">
-							<b>Date</b>: March 20, 2022 - April 1, 2022
-						</div>
-						<br />
-						<div class="subtitle" style="color: #064635">
-							<b>Description</b>: Lorem ipsum dolor sit amet consectetur
-							adipisicing elit. Architecto blanditiis inventore, unde ut id
-							provident culpa maxime commodi voluptas labore.
-						</div>
-					</div>
-					<div class="sec">
-						<h3>Trash Activity</h3>
-						<div class="stats">
-							<LineChart />
-						</div>
-					</div>
-
-					<div class="sec">
-						<h3>Total Trash Collected</h3>
-						<div class="contentCon">
-							<div class="dataCon">
-								<div class="con1">
-									<div
-										class="data printableData"
-										style="width: 100px; height: 100px; margin: 10px"
-									>
-										<div class="categoryTitle">Plastic</div>
-										<div class="activityCount">
-											<div class="count">5</div>
-											<span>Activities</span>
-										</div>
-									</div>
-									<div
-										class="data printableData"
-										style="width: 100px; height: 100px; margin: 10px"
-									>
-										<div class="categoryTitle">Paper</div>
-										<div class="activityCount">
-											<div class="count">10</div>
-											<span>Activities</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="con1">
-									<div
-										class="data printableData"
-										style="width: 100px; height: 100px; margin: 10px"
-									>
-										<div class="categoryTitle">Others</div>
-										<div class="activityCount">
-											<div class="count">2</div>
-											<span>Activities</span>
-										</div>
-									</div>
-									<div
-										class="data printableData"
-										style="width: 100px; height: 100px; margin: 10px"
-									>
-										<div class="categoryTitle">Total Trash</div>
-										<div class="activityCount">
-											<div class="count">17</div>
-											<span>Activities</span>
-										</div>
-									</div>
-								</div>
+						<div class="sec">
+							<h3>Title: Monthly Report</h3>
+							<br />
+							<div class="subtitle" style="color: #064635">
+								<b>Date</b>: March 20, 2022 - April 1, 2022
 							</div>
-							<div class="totalTrashCon printablePie">
-								<Pie />
+							<br />
+							<div class="subtitle" style="color: #064635">
+								<b>Description</b>: Lorem ipsum dolor sit amet consectetur
+								adipisicing elit. Architecto blanditiis inventore, unde ut id
+								provident culpa maxime commodi voluptas labore.
 							</div>
 						</div>
-					</div>
-					<br /><br />
-					<div class="sec printable">
-						<h3>Contribution Table</h3>
-						<br />
-						<div class="contributionCon">
-							<div class="contributionTable">
-								<div class="contributionHeader">
-									<div class="teacherCon">
-										<v-btn text color="#064635" small>
-											<v-icon>mdi-account</v-icon>Teacher name</v-btn
-										>
-									</div>
+						<div class="sec">
+							<h3>Trash Activity</h3>
+							<div class="stats">
+								<LineChart />
+							</div>
+						</div>
 
-									<div class="categories">
-										<v-btn text color="#064635" small>
-											<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
+						<div class="sec">
+							<h3>Total Trash Collected</h3>
+							<div class="contentCon">
+								<div class="dataCon">
+									<div class="con1">
+										<div
+											class="data printableData"
+											style="width: 100px; height: 100px; margin: 10px"
 										>
-										<v-btn text color="#064635" small>
-											<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
-										>
-
-										<v-btn text color="#064635" small>
-											<v-icon>mdi-more</v-icon><span>Others</span></v-btn
-										>
-									</div>
-									<div class="totalCon">
-										<v-btn text color="#064635" small>
-											<v-icon>mdi-trash-can</v-icon><span>Total Trash </span>
-										</v-btn>
-									</div>
-								</div>
-
-								<div class="contributionList">
-									<v-btn
-										class="data"
-										text
-										color="#5AA67A"
-										v-for="(data, index) in contribData"
-										:key="index"
-										x-large
-										to="teachers/profile"
-									>
-										<div class="teacherCon">
-											<div>
-												<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
+											<div class="categoryTitle">Plastic</div>
+											<div class="activityCount">
+												<div class="count">5</div>
+												<span>Activities</span>
 											</div>
+										</div>
+										<div
+											class="data printableData"
+											style="width: 100px; height: 100px; margin: 10px"
+										>
+											<div class="categoryTitle">Paper</div>
+											<div class="activityCount">
+												<div class="count">10</div>
+												<span>Activities</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="con1">
+										<div
+											class="data printableData"
+											style="width: 100px; height: 100px; margin: 10px"
+										>
+											<div class="categoryTitle">Others</div>
+											<div class="activityCount">
+												<div class="count">2</div>
+												<span>Activities</span>
+											</div>
+										</div>
+										<div
+											class="data printableData"
+											style="width: 100px; height: 100px; margin: 10px"
+										>
+											<div class="categoryTitle">Total Trash</div>
+											<div class="activityCount">
+												<div class="count">17</div>
+												<span>Activities</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="totalTrashCon printablePie">
+									<Pie />
+								</div>
+							</div>
+						</div>
+						<br /><br />
+						<div class="sec printable">
+							<h3>Contribution Table</h3>
+							<br />
+							<div class="contributionCon">
+								<div class="contributionTable">
+									<div class="contributionHeader">
+										<div class="teacherCon">
+											<v-btn text color="#064635" small>
+												<v-icon>mdi-account</v-icon>Teacher name</v-btn
+											>
 										</div>
 
 										<div class="categories">
-											<div>{{ data.plastic }}</div>
-											<div>{{ data.paper }}</div>
+											<v-btn text color="#064635" small>
+												<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
+											>
+											<v-btn text color="#064635" small>
+												<v-icon>mdi-paper-roll</v-icon>
+												<span>Paper</span></v-btn
+											>
 
-											<div>{{ data.other }}</div>
+											<v-btn text color="#064635" small>
+												<v-icon>mdi-more</v-icon><span>Others</span></v-btn
+											>
 										</div>
 										<div class="totalCon">
-											<div>{{ data.total }}</div>
+											<v-btn text color="#064635" small>
+												<v-icon>mdi-trash-can</v-icon><span>Total Trash </span>
+											</v-btn>
 										</div>
-									</v-btn>
+									</div>
+
+									<div class="contributionList">
+										<v-btn
+											class="data"
+											text
+											color="#5AA67A"
+											v-for="(data, index) in contribData"
+											:key="index"
+											x-large
+											to="teachers/profile"
+										>
+											<div class="teacherCon">
+												<div>
+													<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
+												</div>
+											</div>
+
+											<div class="categories">
+												<div>{{ data.plastic }}</div>
+												<div>{{ data.paper }}</div>
+
+												<div>{{ data.other }}</div>
+											</div>
+											<div class="totalCon">
+												<div>{{ data.total }}</div>
+											</div>
+										</v-btn>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<br />
-					<br />
-				</div>
-			</section>
-		</VueHtml2pdf>
+						<br />
+						<br />
+					</div>
+				</section>
+			</VueHtml2pdf>
+		</div>
+
+		<div class="mobileView"><DashboardMobile /></div>
 	</div>
 </template>
 
@@ -298,8 +302,9 @@
 	import VueHtml2pdf from "vue-html2pdf";
 	import LineChart from "./Line.vue";
 	import Pie from "./Pie.vue";
+	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
 	export default {
-		components: { VueHtml2pdf, LineChart, Pie },
+		components: { VueHtml2pdf, LineChart, Pie, DashboardMobile },
 		data: () => ({
 			contribData: [
 				{
@@ -421,6 +426,9 @@
 </script>
 
 <style scoped>
+	.mobileView {
+		display: none;
+	}
 	.reportCon h2,
 	.reportCon h3 {
 		color: #064635;
@@ -641,6 +649,16 @@
 
 		.contributionList .data .categories div {
 			padding-left: 20px;
+		}
+	}
+
+	@media only screen and (max-width: 700px) {
+		.desktopView {
+			display: none;
+		}
+
+		.mobileView {
+			display: block;
 		}
 	}
 </style>
