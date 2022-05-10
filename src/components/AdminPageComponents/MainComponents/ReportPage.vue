@@ -2,6 +2,7 @@
 	<div class="report">
 		<div class="reportCon">
 			<h2>Report</h2>
+
 			<div class="sec">
 				<h3>Title: Monthly Report</h3>
 				<br />
@@ -18,38 +19,27 @@
 			<div class="sec">
 				<h3>Trash Activity</h3>
 				<div class="stats">
-					<v-card class="mx-auto text-center colored" dark max-width="800">
-						<v-card-text>
-							<v-sheet color="rgba(0, 0, 0, .12)">
-								<v-sparkline
-									:value="value"
-									color="rgba(255, 255, 255, .7)"
-									height="100"
-									padding="20"
-									stroke-linecap="round"
-									smooth
-								>
-									<template v-slot:label="item"> ${{ item.value }} </template>
-								</v-sparkline>
-							</v-sheet>
-						</v-card-text>
-
-						<v-card-text>
-							<div class="text-h4">Trash Activity</div>
-						</v-card-text>
-
-						<v-divider></v-divider>
-					</v-card>
+					<LineChart />
 				</div>
 			</div>
 
 			<div class="sec">
 				<h3>Total Trash Collected</h3>
-				<div class="totalTrashCon">
-					<div class="data"></div>
-					<div class="data"></div>
-					<div class="data"></div>
-					<div class="data"></div>
+				<div class="contentCon">
+					<div class="dataCon">
+						<div class="con1">
+							<div class="data"></div>
+							<div class="data"></div>
+						</div>
+
+						<div class="con1">
+							<div class="data"></div>
+							<div class="data"></div>
+						</div>
+					</div>
+					<div class="totalTrashCon">
+						<Pie />
+					</div>
 				</div>
 			</div>
 
@@ -78,8 +68,7 @@
 							</div>
 							<div class="totalCon">
 								<v-btn text color="#064635" small>
-									<v-icon>mdi-trash-can</v-icon
-									><span>Total Trash Activity</span>
+									<v-icon>mdi-trash-can</v-icon><span>Total Trash</span>
 								</v-btn>
 							</div>
 						</div>
@@ -134,6 +123,7 @@
 			<section slot="pdf-content">
 				<div class="reportCon">
 					<h2>Report</h2>
+
 					<div class="sec">
 						<h3>Title: Monthly Report</h3>
 						<br />
@@ -150,40 +140,39 @@
 					<div class="sec">
 						<h3>Trash Activity</h3>
 						<div class="stats">
-							<v-card class="mx-auto text-center colored" dark max-width="800">
-								<v-card-text>
-									<v-sheet color="rgba(0, 0, 0, .12)">
-										<v-sparkline
-											:value="value"
-											color="rgba(255, 255, 255, .7)"
-											height="100"
-											padding="20"
-											stroke-linecap="round"
-											smooth
-										>
-											<template v-slot:label="item">
-												${{ item.value }}
-											</template>
-										</v-sparkline>
-									</v-sheet>
-								</v-card-text>
-
-								<v-card-text>
-									<div class="text-h4">Trash Activity</div>
-								</v-card-text>
-
-								<v-divider></v-divider>
-							</v-card>
+							<LineChart />
 						</div>
 					</div>
-					<br />
+
 					<div class="sec">
 						<h3>Total Trash Collected</h3>
-						<div class="totalTrashCon">
-							<div class="data"></div>
-							<div class="data"></div>
-							<div class="data"></div>
-							<div class="data"></div>
+						<div class="contentCon">
+							<div class="dataCon">
+								<div class="con1">
+									<div
+										class="data printableData"
+										style="width: 100px; height: 100px; margin: 10px"
+									></div>
+									<div
+										class="data printableData"
+										style="width: 100px; height: 100px; margin: 10px"
+									></div>
+								</div>
+
+								<div class="con1">
+									<div
+										class="data printableData"
+										style="width: 100px; height: 100px; margin: 10px"
+									></div>
+									<div
+										class="data printableData"
+										style="width: 100px; height: 100px; margin: 10px"
+									></div>
+								</div>
+							</div>
+							<div class="totalTrashCon printablePie">
+								<Pie />
+							</div>
 						</div>
 					</div>
 					<br /><br />
@@ -213,8 +202,7 @@
 									</div>
 									<div class="totalCon">
 										<v-btn text color="#064635" small>
-											<v-icon>mdi-trash-can</v-icon
-											><span>Total Trash Activity</span>
+											<v-icon>mdi-trash-can</v-icon><span>Total Trash </span>
 										</v-btn>
 									</div>
 								</div>
@@ -260,8 +248,10 @@
 
 <script>
 	import VueHtml2pdf from "vue-html2pdf";
+	import LineChart from "./Line.vue";
+	import Pie from "./Pie.vue";
 	export default {
-		components: { VueHtml2pdf },
+		components: { VueHtml2pdf, LineChart, Pie },
 		data: () => ({
 			contribData: [
 				{
@@ -399,22 +389,46 @@
 
 	.stats {
 		padding: 20px 0px;
-		display: flex;
-		justify-content: center;
 	}
 
 	.colored {
 		background-color: #5aa67a;
 	}
-	.totalTrashCon {
-		display: flex;
 
-		justify-content: center;
+	.contentCon {
+		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		flex-wrap: wrap;
 	}
 
-	.totalTrashCon .data {
+	.dataCon {
+		display: flex;
+		margin: 0px 10px;
+		align-items: center;
+		justify-content: center;
+		width: 30%;
+	}
+
+	.dataCon .data {
+		width: 150px;
+		height: 150px;
+		background-color: white;
+		border: 1px solid #5aa67a;
+		border-radius: 20px;
+		margin: 20px;
+	}
+
+	.totalTrashCon {
+		width: 65%;
+		text-align: center;
+		background-color: white;
+		margin: 10px 0px;
+		padding: 10px 0px;
+		border-radius: 20px;
+		border: 1px solid #5aa67a;
+	}
+
+	/* .totalTrashCon .data {
 		width: 200px;
 		height: 150px;
 		margin: 20px;
@@ -422,7 +436,7 @@
 		background-color: white;
 		border: 1px solid #5aa67a;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	}
+	} */
 	.contributionTable {
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -482,7 +496,7 @@
 	}
 
 	.printable {
-		margin-top: 200px;
+		margin-top: 150px;
 	}
 
 	.printable .contributionCon .contributionTable {
@@ -504,7 +518,33 @@
 		text-align: left;
 	}
 
+	.printableData {
+		width: 100px;
+		height: 100px;
+	}
+
+	.printablePie {
+		widows: 50%;
+	}
+
 	@media only screen and (max-width: 1100px) {
+		.dataCon {
+			display: flex;
+			margin: 0px 10px;
+			align-items: center;
+			justify-content: center;
+			width: 30%;
+			flex-wrap: wrap;
+		}
+
+		.dataCon .data {
+			width: 150px;
+			height: 150px;
+			background-color: white;
+			border: 1px solid #5aa67a;
+			border-radius: 20px;
+			margin: 20px;
+		}
 		.reportCon {
 			text-align: left;
 			padding: 40px 20px;
