@@ -32,7 +32,14 @@
 
 					<div class="right">
 						<v-btn rounded small color="error" text>Delete</v-btn>
-						<v-btn rounded small color="#5AA67A" dark>View Report</v-btn>
+						<v-btn
+							rounded
+							small
+							color="#5AA67A"
+							dark
+							@click="$router.push('report/reportid')"
+							>View Report</v-btn
+						>
 					</div>
 				</div>
 			</div>

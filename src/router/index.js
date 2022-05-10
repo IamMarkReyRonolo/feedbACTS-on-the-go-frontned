@@ -9,6 +9,7 @@ import RecordActivity from "../components/AdminPageComponents/MainComponents/Rec
 import TeacherPage from "../components/AdminPageComponents/MainComponents/TeacherPage.vue";
 import HistoryPage from "../components/AdminPageComponents/MainComponents/HistoryPage.vue";
 import TeacherProfile from "../components/AdminPageComponents/MainComponents/TeacherProfile.vue";
+import ReportPage from "../components/AdminPageComponents/MainComponents/ReportPage.vue";
 
 import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCard.vue";
 Vue.use(VueRouter);
@@ -42,6 +43,11 @@ const routes = [
 				name: "history",
 				path: "history",
 				component: HistoryPage,
+			},
+
+			{
+				path: "report/reportid",
+				component: ReportPage,
 			},
 		],
 	},
