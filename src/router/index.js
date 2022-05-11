@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 import LogInPage from "../views/LogInPage.vue";
 import AdminPage from "../views/AdminPage.vue";
+import TeacherUserPage from "../views/TeacherPage.vue";
 
 import Dashboard from "../components/AdminPageComponents/MainComponents/Dashboard.vue";
 import RecordActivity from "../components/AdminPageComponents/MainComponents/RecordActivity.vue";
@@ -12,6 +13,7 @@ import TeacherProfile from "../components/AdminPageComponents/MainComponents/Tea
 import ReportPage from "../components/AdminPageComponents/MainComponents/ReportPage.vue";
 
 import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCard.vue";
+import TeacherDashboard from "../components/TeacherPageComponents/MainComponents/TeacherDashboard.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -60,6 +62,17 @@ const routes = [
 	{
 		path: "/printCard",
 		component: PrintCard,
+	},
+
+	{
+		path: "/teacher",
+		component: TeacherUserPage,
+		children: [
+			{
+				path: "/",
+				component: TeacherDashboard,
+			},
+		],
 	},
 ];
 

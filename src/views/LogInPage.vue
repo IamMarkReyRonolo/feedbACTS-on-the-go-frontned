@@ -143,7 +143,8 @@
 					this.logInLoading = true;
 					setTimeout(() => {
 						if (this.loginAsTeacher) {
-							if (this.username == "admin" && this.password == "admin") {
+							if (this.username == "teacher" && this.password == "teacher") {
+								this.$router.push("/teacher");
 							} else {
 								this.snackbar = true;
 								this.errorMessage = "Incorrect credentials";
