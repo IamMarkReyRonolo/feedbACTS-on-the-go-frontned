@@ -29,18 +29,18 @@
 						<div class="navs">
 							<div class="nav">
 								<v-btn
-									:text="!clickedDashboard"
-									:dark="!clickedDashboard"
-									@click="navigate('recent')"
-									>Recent Activity</v-btn
-								>
-							</div>
-							<div class="nav">
-								<v-btn
 									:text="!clickedTeachers"
 									:dark="!clickedTeachers"
 									@click="navigate('profile')"
 									>Profile</v-btn
+								>
+							</div>
+							<div class="nav">
+								<v-btn
+									:text="!clickedDashboard"
+									:dark="!clickedDashboard"
+									@click="navigate('recent')"
+									>Recent Activity</v-btn
 								>
 							</div>
 							<div class="nav">
