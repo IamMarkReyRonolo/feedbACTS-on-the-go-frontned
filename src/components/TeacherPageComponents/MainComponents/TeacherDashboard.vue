@@ -1,8 +1,9 @@
 <template>
 	<div class="recentActivities">
 		<div class="desktopView">
+			<TeacherProfile />
 			<div class="upper">
-				<h2>Recent Activity</h2>
+				<h2>Activity History</h2>
 				<div class="categories">
 					<div class="cat">
 						<v-btn
@@ -111,23 +112,25 @@
 					</div>
 				</div>
 			</div>
-
-			<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 		</div>
 
 		<div class="mobileView">
 			<DashboardMobile />
 		</div>
+
+		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 	</div>
 </template>
 
 <script>
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
+	import TeacherProfile from "./TeacherProfile.vue";
 	export default {
 		components: {
 			MoreDetails,
 			DashboardMobile,
+			TeacherProfile,
 		},
 		data() {
 			return {
@@ -248,7 +251,7 @@
 	}
 
 	.activity .v-btn .con {
-		padding-left: 15px;
+		padding-left: 40px;
 	}
 
 	/* .con .v-btn {
@@ -257,6 +260,12 @@
 
 	.mobileView {
 		display: none;
+	}
+
+	@media only screen and (max-width: 1100px) {
+		.desktopView {
+			margin: 20px 0px;
+		}
 	}
 
 	@media only screen and (max-width: 700px) {
