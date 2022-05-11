@@ -3,7 +3,7 @@
 		<div class="activityTable">
 			<div class="header">
 				<v-btn class="dateColumn" small text color="#064635">Date</v-btn>
-				<v-btn class="teacherColumn" small text color="#064635">Teacher</v-btn>
+				<v-btn class="teacherColumn" small text color="#064635">Details</v-btn>
 				<v-btn class="categoryColumn" small text color="#064635">Trash</v-btn>
 			</div>
 			<div class="activities">
@@ -20,13 +20,13 @@
 					@click="moreDetails = true"
 				>
 					<div class="dateColumn">03/25/22</div>
-					<div class="teacherColumn">Juan Dela Cruz</div>
+					<div class="teacherColumn">Deposit Plastuc</div>
 					<div class="categoryColumn">Plastic</div>
 				</v-btn>
 			</div>
 			<div class="addBtn">
 				<v-btn color="success" fab large dark @click="recordActivity">
-					<v-icon>mdi-pencil</v-icon>
+					<v-icon>mdi-qrcode</v-icon>
 				</v-btn>
 			</div>
 		</div>

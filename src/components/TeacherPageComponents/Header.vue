@@ -84,15 +84,15 @@
 
 			<div class="middlePart">
 				<div class="left">
-					<h2>ADMINISTRATOR</h2>
+					<h2>Jaun Dela Cruz</h2>
 					<p>Sacub National High School</p>
 				</div>
 
 				<div class="right">
 					<v-btn fab dark color="#064635" @click="clickBuzzer = true">
-						<v-icon dark size="40px"> mdi-gesture-double-tap </v-icon>
+						<v-icon dark size="40px"> mdi-bell </v-icon>
 					</v-btn>
-					<span>Buzzer</span>
+					<span>Notifications</span>
 				</div>
 			</div>
 
