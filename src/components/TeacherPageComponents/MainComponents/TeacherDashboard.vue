@@ -195,7 +195,7 @@
 
 <style scoped>
 	.desktopView {
-		margin: 40px;
+		margin: 20px 40px;
 	}
 	.upper {
 		text-align: left;
