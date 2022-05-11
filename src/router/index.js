@@ -14,6 +14,8 @@ import ReportPage from "../components/AdminPageComponents/MainComponents/ReportP
 
 import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCard.vue";
 import TeacherDashboard from "../components/TeacherPageComponents/MainComponents/TeacherDashboard.vue";
+import TeacherUserProfile from "../components/TeacherPageComponents/MainComponents/TeacherProfile.vue";
+import TeacherNotifications from "../components/TeacherPageComponents/MainComponents/TeacherNotifications.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -71,6 +73,14 @@ const routes = [
 			{
 				path: "/",
 				component: TeacherDashboard,
+			},
+			{
+				path: "profile",
+				component: TeacherUserProfile,
+			},
+			{
+				path: "notifications",
+				component: TeacherNotifications,
 			},
 		],
 	},

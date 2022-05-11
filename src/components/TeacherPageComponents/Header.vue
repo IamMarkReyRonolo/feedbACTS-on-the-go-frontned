@@ -31,24 +31,24 @@
 								<v-btn
 									:text="!clickedDashboard"
 									:dark="!clickedDashboard"
-									@click="navigate('dashboard')"
-									>Dashboard</v-btn
+									@click="navigate('recent')"
+									>Recent Activity</v-btn
 								>
 							</div>
 							<div class="nav">
 								<v-btn
 									:text="!clickedTeachers"
 									:dark="!clickedTeachers"
-									@click="navigate('teachers')"
-									>Teachers</v-btn
+									@click="navigate('profile')"
+									>Profile</v-btn
 								>
 							</div>
 							<div class="nav">
 								<v-btn
 									:text="!clickedHistory"
 									:dark="!clickedHistory"
-									@click="navigate('history')"
-									>Report History</v-btn
+									@click="navigate('notifications')"
+									>Notifications</v-btn
 								>
 							</div>
 						</div>
@@ -220,21 +220,21 @@
 			},
 
 			navigate(routeName) {
-				if (routeName == "dashboard") {
+				if (routeName == "recent") {
 					this.clickedDashboard = true;
 					this.clickedTeachers = false;
 					this.clickedHistory = false;
-					this.$router.push("/admin/");
-				} else if (routeName == "teachers") {
+					this.$router.push("/teacher/");
+				} else if (routeName == "profile") {
 					this.clickedDashboard = false;
 					this.clickedTeachers = true;
 					this.clickedHistory = false;
-					this.$router.push("/admin/teachers");
+					this.$router.push("/teacher/profile");
 				} else {
 					this.clickedDashboard = false;
 					this.clickedTeachers = false;
 					this.clickedHistory = true;
-					this.$router.push("/admin/history");
+					this.$router.push("/teacher/notifications");
 				}
 			},
 			selectCategory(category) {
