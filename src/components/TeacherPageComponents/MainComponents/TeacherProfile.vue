@@ -29,11 +29,13 @@
 
 			<div class="btns">
 				<div class="btn">
-					<v-btn small>View QR Code</v-btn>
+					<v-btn small @click="showQR = true">View QR Code</v-btn>
 				</div>
 				<br />
 				<div class="btn">
-					<v-btn color="#5aa67a" dark small>Print Card</v-btn>
+					<v-btn color="#5aa67a" dark small @click="printCard = true"
+						>Print Card</v-btn
+					>
 				</div>
 			</div>
 		</div>
@@ -72,13 +74,31 @@
 				</div>
 			</div>
 		</div>
+
+		<ShowQR :showQR="showQR" :value="value" @closeQR="closeQR" />
+		<PrintCard :printCard="printCard" @closePrintCard="closePrintCard" />
 	</div>
 </template>
 
 <script>
+	import ShowQR from "../PopUpComponents/ViewQRCode.vue";
+	import PrintCard from "../PopUpComponents/PrintCard.vue";
+
 	export default {
-		components: {},
-		data: () => ({}),
+		components: { ShowQR, PrintCard },
+		data: () => ({
+			showQR: false,
+			printCard: false,
+			value: "",
+		}),
+		methods: {
+			closeQR() {
+				this.showQR = false;
+			},
+			closePrintCard() {
+				this.printCard = false;
+			},
+		},
 	};
 </script>
 

@@ -34,48 +34,40 @@
 				</div>
 
 				<div class="btn">
-					<v-btn color="#5aa67a" dark>View QR Code</v-btn>
+					<v-btn color="#5aa67a" dark @click="showQR = true"
+						>View QR Code</v-btn
+					>
 				</div>
 			</div>
 		</div>
+
+		<ViewQRCode :showQR="showQR" :value="value" @closeQR="closeQR" />
 	</div>
 </template>
 
 <script>
+	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
 	export default {
-		components: {},
+		components: { ViewQRCode },
 
 		data() {
 			return {
-				result: {},
-				error: "",
-				proceed: false,
-				loading: false,
-				isdisabled: false,
-				cantProceed: true,
-				activity: {
-					date: "",
-					time: "",
-					teacher: "",
-					code: "",
-					category: "",
-					feedback: "",
+				showQR: false,
+				teacherDetails: {
+					name: "Juan Dela Cruz",
+					code: "123123123",
 				},
-				categories: ["Plastic", "Paper", "Others"],
-				teachers: [
-					"Juan Dela Cruz",
-					"Juan Dela Craz",
-					"Juan Dela Cruqz",
-					"Juan Dela Crufz",
-					"Juan Dela Crusz",
-					"Mark Rey Ronolo",
-				],
+				value: "asdasd",
 			};
 		},
 
 		methods: {
 			closeDialog() {
 				this.$router.push("/teacher");
+			},
+
+			closeQR() {
+				this.showQR = false;
 			},
 		},
 
@@ -112,6 +104,8 @@
 	.teacherDetails {
 		text-align: left;
 		padding: 10px 40px;
+		width: 400px;
+		margin: auto;
 	}
 
 	.label {
