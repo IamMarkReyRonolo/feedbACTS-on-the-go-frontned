@@ -12,9 +12,14 @@
 					<div class="time">{{ time }}</div>
 					<div class="date">{{ currentDate }}</div>
 				</div>
-				<v-btn text dark @click="clickSettings = true"
-					><span>Settings</span>
-				</v-btn>
+				<div class="btns">
+					<v-btn fab dark color="#064635" @click="clickBuzzer = true" x-small>
+						<v-icon dark size="20px"> mdi-bell </v-icon>
+					</v-btn>
+					<v-btn text dark @click="clickSettings = true"
+						><span>Settings</span>
+					</v-btn>
+				</div>
 			</div>
 			<div class="navCon">
 				<div class="leftCon">
@@ -43,14 +48,14 @@
 									>Dashboard</v-btn
 								>
 							</div>
-							<div class="nav">
+							<!-- <div class="nav">
 								<v-btn
 									:text="!clickedHistory"
 									:dark="!clickedHistory"
 									@click="navigate('notifications')"
 									>Notifications</v-btn
 								>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
