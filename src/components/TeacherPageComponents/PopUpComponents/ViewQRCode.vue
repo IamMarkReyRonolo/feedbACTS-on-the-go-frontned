@@ -42,15 +42,7 @@
 			};
 		},
 
-		methods: {
-			soundBuzzer() {
-				this.loading = true;
-				setTimeout(() => {
-					this.loading = false;
-					this.$emit("closeBuzzer", true);
-				}, 1000);
-			},
-		},
+		methods: {},
 	};
 </script>
 

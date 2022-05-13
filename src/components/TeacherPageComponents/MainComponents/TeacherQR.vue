@@ -8,7 +8,7 @@
 				<h2>Teacher Details</h2>
 
 				<div class="avatarCon">
-					<v-avatar size="120" color="green"
+					<v-avatar size="120" color="#5aa67a"
 						><v-icon size="110" dark>mdi-account</v-icon></v-avatar
 					>
 				</div>
