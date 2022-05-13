@@ -16,6 +16,8 @@ import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCa
 import TeacherDashboard from "../components/TeacherPageComponents/MainComponents/TeacherDashboard.vue";
 import TeacherUserProfile from "../components/TeacherPageComponents/MainComponents/TeacherProfile.vue";
 import TeacherNotifications from "../components/TeacherPageComponents/MainComponents/TeacherNotifications.vue";
+import TeacherQR from "../components/TeacherPageComponents/MainComponents/TeacherQR.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -83,6 +85,11 @@ const routes = [
 				component: TeacherNotifications,
 			},
 		],
+	},
+
+	{
+		path: "/teacher-details",
+		component: TeacherQR,
 	},
 ];
 

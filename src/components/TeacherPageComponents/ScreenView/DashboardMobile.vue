@@ -42,7 +42,7 @@
 		data: () => ({ moreDetails: false }),
 		methods: {
 			recordActivity() {
-				this.$router.push("/recordActivity");
+				this.$router.push("/teacher-details");
 			},
 			closeDetails() {
 				this.moreDetails = false;
