@@ -36,7 +36,7 @@
 			</div>
 			<div class="list">
 				<div class="contributor" v-for="n in 7" :key="n">
-					<v-btn class="hoverable" large to="teachers/profile">
+					<v-btn class="hoverable" large to="/admin/teachers/profile">
 						<div class="name">
 							<v-icon small>mdi-account-circle</v-icon
 							><span style="font-size: 12px">Mark Rey Ronolo</span>

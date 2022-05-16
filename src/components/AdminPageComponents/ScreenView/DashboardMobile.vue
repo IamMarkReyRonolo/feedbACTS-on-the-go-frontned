@@ -52,7 +52,7 @@
 </script>
 
 <style scoped>
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		.activityTable .header,
 		.activity {
 			display: flex;

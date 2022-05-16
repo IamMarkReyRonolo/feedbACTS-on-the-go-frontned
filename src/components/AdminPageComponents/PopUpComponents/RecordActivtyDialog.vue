@@ -55,7 +55,7 @@
 				</div>
 
 				<div class="detail">
-					<v-select
+					<!-- <v-select
 						label="Category"
 						outlined
 						color="#5aa67a"
@@ -63,19 +63,60 @@
 						v-model="activity.category"
 						:items="categories"
 						:rules="[rules.required]"
-					></v-select>
+					></v-select> -->
+
+					<v-combobox
+						label="Category"
+						outlined
+						color="#5aa67a"
+						v-model="activity.category"
+						:items="categories"
+						multiple
+						small-chips
+						:rules="[rules.required]"
+					>
+					</v-combobox>
+				</div>
+
+				<div class="detail">
+					<v-combobox
+						label="Segregated"
+						outlined
+						color="#5aa67a"
+						v-model="activity.segregated"
+						:items="segregated"
+						small-chips
+						:rules="[rules.required]"
+					>
+					</v-combobox>
 				</div>
 
 				<div class="feedback">
 					<div class="detail">
-						<v-textarea
-							label="Feedback"
+						<v-combobox
+							v-model="activity.feedback"
+							:items="feedbacks"
+							:search-input.sync="search"
+							hide-selected
 							outlined
 							color="#5aa67a"
-							dense
-							no-resize
-							v-model="activity.feedback"
-						></v-textarea>
+							label="Feedback"
+							persistent-hint
+							small-chips
+							multiple
+							:rules="[rules.required]"
+						>
+							<template v-slot:no-data>
+								<v-list-item>
+									<v-list-item-content>
+										<v-list-item-title>
+											No results matching "<strong>{{ search }}</strong
+											>". Press <kbd>enter</kbd> to create a new one
+										</v-list-item-title>
+									</v-list-item-content>
+								</v-list-item>
+							</template>
+						</v-combobox>
 					</div>
 
 					<div class="btn">
@@ -121,10 +162,12 @@
 					time: "",
 					teacher: "",
 					code: "",
-					category: "",
-					feedback: "",
+					category: [],
+					segregated: "",
+					feedback: [],
 				},
-				categories: ["Plastic", "Paper", "Others"],
+				categories: ["Paper", "Cellophanes", "Plastic Bottles", "Others"],
+				segregated: ["Yes", "Partly", "No"],
 				teachers: [
 					"Juan Dela Cruz",
 					"Juan Dela Craz",
@@ -134,15 +177,30 @@
 					"Mark Rey Ronolo",
 				],
 				rules: {
-					required: (value) => !!value || "Required.",
+					required: (value) => this.validateRequired(value) || "Required.",
 					min: (v) => v.length >= 8 || "Min 8 characters",
 					match: (v) =>
 						v == this.newPassword || `The password you entered don't match`,
 				},
+				feedbacks: [
+					"Great job, properly segregated.",
+					"Please segregate your trash next time.",
+					"Some of your trash aren't segregated properly",
+				],
+				model: "",
+				search: null,
 			};
 		},
 
 		methods: {
+			validateRequired(value) {
+				const type = typeof value;
+				if (type == "string") {
+					return !!value;
+				} else {
+					return value.length != 0;
+				}
+			},
 			closeDialog() {
 				this.clear();
 				this.$emit("closeDialog");
@@ -152,8 +210,9 @@
 				this.error = "";
 				this.activity.teacher = "";
 				this.activity.code = "";
-				this.activity.category = "";
-				this.activity.feedback = "";
+				this.activity.category = [];
+				this.activity.segregated = "";
+				this.activity.feedback = [];
 				this.isdisabled = false;
 				this.proceed = false;
 			},
@@ -242,7 +301,9 @@
 				if (
 					this.activity.teacher &&
 					this.activity.code &&
-					this.activity.category
+					this.activity.category.length != 0 &&
+					this.activity.segregated &&
+					this.activity.feedback.length != 0
 				) {
 					return true;
 				}
@@ -257,7 +318,8 @@
 	.recordActivtyCon {
 		background-color: white;
 		padding: 40px 10px;
-		height: 580px;
+		height: 650px;
+		overflow-y: auto;
 	}
 	.error {
 		font-weight: bold;
@@ -291,5 +353,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+
+	.v-chip {
+		color: green;
 	}
 </style>
