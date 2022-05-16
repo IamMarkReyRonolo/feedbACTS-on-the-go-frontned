@@ -1,15 +1,31 @@
 <template>
-	<Pie
-		:chart-options="chartOptions"
-		:chart-data="chartData"
-		:chart-id="chartId"
-		:dataset-id-key="datasetIdKey"
-		:plugins="plugins"
-		:css-classes="cssClasses"
-		:styles="styles"
-		:width="width"
-		:height="height"
-	/>
+	<div>
+		<Pie
+			:chart-options="chartOptions"
+			:chart-data="chartData"
+			:chart-id="chartId"
+			:dataset-id-key="datasetIdKey"
+			:plugins="plugins"
+			:css-classes="cssClasses"
+			:styles="styles"
+			:width="width"
+			:height="height"
+		/>
+
+		<div class="trueLabels">
+			<v-btn
+				class="v-btn"
+				dark
+				x-small
+				:color="colors[data]"
+				v-for="(a, index, data) in getData"
+				:key="index"
+				style="margin: 5px"
+			>
+				{{ index }} - {{ a }}%
+			</v-btn>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -42,11 +58,9 @@
 			},
 			width: {
 				type: Number,
-				default: 400,
 			},
 			height: {
 				type: Number,
-				default: 400,
 			},
 			cssClasses: {
 				default: "",
@@ -60,15 +74,18 @@
 				type: Array,
 				default: () => [],
 			},
+			data: {
+				type: Object,
+			},
 		},
 		data() {
 			return {
 				chartData: {
-					labels: ["Plastic", "Paper", "Others"],
+					// labels: Object.keys(this.data).filter((key) => key != "bg_color"),
 					datasets: [
 						{
-							backgroundColor: ["#41B883", "#d6ab33", "#94e0be"],
-							data: [40, 20, 80],
+							backgroundColor: this.data.bg_color,
+							data: Object.values(this.data).filter((key) => key != "bg_color"),
 						},
 					],
 				},
@@ -76,7 +93,27 @@
 					responsive: true,
 					maintainAspectRatio: false,
 				},
+				colors: this.data.bg_color,
 			};
+		},
+
+		created() {
+			console.log("yep");
+		},
+
+		computed: {
+			getData: function () {
+				const labels = Object.keys(this.data).filter(
+					(key) => key != "bg_color"
+				);
+				const values = Object.values(this.data).filter(
+					(key) => key != "bg_color"
+				);
+
+				let newData = {};
+				labels.forEach((key, i) => (newData[key] = values[i]));
+				return newData;
+			},
 		},
 	};
 </script>
