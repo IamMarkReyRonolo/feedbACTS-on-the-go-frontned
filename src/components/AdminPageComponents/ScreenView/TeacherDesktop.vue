@@ -30,59 +30,7 @@
 			</div>
 		</div>
 		<div class="contributionCon" v-if="selectContributionTable">
-			<div class="contributionTable">
-				<div class="contributionHeader">
-					<div class="teacherCon">
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-account</v-icon>Teacher name</v-btn
-						>
-					</div>
-
-					<div class="categories">
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
-						>
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
-						>
-
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-more</v-icon><span>Others</span></v-btn
-						>
-					</div>
-					<div class="totalCon">
-						<v-btn text color="#064635" small>
-							<v-icon>mdi-trash-can</v-icon><span>Total Trash Activity</span>
-						</v-btn>
-					</div>
-				</div>
-
-				<div class="contributionList">
-					<v-btn
-						class="data"
-						text
-						color="#5AA67A"
-						v-for="(data, index) in contribData"
-						:key="index"
-						x-large
-						to="teachers/profile"
-					>
-						<div class="teacherCon">
-							<div><v-icon>mdi-account-circle</v-icon>{{ data.teacher }}</div>
-						</div>
-
-						<div class="categories">
-							<div>{{ data.plastic }}</div>
-							<div>{{ data.paper }}</div>
-
-							<div>{{ data.other }}</div>
-						</div>
-						<div class="totalCon">
-							<div>{{ data.total }}</div>
-						</div>
-					</v-btn>
-				</div>
-			</div>
+			<ContributionTable />
 		</div>
 		<div class="allTeachersCon" v-if="!selectContributionTable">
 			<div class="searchBarCon">
@@ -97,7 +45,7 @@
 			<div class="allTeachers">
 				<div class="teacher" v-for="(teacher, index) in teachers" :key="index">
 					<div class="avatarCon">
-						<v-avatar size="70px" color="#5AA67A"
+						<v-avatar size="70px" color="#007D48"
 							><v-icon dark size="60px"> mdi-account </v-icon></v-avatar
 						>
 					</div>
@@ -108,7 +56,7 @@
 							<v-btn
 								rounded
 								outlined
-								color="#5AA67A"
+								color="#007D48"
 								small
 								to="teachers/profile"
 								>View Teacher</v-btn
@@ -118,6 +66,7 @@
 				</div>
 			</div>
 		</div>
+		<br />
 
 		<AddTeacher :addTeacher="addTeacher" @closeDialog="closeDialog()" />
 	</div>
@@ -125,8 +74,9 @@
 
 <script>
 	import AddTeacher from "../PopUpComponents/AddTeacher.vue";
+	import ContributionTable from "../TeachersPageComponents/ContributionTable.vue";
 	export default {
-		components: { AddTeacher },
+		components: { AddTeacher, ContributionTable },
 		data: () => ({
 			addTeacher: false,
 			selectContributionTable: true,
@@ -349,69 +299,6 @@
 
 	.headerBtns .v-btn {
 		margin-right: 10px;
-	}
-
-	.contributionCon {
-		padding: 0px 0px;
-	}
-
-	.contributionTable {
-		height: 600px;
-		background-color: white;
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 20px;
-		padding: 20px;
-	}
-
-	.contributionHeader,
-	.data {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-	}
-
-	.teacherCon {
-		width: 30%;
-	}
-
-	.categories {
-		width: 50%;
-		display: flex;
-		justify-content: space-evenly;
-	}
-
-	.totalCon {
-		width: 20%;
-		text-align: center;
-	}
-
-	.v-icon {
-		padding: 10px;
-	}
-
-	.contributionList {
-		margin: 10px 0px;
-		max-height: 510px;
-
-		overflow-y: auto;
-	}
-
-	.contributionList .data {
-		padding: 10px 0px;
-		font-weight: bold;
-		padding: 20px 0px;
-		margin: 2px 0px;
-	}
-
-	.contributionList .data .teacherCon div {
-		padding-left: 30px;
-		text-align: left;
-	}
-
-	.contributionList .data .categories div {
-		width: 25%;
-		text-align: center;
 	}
 
 	.allTeachers {

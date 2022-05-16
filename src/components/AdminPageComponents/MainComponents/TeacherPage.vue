@@ -20,7 +20,7 @@
 <style scoped>
 	.teacherPageCon {
 		text-align: left;
-		padding: 20px 40px;
+		padding: 20px 0px;
 	}
 	.mobileView {
 		display: none;
@@ -33,7 +33,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		.desktopView {
 			display: none;
 		}

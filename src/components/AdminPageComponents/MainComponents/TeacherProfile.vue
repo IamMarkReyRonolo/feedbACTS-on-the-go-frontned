@@ -4,14 +4,14 @@
 			<div class="leftCon">
 				<div class="teacherDetails">
 					<div class="profileAvatar">
-						<v-avatar size="120px" color="#5AA67A">
+						<v-avatar size="120px" color="#007D48">
 							<v-icon dark size="100px">mdi-account</v-icon></v-avatar
 						>
 						<div class="functionBtns">
-							<v-btn class="warning" x-small @click="editTeacher = true"
+							<v-btn color="#407355" dark x-small @click="editTeacher = true"
 								>Edit</v-btn
 							>
-							<v-btn class="error" x-small @click="deleteTeacher = true"
+							<v-btn color="#7AA51F" dark x-small @click="deleteTeacher = true"
 								>Delete</v-btn
 							>
 						</div>
@@ -46,7 +46,7 @@
 					</div>
 					<div class="detailsFunctionCon">
 						<div class="btn">
-							<v-btn small color="#5AA67A" dark @click="showQR = true"
+							<v-btn small color="#064635" dark @click="showQR = true"
 								>View QR Code</v-btn
 							>
 						</div>
@@ -58,53 +58,7 @@
 				</div>
 			</div>
 			<div class="rightCon">
-				<div class="historyTable">
-					<h2>Activity History</h2>
-					<div class="table">
-						<div class="tableHeader">
-							<div class="con">
-								<v-btn text color="#5aa67a"
-									><v-icon>mdi-calendar</v-icon><span>Date</span></v-btn
-								>
-							</div>
-							<div class="con">
-								<v-btn text color="#5aa67a"
-									><v-icon>mdi-calendar-clock</v-icon><span>Time</span></v-btn
-								>
-							</div>
-							<div class="con">
-								<v-btn text color="#5aa67a"
-									><v-icon>mdi-card-text</v-icon><span>Details</span></v-btn
-								>
-							</div>
-							<div class="con">
-								<v-btn text color="#5aa67a"
-									><v-icon>mdi-trash-can</v-icon><span>Category</span></v-btn
-								>
-							</div>
-						</div>
-						<div class="tableList">
-							<div class="activity" v-for="n in 20" :key="n">
-								<v-btn text color="#5aa67a" @click="moreDetails = true">
-									<div class="con">
-										<span>03/20/2022</span>
-									</div>
-									<div class="con">
-										<span>10:30 AM</span>
-									</div>
-									<div class="con">
-										<span>Disposed Plastic</span>
-									</div>
-									<div class="con">
-										<v-chip color="#5aa67a" dark small>
-											<v-icon small>mdi-recycle</v-icon>Plastic</v-chip
-										>
-									</div>
-								</v-btn>
-							</div>
-						</div>
-					</div>
-				</div>
+				<HistoryTable />
 			</div>
 		</div>
 
@@ -135,6 +89,7 @@
 	import EditTeacher from "../PopUpComponents/EditTeacher.vue";
 	import DeleteTeacher from "../PopUpComponents/DeleteTeacher.vue";
 	import PrintCard from "../PopUpComponents/PrintCard.vue";
+	import HistoryTable from "../TeachersPageComponents/HistoryTable.vue";
 	export default {
 		components: {
 			DashboardMobile,
@@ -143,6 +98,7 @@
 			EditTeacher,
 			DeleteTeacher,
 			PrintCard,
+			HistoryTable,
 		},
 		data() {
 			return {
@@ -208,27 +164,28 @@
 		display: none;
 	}
 	.teacherPageCon {
-		padding: 20px;
+		padding: 20px 0px;
 	}
 
 	.mainCon {
-		padding: 0px 30px;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: space-between;
+		align-items: flex-start;
 	}
 
 	.leftCon {
-		min-width: 300px;
+		min-width: 24%;
 	}
 
-	.teacherDetails,
-	.historyTable {
+	.rightCon {
+		width: 74%;
+	}
+
+	.teacherDetails {
 		text-align: left;
 		background-color: white;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 20px;
-		margin: 20px 0px;
 	}
 
 	.teacherDetails {
@@ -262,67 +219,46 @@
 	.content {
 		font-size: 18px;
 		font-weight: bold;
-		color: #5aa67a;
+		color: #007d48;
 	}
 
 	.btn {
 		padding: 5px 0px;
 	}
 
-	.rightCon {
-		width: 1000px;
-	}
-
-	.historyTable {
-		height: 650px;
-		margin: 20px;
-		padding: 20px 40px;
-	}
-
-	.historyTable h2 {
-		color: #5aa67a;
-		padding: 10px 0px;
-	}
-
-	.tableHeader {
-		display: flex;
-		justify-content: space-around;
-	}
-
-	.tableList {
-		overflow-y: auto;
-		height: 500px;
-	}
-
-	.con {
-		width: 100%;
-		text-align: left;
-	}
-
-	.activity .v-btn {
-		width: 100%;
-		padding: 0px;
-	}
-
-	.activity .v-btn .con {
-		padding-left: 15px;
-	}
-
-	/* .con .v-btn {
-		width: 100%;
-	} */
-
 	@media only screen and (max-width: 1100px) {
 		.mainCon {
 			padding: 0px 0px;
+			display: block;
 		}
 
-		.leftCon {
-			min-width: 225px;
+		.leftCon,
+		.rightCon {
+			width: 100%;
+			margin: 10px 0px;
+		}
+
+		.teacherDetails,
+		.name {
+			text-align: left;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.teacherDetails {
+			flex-wrap: wrap;
+		}
+		.details .label {
+			font-size: 10px;
+		}
+
+		.details .content {
+			font-size: 14px;
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		.mainCon {
 			display: none;
 		}
