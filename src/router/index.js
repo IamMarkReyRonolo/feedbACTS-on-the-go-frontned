@@ -14,8 +14,6 @@ import ReportPage from "../components/AdminPageComponents/MainComponents/ReportP
 
 import PrintCard from "../components/AdminPageComponents/PopUpComponents/PrintCard.vue";
 import TeacherDashboard from "../components/TeacherPageComponents/MainComponents/TeacherDashboard.vue";
-import TeacherUserProfile from "../components/TeacherPageComponents/MainComponents/TeacherProfile.vue";
-import TeacherQR from "../components/TeacherPageComponents/MainComponents/TeacherQR.vue";
 
 Vue.use(VueRouter);
 
@@ -75,16 +73,7 @@ const routes = [
 				path: "/",
 				component: TeacherDashboard,
 			},
-			{
-				path: "profile",
-				component: TeacherUserProfile,
-			},
 		],
-	},
-
-	{
-		path: "/teacher-details",
-		component: TeacherQR,
 	},
 ];
 

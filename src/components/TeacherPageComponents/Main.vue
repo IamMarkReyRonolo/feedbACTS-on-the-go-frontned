@@ -23,4 +23,10 @@
 			padding: 0px 20px;
 		}
 	}
+
+	@media only screen and (max-width: 765px) {
+		.mainCon {
+			padding: 0px;
+		}
+	}
 </style>

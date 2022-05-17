@@ -1,110 +1,133 @@
 <template>
 	<div class="mobileView">
-		<div class="activityTable">
-			<div class="header">
-				<v-btn class="dateColumn" small text color="#064635">Date</v-btn>
-				<v-btn class="teacherColumn" small text color="#064635">Details</v-btn>
-				<v-btn class="categoryColumn" small text color="#064635">Trash</v-btn>
-			</div>
-			<div class="activities">
-				<v-btn
-					class="activity"
-					v-for="n in 20"
-					:key="n"
-					style="width: 100%; font-size: 10px"
-					unselectable="on"
-					onselectstart="return false;"
-					onmousedown="return false;"
-					large
-					outlined
-					@click="moreDetails = true"
-				>
-					<div class="dateColumn">03/25/22</div>
-					<div class="teacherColumn">Deposit Plastuc</div>
-					<div class="categoryColumn">Plastic</div>
-				</v-btn>
-			</div>
-			<div class="addBtn">
-				<v-btn color="success" fab large dark @click="recordActivity">
-					<v-icon>mdi-qrcode</v-icon>
-				</v-btn>
+		<div class="navs">
+			<div class="categories">
+				<div class="cat">
+					<v-btn
+						rounded
+						:text="!clickedAll"
+						:dark="!clickedAll"
+						@click="selectCategory('all')"
+						small
+					>
+						Activities
+					</v-btn>
+				</div>
+				<div class="cat">
+					<v-btn
+						rounded
+						:text="!clickedPlastic"
+						:dark="!clickedPlastic"
+						@click="selectCategory('plastic')"
+						small
+					>
+						Statistics
+					</v-btn>
+				</div>
+				<div class="cat">
+					<v-btn
+						rounded
+						:text="!clickedPaper"
+						:dark="!clickedPaper"
+						@click="selectCategory('paper')"
+						small
+					>
+						Profile
+					</v-btn>
+				</div>
+
+				<!-- <div class="cat">
+						<v-btn
+							rounded
+							:text="!clickedOthers"
+							:dark="!clickedOthers"
+							@click="selectCategory('others')"
+						>
+							Others
+						</v-btn>
+					</div> -->
 			</div>
 		</div>
 
-		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
+		<div class="view">
+			<Profile v-if="clickedPaper" />
+			<Statistics v-if="clickedPlastic" />
+			<ActivityHistory v-if="clickedAll" />
+		</div>
 	</div>
 </template>
 
 <script>
-	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
+	import ActivityHistory from "./ActivityHistory.vue";
+	import Statistics from "./Statistics.vue";
+	import Profile from "./Profile.vue";
 	export default {
-		components: { MoreDetails },
-		data: () => ({ moreDetails: false }),
+		components: { ActivityHistory, Statistics, Profile },
+		data: () => ({
+			moreDetails: false,
+			clickedAll: true,
+			clickedPlastic: false,
+			clickedPaper: false,
+		}),
 		methods: {
-			recordActivity() {
-				this.$router.push("/teacher-details");
-			},
-			closeDetails() {
-				this.moreDetails = false;
+			selectCategory(category) {
+				if (category == "all") {
+					this.clickedAll = true;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "plastic") {
+					this.clickedAll = false;
+					this.clickedPlastic = true;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "paper") {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = true;
+					this.clickedCellophanes = false;
+					this.clickedOthers = false;
+				} else if (category == "cellophanes") {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = true;
+					this.clickedOthers = false;
+				} else {
+					this.clickedAll = false;
+					this.clickedPlastic = false;
+					this.clickedPaper = false;
+					this.clickedCellophanes = false;
+					this.clickedOthers = true;
+				}
 			},
 		},
 	};
 </script>
 
 <style scoped>
-	@media only screen and (max-width: 700px) {
-		.activityTable .header,
-		.activity {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
-
-		.header {
-			font-weight: bold;
-			color: #064635;
-		}
-
-		.activityTable .header,
-		.activities {
-			padding: 10px 0px;
-			/* border: 1px solid black; */
-		}
-
-		.header .dateColumn,
-		.header .teacherColumn,
-		.header .categoryColumn {
-			font-weight: bolder;
-		}
-
-		.activities {
-			height: 455px;
-			overflow-y: auto;
-		}
-
-		.activityTable .header {
+	@media only screen and (max-width: 765px) {
+		.navs {
+			background-color: #5aa67a;
+			margin-top: -30px;
 			padding: 0px 20px;
+			padding-bottom: 10px;
+		}
+		.categories {
+			display: flex;
+			overflow-x: auto;
+			justify-content: flex-start;
+			padding: 10px 0px;
 		}
 
-		.activity {
-			padding: 10px;
-			border-radius: 10px;
-			background-color: white;
-			margin: 5px 0px;
-			color: #65c18c;
-
-			cursor: pointer;
-			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.11);
+		.cat {
+			margin-right: 2px;
 		}
 
-		.activity .teacherColumn {
-			font-weight: bolder;
-		}
-
-		.addBtn {
-			position: fixed;
-			right: 25px;
-			bottom: 30px;
+		.view {
+			padding: 0px 10px;
 		}
 	}
 </style>

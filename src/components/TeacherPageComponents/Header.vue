@@ -100,67 +100,6 @@
 					<span>Notifications</span>
 				</div>
 			</div>
-
-			<div class="lowerPart">
-				<h2>RECENT ACTIVITIES</h2>
-				<div class="categories">
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedAll"
-							:dark="!clickedAll"
-							@click="selectCategory('all')"
-						>
-							All
-						</v-btn>
-					</div>
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedPlastic"
-							:dark="!clickedPlastic"
-							@click="selectCategory('plastic')"
-						>
-							Plastic
-						</v-btn>
-					</div>
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedPaper"
-							:dark="!clickedPaper"
-							@click="selectCategory('paper')"
-						>
-							Paper
-						</v-btn>
-					</div>
-					<!-- <div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedCellophanes"
-							:dark="!clickedCellophanes"
-							@click="selectCategory('cellophanes')"
-						>
-							Cellophanes
-						</v-btn>
-					</div> -->
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedOthers"
-							:dark="!clickedOthers"
-							@click="selectCategory('others')"
-						>
-							Others
-						</v-btn>
-					</div>
-				</div>
-			</div>
 		</div>
 
 		<BuzzerConfirmation
@@ -195,11 +134,6 @@
 			clickedDashboard: true,
 			clickedTeachers: false,
 			clickedHistory: false,
-			clickedAll: true,
-			clickedPlastic: false,
-			clickedPaper: false,
-			clickedCellophanes: false,
-			clickedOthers: false,
 			timerIsOn: false,
 			time: "",
 		}),
@@ -240,39 +174,6 @@
 					this.clickedTeachers = false;
 					this.clickedHistory = true;
 					this.$router.push("/teacher/notifications");
-				}
-			},
-			selectCategory(category) {
-				if (category == "all") {
-					this.clickedAll = true;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
-					this.clickedCellophanes = false;
-					this.clickedOthers = false;
-				} else if (category == "plastic") {
-					this.clickedAll = false;
-					this.clickedPlastic = true;
-					this.clickedPaper = false;
-					this.clickedCellophanes = false;
-					this.clickedOthers = false;
-				} else if (category == "paper") {
-					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = true;
-					this.clickedCellophanes = false;
-					this.clickedOthers = false;
-				} else if (category == "cellophanes") {
-					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
-					this.clickedCellophanes = true;
-					this.clickedOthers = false;
-				} else {
-					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
-					this.clickedCellophanes = false;
-					this.clickedOthers = true;
 				}
 			},
 		},
@@ -465,12 +366,11 @@
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		/* For mobile phones: */
 		.headerCon {
-			min-height: 220px;
+			min-height: 100px;
 		}
-
 		.desktopView {
 			display: none;
 		}
@@ -536,7 +436,7 @@
 		.categories {
 			display: flex;
 			overflow-x: auto;
-			justify-content: center;
+			justify-content: flex-start;
 			padding: 10px 0px;
 		}
 
