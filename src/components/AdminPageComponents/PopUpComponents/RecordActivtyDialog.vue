@@ -55,16 +55,6 @@
 				</div>
 
 				<div class="detail">
-					<!-- <v-select
-						label="Category"
-						outlined
-						color="#5aa67a"
-						dense
-						v-model="activity.category"
-						:items="categories"
-						:rules="[rules.required]"
-					></v-select> -->
-
 					<v-combobox
 						label="Category"
 						outlined
@@ -73,7 +63,7 @@
 						:items="categories"
 						multiple
 						small-chips
-						:rules="[rules.required]"
+						:rules="[rules.required, rules.categoryMapped]"
 					>
 					</v-combobox>
 				</div>
@@ -86,7 +76,7 @@
 						v-model="activity.segregated"
 						:items="segregated"
 						small-chips
-						:rules="[rules.required]"
+						:rules="[rules.required, rules.segregatedMapped]"
 					>
 					</v-combobox>
 				</div>
@@ -125,10 +115,10 @@
 						>
 						<v-btn
 							large
-							:dark="allowed"
 							color="#5aa67a"
 							:loading="loading"
 							@click="addActivity"
+							:dark="allowed"
 							:disabled="!allowed"
 							>Add Activity</v-btn
 						>
@@ -181,6 +171,9 @@
 					min: (v) => v.length >= 8 || "Min 8 characters",
 					match: (v) =>
 						v == this.newPassword || `The password you entered don't match`,
+					categoryMapped: (v) => this.checkCategoryValue(v) || "Invalid input",
+					segregatedMapped: (v) =>
+						this.segregated.includes(v) || "Invalid input",
 				},
 				feedbacks: [
 					"Great job, properly segregated.",
@@ -193,12 +186,25 @@
 		},
 
 		methods: {
+			checkCategoryValue(categories) {
+				let isvalid = true;
+				categories.forEach((category) => {
+					if (!this.categories.includes(category)) {
+						isvalid = false;
+					}
+				});
+				return isvalid;
+			},
 			validateRequired(value) {
-				const type = typeof value;
-				if (type == "string") {
-					return !!value;
+				if (value) {
+					const type = typeof value;
+					if (type == "string") {
+						return !!value;
+					} else {
+						return value.length != 0;
+					}
 				} else {
-					return value.length != 0;
+					return !!value;
 				}
 			},
 			closeDialog() {
