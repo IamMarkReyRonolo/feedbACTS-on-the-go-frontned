@@ -233,7 +233,9 @@
 					this.activity.teacher &&
 					this.activity.category.length != 0 &&
 					this.activity.segregated &&
-					this.activity.feedback.length != 0
+					this.activity.feedback.length != 0 &&
+					this.segregated.includes(this.activity.segregated) &&
+					this.checkCategoryValue(this.activity.category)
 				) {
 					return true;
 				}
