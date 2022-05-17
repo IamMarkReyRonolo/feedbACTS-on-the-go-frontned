@@ -313,7 +313,7 @@
 	.recordActivtyCon {
 		background-color: white;
 		padding: 40px 10px;
-		height: 650px;
+		height: 100vh;
 		overflow-y: auto;
 	}
 	.error {
