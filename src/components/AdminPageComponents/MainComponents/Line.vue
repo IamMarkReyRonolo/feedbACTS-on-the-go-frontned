@@ -1,17 +1,15 @@
 <template>
-	<div class="lineChart">
-		<LineChartGenerator
-			:chart-options="chartOptions"
-			:chart-data="chartData"
-			:chart-id="chartId"
-			:dataset-id-key="datasetIdKey"
-			:plugins="plugins"
-			:css-classes="cssClasses"
-			:styles="styles"
-			:width="width"
-			:height="height"
-		/>
-	</div>
+	<LineChartGenerator
+		:chart-options="chartOptions"
+		:chart-data="chartData"
+		:chart-id="chartId"
+		:dataset-id-key="datasetIdKey"
+		:plugins="plugins"
+		:css-classes="cssClasses"
+		:styles="styles"
+		:width="width"
+		:height="height"
+	/>
 </template>
 
 <script>
@@ -54,11 +52,9 @@
 			},
 			width: {
 				type: Number,
-				default: 400,
 			},
 			height: {
 				type: Number,
-				default: 400,
 			},
 			cssClasses: {
 				default: "",
@@ -84,12 +80,17 @@
 						"May",
 						"June",
 						"July",
+						"January",
+						"February",
+						"March",
+						"April",
+						"May",
 					],
 					datasets: [
 						{
-							label: "Total Trash Activity",
+							label: "Teachers' Contribution Consistency",
 							backgroundColor: "#5aa67a",
-							data: [40, 39, 10, 40, 39, 80, 40],
+							data: [40, 39, 10, 100, 39, 80, 40, 40, 39, 10, 40, 39],
 						},
 					],
 				},
@@ -102,11 +103,4 @@
 	};
 </script>
 
-<style scoped>
-	.lineChart {
-		background-color: white;
-		padding: 20px;
-		border-radius: 20px;
-		border: 1px solid #5aa67a;
-	}
-</style>
+<style scoped></style>

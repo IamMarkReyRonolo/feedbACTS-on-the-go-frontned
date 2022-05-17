@@ -18,9 +18,9 @@
 					</div>
 				</div>
 				<div class="sec">
-					<h3>Trash Activity</h3>
+					<h3>Teachers' Contribution Consistency</h3>
 					<div class="stats">
-						<LineChart />
+						<LineChart :width="300" :height="300" />
 					</div>
 				</div>
 
@@ -30,14 +30,14 @@
 						<div class="dataCon">
 							<div class="con1">
 								<div class="data">
-									<div class="categoryTitle">Plastic</div>
+									<div class="categoryTitle">Paper</div>
 									<div class="activityCount">
 										<div class="count">5</div>
 										<span>Activities</span>
 									</div>
 								</div>
 								<div class="data">
-									<div class="categoryTitle">Paper</div>
+									<div class="categoryTitle">Cellophanes</div>
 									<div class="activityCount">
 										<div class="count">10</div>
 										<span>Activities</span>
@@ -47,14 +47,14 @@
 
 							<div class="con1">
 								<div class="data">
-									<div class="categoryTitle">Others</div>
+									<div class="categoryTitle">Plastic Bottles</div>
 									<div class="activityCount">
 										<div class="count">2</div>
 										<span>Activities</span>
 									</div>
 								</div>
 								<div class="data">
-									<div class="categoryTitle">Total Trash</div>
+									<div class="categoryTitle">Others</div>
 									<div class="activityCount">
 										<div class="count">17</div>
 										<span>Activities</span>
@@ -63,76 +63,62 @@
 							</div>
 						</div>
 						<div class="totalTrashCon">
-							<Pie />
+							<Pie :width="300" :height="300" :data="dataPerType" />
+						</div>
+					</div>
+				</div>
+
+				<div class="sec">
+					<div class="contentCon">
+						<div class="totalTrashCon">
+							<Pie :width="300" :height="300" :data="dataPerStatus" />
+						</div>
+						<div class="dataCon">
+							<div class="con1">
+								<div class="data">
+									<div class="categoryTitle">Segregated</div>
+									<div class="activityCount">
+										<div class="count">5</div>
+										<span>Activities</span>
+									</div>
+								</div>
+								<div class="data">
+									<div class="categoryTitle">Not Segregated</div>
+									<div class="activityCount">
+										<div class="count">10</div>
+										<span>Activities</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="con1">
+								<div class="data">
+									<div class="categoryTitle" style="font-size: 14px">
+										Partly Segregated
+									</div>
+									<div class="activityCount">
+										<div class="count">2</div>
+										<span>Activities</span>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="sec">
 					<h3>Contribution Table</h3>
-					<div class="contributionCon">
-						<div class="contributionTable">
-							<div class="contributionHeader">
-								<div class="teacherCon">
-									<v-btn text color="#064635" small>
-										<v-icon>mdi-account</v-icon>Teacher name</v-btn
-									>
-								</div>
-
-								<div class="categories">
-									<v-btn text color="#064635" small>
-										<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
-									>
-									<v-btn text color="#064635" small>
-										<v-icon>mdi-paper-roll</v-icon> <span>Paper</span></v-btn
-									>
-
-									<v-btn text color="#064635" small>
-										<v-icon>mdi-more</v-icon><span>Others</span></v-btn
-									>
-								</div>
-								<div class="totalCon">
-									<v-btn text color="#064635" small>
-										<v-icon>mdi-trash-can</v-icon><span>Total Trash</span>
-									</v-btn>
-								</div>
-							</div>
-
-							<div class="contributionList">
-								<v-btn
-									class="data"
-									text
-									color="#5AA67A"
-									v-for="(data, index) in contribData"
-									:key="index"
-									x-large
-									to="teachers/profile"
-								>
-									<div class="teacherCon">
-										<div>
-											<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
-										</div>
-									</div>
-
-									<div class="categories">
-										<div>{{ data.plastic }}</div>
-										<div>{{ data.paper }}</div>
-
-										<div>{{ data.other }}</div>
-									</div>
-									<div class="totalCon">
-										<div>{{ data.total }}</div>
-									</div>
-								</v-btn>
-							</div>
-						</div>
-					</div>
+					<ContributionTable />
 				</div>
 			</div>
-			<v-btn @click="generateReport" color="#5aa67a" dark> Print Report</v-btn>
+			<v-btn @click="generateReport" color="#5aa67a" dark :loading="loading">
+				Print Report</v-btn
+			>
+
 			<br />
 			<br />
 			<br />
+
 			<VueHtml2pdf
 				:show-layout="false"
 				:float-layout="true"
@@ -141,8 +127,12 @@
 				:pdf-quality="2"
 				:manual-pagination="false"
 				pdf-format="legal"
-				pdf-orientation="portrait"
+				pdf-orientation="landscape"
 				ref="html2Pdf"
+				pdf-content-width="80%"
+				:paginate-elements-by-height="500"
+				@progress="loading = true"
+				@beforeDownload="loading = false"
 			>
 				<section slot="pdf-content">
 					<div class="reportCon">
@@ -162,32 +152,27 @@
 							</div>
 						</div>
 						<div class="sec">
-							<h3>Trash Activity</h3>
+							<h3>Teachers' Contribution Consistency</h3>
 							<div class="stats">
-								<LineChart />
+								<LineChart :width="300" :height="300" />
 							</div>
 						</div>
-
+						<br /><br /><br /><br />
+						<br /><br /><br /><br />
 						<div class="sec">
 							<h3>Total Trash Collected</h3>
 							<div class="contentCon">
 								<div class="dataCon">
 									<div class="con1">
-										<div
-											class="data printableData"
-											style="width: 100px; height: 100px; margin: 10px"
-										>
-											<div class="categoryTitle">Plastic</div>
+										<div class="data">
+											<div class="categoryTitle">Paper</div>
 											<div class="activityCount">
 												<div class="count">5</div>
 												<span>Activities</span>
 											</div>
 										</div>
-										<div
-											class="data printableData"
-											style="width: 100px; height: 100px; margin: 10px"
-										>
-											<div class="categoryTitle">Paper</div>
+										<div class="data">
+											<div class="categoryTitle">Cellophanes</div>
 											<div class="activityCount">
 												<div class="count">10</div>
 												<span>Activities</span>
@@ -196,21 +181,15 @@
 									</div>
 
 									<div class="con1">
-										<div
-											class="data printableData"
-											style="width: 100px; height: 100px; margin: 10px"
-										>
-											<div class="categoryTitle">Others</div>
+										<div class="data">
+											<div class="categoryTitle">Plastic Bottles</div>
 											<div class="activityCount">
 												<div class="count">2</div>
 												<span>Activities</span>
 											</div>
 										</div>
-										<div
-											class="data printableData"
-											style="width: 100px; height: 100px; margin: 10px"
-										>
-											<div class="categoryTitle">Total Trash</div>
+										<div class="data">
+											<div class="categoryTitle">Others</div>
 											<div class="activityCount">
 												<div class="count">17</div>
 												<span>Activities</span>
@@ -218,77 +197,54 @@
 										</div>
 									</div>
 								</div>
-								<div class="totalTrashCon printablePie">
-									<Pie />
+								<div class="totalTrashCon">
+									<Pie :width="300" :height="300" :data="dataPerType" />
 								</div>
 							</div>
 						</div>
-						<br /><br />
-						<div class="sec printable">
+
+						<div class="sec" style="margin-top: -20px">
+							<div class="contentCon">
+								<div class="totalTrashCon">
+									<Pie :width="300" :height="300" :data="dataPerStatus" />
+								</div>
+								<div class="dataCon">
+									<div class="con1">
+										<div class="data">
+											<div class="categoryTitle">Segregated</div>
+											<div class="activityCount">
+												<div class="count">5</div>
+												<span>Activities</span>
+											</div>
+										</div>
+										<div class="data">
+											<div class="categoryTitle">Not Segregated</div>
+											<div class="activityCount">
+												<div class="count">10</div>
+												<span>Activities</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="con1">
+										<div class="data">
+											<div class="categoryTitle" style="font-size: 14px">
+												Partly Segregated
+											</div>
+											<div class="activityCount">
+												<div class="count">2</div>
+												<span>Activities</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br /><br /><br />
+						<div class="sec">
 							<h3>Contribution Table</h3>
-							<br />
-							<div class="contributionCon">
-								<div class="contributionTable">
-									<div class="contributionHeader">
-										<div class="teacherCon">
-											<v-btn text color="#064635" small>
-												<v-icon>mdi-account</v-icon>Teacher name</v-btn
-											>
-										</div>
-
-										<div class="categories">
-											<v-btn text color="#064635" small>
-												<v-icon>mdi-recycle</v-icon> <span>Plastic</span></v-btn
-											>
-											<v-btn text color="#064635" small>
-												<v-icon>mdi-paper-roll</v-icon>
-												<span>Paper</span></v-btn
-											>
-
-											<v-btn text color="#064635" small>
-												<v-icon>mdi-more</v-icon><span>Others</span></v-btn
-											>
-										</div>
-										<div class="totalCon">
-											<v-btn text color="#064635" small>
-												<v-icon>mdi-trash-can</v-icon><span>Total Trash </span>
-											</v-btn>
-										</div>
-									</div>
-
-									<div class="contributionList">
-										<v-btn
-											class="data"
-											text
-											color="#5AA67A"
-											v-for="(data, index) in contribData"
-											:key="index"
-											x-large
-											to="teachers/profile"
-										>
-											<div class="teacherCon">
-												<div>
-													<v-icon>mdi-account-circle</v-icon>{{ data.teacher }}
-												</div>
-											</div>
-
-											<div class="categories">
-												<div>{{ data.plastic }}</div>
-												<div>{{ data.paper }}</div>
-
-												<div>{{ data.other }}</div>
-											</div>
-											<div class="totalCon">
-												<div>{{ data.total }}</div>
-											</div>
-										</v-btn>
-									</div>
-								</div>
-							</div>
+							<ContributionTable />
 						</div>
-
-						<br />
-						<br />
 					</div>
 				</section>
 			</VueHtml2pdf>
@@ -303,8 +259,16 @@
 	import LineChart from "./Line.vue";
 	import Pie from "./Pie.vue";
 	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
+
+	import ContributionTable from "../ReportPageComponents/ContributionTable.vue";
 	export default {
-		components: { VueHtml2pdf, LineChart, Pie, DashboardMobile },
+		components: {
+			VueHtml2pdf,
+			LineChart,
+			Pie,
+			DashboardMobile,
+			ContributionTable,
+		},
 		data: () => ({
 			contribData: [
 				{
@@ -416,6 +380,20 @@
 				423, 446, 675, 510, 590, 610, 760, 423, 446, 675, 510, 590, 610, 760,
 			],
 			label: [1, 2, 3, 4, 5],
+			dataPerType: {
+				paper: 20,
+				plastic_bottles: 40,
+				cellophanes: 30,
+				others: 10,
+				bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
+			},
+			dataPerStatus: {
+				segregated: 20,
+				partially_segregated: 40,
+				not_segregated: 40,
+				bg_color: ["#41B883", "#d6ab33", "#94e0be"],
+			},
+			loading: false,
 		}),
 		methods: {
 			generateReport() {
@@ -444,7 +422,11 @@
 	}
 
 	.stats {
-		padding: 20px 0px;
+		background-color: white;
+		padding: 20px;
+		margin: 10px 0px;
+		border-radius: 20px;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	}
 
 	.colored {
@@ -652,7 +634,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		.desktopView {
 			display: none;
 		}

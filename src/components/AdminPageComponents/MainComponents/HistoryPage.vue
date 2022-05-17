@@ -15,10 +15,10 @@
 			</div>
 			<div class="reportHistoryTable">
 				<div class="header">
-					<v-btn text color="#5AA67A" small
+					<v-btn text color="#007D48" small
 						><v-icon>mdi-calendar</v-icon><span>Date Created</span></v-btn
 					>
-					<v-btn text color="#5AA67A" small
+					<v-btn text color="#007D48" small
 						><v-icon>mdi-android-messages</v-icon
 						><span>Report Title</span></v-btn
 					>
@@ -35,7 +35,7 @@
 						<v-btn
 							rounded
 							small
-							color="#5AA67A"
+							color="#007D48"
 							dark
 							@click="$router.push('report/reportid')"
 							>View Report</v-btn
@@ -73,7 +73,7 @@
 
 	.reportHistoryTable {
 		margin: 20px 0px;
-		padding: 10px 50px;
+		padding: 10px 0px;
 	}
 
 	/* .header,
@@ -111,7 +111,7 @@
 
 	.left div {
 		width: 200px;
-		color: #5aa67a;
+		color: #007d48;
 		font-weight: 500;
 		padding: 20px 0px;
 	}
@@ -144,7 +144,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 765px) {
 		.desktopView {
 			display: none;
 		}
