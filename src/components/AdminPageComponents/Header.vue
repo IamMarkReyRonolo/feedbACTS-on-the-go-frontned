@@ -93,7 +93,7 @@
 			</div>
 
 			<div class="lowerPart">
-				<h2>RECENT ACTIVITIES</h2>
+				<h2>Activity History</h2>
 				<div class="categories">
 					<div class="cat">
 						<v-btn
@@ -110,22 +110,22 @@
 						<v-btn
 							rounded
 							small
-							:text="!clickedPlastic"
-							:dark="!clickedPlastic"
-							@click="selectCategory('plastic')"
+							:text="!clickedSegregated"
+							:dark="!clickedSegregated"
+							@click="selectCategory('segregated')"
 						>
-							Plastic
+							Segregated
 						</v-btn>
 					</div>
 					<div class="cat">
 						<v-btn
 							rounded
 							small
-							:text="!clickedPaper"
-							:dark="!clickedPaper"
-							@click="selectCategory('paper')"
+							:text="!clickedPartlySeg"
+							:dark="!clickedPartlySeg"
+							@click="selectCategory('partly')"
 						>
-							Paper
+							Partly Segregated
 						</v-btn>
 					</div>
 					<!-- <div class="cat">
@@ -143,11 +143,11 @@
 						<v-btn
 							rounded
 							small
-							:text="!clickedOthers"
-							:dark="!clickedOthers"
-							@click="selectCategory('others')"
+							:text="!clickedNotSeg"
+							:dark="!clickedNotSeg"
+							@click="selectCategory('notSegregated')"
 						>
-							Others
+							Not Segregated
 						</v-btn>
 					</div>
 				</div>
@@ -187,10 +187,10 @@
 			clickedTeachers: false,
 			clickedHistory: false,
 			clickedAll: true,
-			clickedPlastic: false,
-			clickedPaper: false,
+			clickedSegregated: false,
+			clickedPartlySeg: false,
 			clickedCellophanes: false,
-			clickedOthers: false,
+			clickedNotSeg: false,
 			timerIsOn: false,
 			time: "",
 		}),
@@ -236,34 +236,34 @@
 			selectCategory(category) {
 				if (category == "all") {
 					this.clickedAll = true;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
+					this.clickedSegregated = false;
+					this.clickedPartlySeg = false;
 					this.clickedCellophanes = false;
-					this.clickedOthers = false;
-				} else if (category == "plastic") {
+					this.clickedNotSeg = false;
+				} else if (category == "segregated") {
 					this.clickedAll = false;
-					this.clickedPlastic = true;
-					this.clickedPaper = false;
+					this.clickedSegregated = true;
+					this.clickedPartlySeg = false;
 					this.clickedCellophanes = false;
-					this.clickedOthers = false;
-				} else if (category == "paper") {
+					this.clickedNotSeg = false;
+				} else if (category == "partly") {
 					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = true;
+					this.clickedSegregated = false;
+					this.clickedPartlySeg = true;
 					this.clickedCellophanes = false;
-					this.clickedOthers = false;
+					this.clickedNotSeg = false;
 				} else if (category == "cellophanes") {
 					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
+					this.clickedSegregated = false;
+					this.clickedPartlySeg = false;
 					this.clickedCellophanes = true;
-					this.clickedOthers = false;
+					this.clickedNotSeg = false;
 				} else {
 					this.clickedAll = false;
-					this.clickedPlastic = false;
-					this.clickedPaper = false;
+					this.clickedSegregated = false;
+					this.clickedPartlySeg = false;
 					this.clickedCellophanes = false;
-					this.clickedOthers = true;
+					this.clickedNotSeg = true;
 				}
 			},
 		},
@@ -517,7 +517,7 @@
 		.categories {
 			display: flex;
 			overflow-x: auto;
-			justify-content: center;
+			justify-content: flex-start;
 			padding: 10px 0px;
 		}
 
