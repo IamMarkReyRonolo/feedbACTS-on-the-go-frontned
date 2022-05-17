@@ -40,10 +40,15 @@
 					solo
 					prepend-inner-icon="mdi-account-search"
 					color="success"
+					v-model="searchTeacher"
 				></v-text-field>
 			</div>
 			<div class="allTeachers">
-				<div class="teacher" v-for="(teacher, index) in teachers" :key="index">
+				<div
+					class="teacher"
+					v-for="(teacher, index) in renderTeachers"
+					:key="index"
+				>
 					<div class="avatarCon">
 						<v-avatar size="70px" color="#007D48"
 							><v-icon dark size="60px"> mdi-account </v-icon></v-avatar
@@ -272,11 +277,22 @@
 					total: 5,
 				},
 			],
+			searchTeacher: "",
 		}),
 
 		methods: {
 			closeDialog() {
 				this.addTeacher = false;
+			},
+		},
+
+		computed: {
+			renderTeachers: function () {
+				const showTeachers = this.teachers.filter((teacher) => {
+					return teacher.teacher.includes(this.searchTeacher);
+				});
+
+				return showTeachers;
 			},
 		},
 	};
