@@ -28,7 +28,10 @@
 					</div>
 					<div class="mainNavs">
 						<div class="appTitle">
-							<h1>Feedbacking and Concurrent Tracking System</h1>
+							<h1>FeedbACTS on the GO</h1>
+							<div class="subtitle">
+								Feedbacks and Concurrent Tracking System on Garbage Orderliness.
+							</div>
 						</div>
 						{{ getName }}
 						<div class="navs">
@@ -78,7 +81,7 @@
 					<div class="mLogoCon">
 						<img src="../../assets/recycling.png" alt="" />
 					</div>
-					<p>Feedbacking and Concurrent Tracking System</p>
+					<p>FeedbACTS on the GO</p>
 				</div>
 				<div class="upperRight">
 					<v-btn text small dark fab @click="clickSettings = true">

@@ -92,7 +92,11 @@
 
 		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
-		<PrintCard :printCard="printCard" @closePrintCard="closePrintCard" />
+		<PrintCard
+			:printCard="printCard"
+			@closePrintCard="closePrintCard"
+			:teacherDetails="teacher"
+		/>
 	</div>
 </template>
 

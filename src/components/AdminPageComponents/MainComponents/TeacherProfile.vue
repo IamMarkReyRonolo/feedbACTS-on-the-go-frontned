@@ -78,7 +78,11 @@
 			:teacher="teacher"
 		/>
 
-		<PrintCard :printCard="printCard" @closePrintCard="closePrintCard" />
+		<PrintCard
+			:printCard="printCard"
+			:teacherDetails="teacher"
+			@closePrintCard="closePrintCard"
+		/>
 	</div>
 </template>
 

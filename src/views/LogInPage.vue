@@ -76,10 +76,11 @@
 					<v-row no-gutters class="rowCon">
 						<v-col cols="12" md="6">
 							<div class="details">
-								<h1 class="titleHeader">
-									Feedbacking and Concurrent Tracking System
-								</h1>
-								<div class="subTitle">Disposal of Solid Waste Materials</div>
+								<h1 class="titleHeader">FeedbACTS on the GO</h1>
+								<div class="subTitle">
+									Feedbacks and Concurrent Tracking System on Garbage
+									Orderliness.
+								</div>
 								<div class="sub">
 									An initiative of Sacub National High School
 								</div>

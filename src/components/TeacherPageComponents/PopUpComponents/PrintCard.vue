@@ -21,10 +21,10 @@
 							<img src="../../../assets/Ellipse2.png" alt="" />
 						</div>
 						<div class="titleContent">
-							<div class="cardTitle">FeedaCTS CARD</div>
+							<div class="cardTitle">FeedbACTS Card</div>
 							<div class="cardSub">
-								Feedbacking and Concurrent Tracking System <br />Solid Waste
-								Disposal
+								Feedbacks and Concurrent Tracking System <br />
+								on Garbage Orderliness.
 							</div>
 						</div>
 					</div>
@@ -41,11 +41,14 @@
 							<div class="detailsCon">
 								<div class="detail">
 									<div class="label">Name</div>
-									<div class="data">Mark Rey Ronolo</div>
+									<div class="data">
+										{{ teacherDetails.first_name }}
+										{{ teacherDetails.last_name }}
+									</div>
 								</div>
 								<div class="detail">
 									<div class="label">Gender</div>
-									<div class="data">Male</div>
+									<div class="data">{{ teacherDetails.gender }}</div>
 								</div>
 
 								<div class="detail">
@@ -57,7 +60,10 @@
 						<div class="lower">
 							<h4>Scan Me</h4>
 							<div class="qrcode">
-								<QrcodeVue :value="value" :size="size" level="H" />
+								<QrcodeVue :value="getQRValue" :size="size" level="H" />
+							</div>
+							<div class="code" style="color: #5aa67a; font-weight: bold">
+								{{ teacherDetails.code }}
 							</div>
 						</div>
 					</div>
@@ -88,10 +94,10 @@
 									<img src="../../../assets/Ellipse2.png" alt="" />
 								</div>
 								<div class="titleContent">
-									<div class="cardTitle">FeedaCTS CARD</div>
+									<div class="cardTitle">FeedbACTS Card</div>
 									<div class="cardSub">
-										Feedbacking and Concurrent Tracking System <br />Solid Waste
-										Disposal
+										Feedbacks and Concurrent Tracking System <br />
+										on Garbage Orderliness.
 									</div>
 								</div>
 							</div>
@@ -108,11 +114,14 @@
 									<div class="detailsCon">
 										<div class="detail">
 											<div class="label">Name</div>
-											<div class="data">Mark Rey Ronolo</div>
+											<div class="data">
+												{{ teacherDetails.first_name }}
+												{{ teacherDetails.last_name }}
+											</div>
 										</div>
 										<div class="detail">
 											<div class="label">Gender</div>
-											<div class="data">Male</div>
+											<div class="data">{{ teacherDetails.gender }}</div>
 										</div>
 
 										<div class="detail">
@@ -124,7 +133,10 @@
 								<div class="lower">
 									<h4>Scan Me</h4>
 									<div class="qrcode">
-										<QrcodeVue :value="value" :size="size" level="H" />
+										<QrcodeVue :value="getQRValue" :size="size" level="H" />
+									</div>
+									<div class="code" style="color: #5aa67a; font-weight: bold">
+										{{ teacherDetails.code }}
 									</div>
 								</div>
 							</div>
@@ -147,16 +159,29 @@
 		},
 		props: {
 			printCard: Boolean,
+			teacherDetails: Object,
 		},
 		data() {
 			return {
-				value: "",
 				size: 150,
 			};
 		},
 		methods: {
 			generateReport() {
 				this.$refs.html2Pdf.generatePdf();
+			},
+		},
+
+		computed: {
+			getQRValue: function () {
+				const qrValue = {
+					teacher:
+						this.teacherDetails.first_name +
+						" " +
+						this.teacherDetails.last_name,
+					code: this.teacherDetails.code,
+				};
+				return JSON.stringify(qrValue);
 			},
 		},
 	};
@@ -173,7 +198,7 @@
 
 	.card {
 		width: 300px;
-		height: 400px;
+		height: 450px;
 		margin: 50px auto;
 		border: 1px solid #5aa67a;
 		border-radius: 10px;
