@@ -35,44 +35,47 @@
 			</div>
 
 			<div class="tableContents">
+				{{ sortedContributions() }}
 				<v-btn
 					large
 					style="width: 100%; padding: 0px"
-					v-for="n in 20"
-					:key="n"
-					to="/admin/teachers/profile"
+					v-for="data in contributions"
+					:key="data.id"
+					:to="'/admin/teachers/profile/' + data.id"
 					class="hoverableData"
 				>
 					<div class="heading" style="width: 20%">
 						<div class="contentdetails">
 							<v-icon small style="padding-right: 5px" color="#007D48"
 								>mdi-account-circle</v-icon
-							>Mark Rey Ronolo
+							>{{ data.teacher }}
 						</div>
 					</div>
 					<div class="heading" style="width: 40%">
 						<div class="contentdetails category">
-							<v-chip color="#007D48" dark small>10</v-chip>
+							<v-chip color="#007D48" dark small>{{ data.paper }}</v-chip>
 						</div>
 						<div class="contentdetails category">
-							<v-chip color="#007D48" dark small>10</v-chip>
+							<v-chip color="#007D48" dark small>{{ data.cellophanes }}</v-chip>
 						</div>
 						<div class="contentdetails category">
-							<v-chip color="#007D48" dark small>10</v-chip>
+							<v-chip color="#007D48" dark small>{{
+								data.plastic_bottles
+							}}</v-chip>
 						</div>
 						<div class="contentdetails category">
-							<v-chip color="#007D48" dark small>10</v-chip>
+							<v-chip color="#007D48" dark small>{{ data.others }}</v-chip>
 						</div>
 					</div>
 					<div class="heading" style="width: 40%">
 						<div class="contentdetails status">
-							<v-chip color="#7AA51F" dark small>10</v-chip>
+							<v-chip color="#7AA51F" dark small>{{ data.segregated }}</v-chip>
 						</div>
 						<div class="contentdetails status">
-							<v-chip color="#7AA51F" dark small>10</v-chip>
+							<v-chip color="#7AA51F" dark small>{{ data.partly_seg }}</v-chip>
 						</div>
 						<div class="contentdetails status">
-							<v-chip color="#7AA51F" dark small>10</v-chip>
+							<v-chip color="#7AA51F" dark small>{{ data.not_seg }}</v-chip>
 						</div>
 					</div>
 				</v-btn>
@@ -84,7 +87,27 @@
 <script>
 	export default {
 		components: {},
-		data: () => ({}),
+		props: {
+			contribData: Array,
+		},
+		data: () => ({
+			contributions: [],
+		}),
+
+		methods: {
+			sortedContributions() {
+				const data = [...this.contribData];
+				data.sort((a, b) =>
+					a.total_activities > b.total_activities
+						? -1
+						: b.total_activities > a.total_activities
+						? 1
+						: 0
+				);
+
+				this.contributions = [...data];
+			},
+		},
 	};
 </script>
 

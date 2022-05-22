@@ -89,6 +89,7 @@
 </template>
 
 <script>
+	import teacherAPI from "../../../apis/teacherAPI.js";
 	export default {
 		props: {
 			addTeacher: Boolean,
@@ -113,13 +114,38 @@
 		},
 
 		methods: {
-			addNewTeacher() {
+			async addNewTeacher() {
 				this.loading = true;
-				setTimeout(() => {
+				try {
+					this.teacher.code = this.generateCode();
+					const teacher = await teacherAPI.prototype.createTeacher(
+						this.teacher
+					);
 					this.loading = false;
 					this.clearFields();
-					this.$emit("closeDialog");
-				}, 1000);
+					this.$emit("closeDialog", teacher.data.user);
+				} catch (error) {
+					this.loading = false;
+					this.clearFields();
+					if (error.message == "Network Error") {
+						this.$emit("closeDialog", "Network Error");
+					} else {
+						this.$emit("closeDialog", "Failed. Username already exists");
+					}
+				}
+			},
+
+			generateCode() {
+				let result = "";
+				let characters =
+					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+				let charactersLength = characters.length;
+				for (var i = 0; i < 7; i++) {
+					result += characters.charAt(
+						Math.floor(Math.random() * charactersLength)
+					);
+				}
+				return result;
 			},
 
 			close() {

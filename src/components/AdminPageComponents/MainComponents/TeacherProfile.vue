@@ -1,88 +1,132 @@
 <template>
-	<div class="teacherPageCon">
-		<div class="mainCon">
-			<div class="leftCon">
-				<div class="teacherDetails">
-					<div class="profileAvatar">
-						<v-avatar size="120px" color="#007D48">
-							<v-icon dark size="100px">mdi-account</v-icon></v-avatar
-						>
-						<div class="functionBtns">
-							<v-btn color="#407355" dark x-small @click="editTeacher = true"
-								>Edit</v-btn
-							>
-							<v-btn color="#7AA51F" dark x-small @click="deleteTeacher = true"
-								>Delete</v-btn
-							>
-						</div>
-					</div>
+	<div>
+		<div class="fetched" v-if="fetched">
+			<div class="teacherPageCon">
+				<div class="mainCon">
+					<div class="leftCon">
+						<div class="teacherDetails">
+							<div class="profileAvatar">
+								<v-avatar size="120px" color="#007D48">
+									<v-icon dark size="100px">mdi-account</v-icon></v-avatar
+								>
+								<div class="functionBtns">
+									<v-btn
+										color="#407355"
+										dark
+										x-small
+										@click="editTeacher = true"
+										>Edit</v-btn
+									>
+									<v-btn
+										color="#7AA51F"
+										dark
+										x-small
+										@click="deleteTeacher = true"
+										>Delete</v-btn
+									>
+								</div>
+							</div>
 
-					<div class="name">
-						<div class="details">
-							<div class="label">First Name</div>
-							<div class="content">Juan</div>
-						</div>
-						<div class="details">
-							<div class="label">Last Name</div>
-							<div class="content">Dela Cruz</div>
-						</div>
-					</div>
+							<div class="name">
+								<div class="details">
+									<div class="label">First Name</div>
+									<div class="content">{{ teacher.first_name }}</div>
+								</div>
+								<div class="details">
+									<div class="label">Last Name</div>
+									<div class="content">{{ teacher.last_name }}</div>
+								</div>
+							</div>
 
-					<div class="details">
-						<div class="label">Gender</div>
-						<div class="content">Male</div>
-					</div>
-					<div class="details">
-						<div class="label">Username</div>
-						<div class="content">akosijuan123</div>
-					</div>
-					<div class="details">
-						<div class="label">Password</div>
-						<div class="content">123123</div>
-					</div>
-					<div class="details">
-						<div class="label">Code</div>
-						<div class="content">123123</div>
-					</div>
-					<div class="detailsFunctionCon">
-						<div class="btn">
-							<v-btn small color="#064635" dark @click="showQR = true"
-								>View QR Code</v-btn
-							>
-						</div>
+							<div class="details">
+								<div class="label">Gender</div>
+								<div class="content">{{ teacher.gender }}</div>
+							</div>
+							<div class="details">
+								<div class="label">Username</div>
+								<div class="content">{{ teacher.username }}</div>
+							</div>
+							<div class="details">
+								<div class="label">Password</div>
+								<div class="content">{{ teacher.password }}</div>
+							</div>
+							<div class="details">
+								<div class="label">Code</div>
+								<div class="content">{{ teacher.code }}</div>
+							</div>
+							<div class="detailsFunctionCon">
+								<div class="btn">
+									<v-btn small color="#064635" dark @click="showQR = true"
+										>View QR Code</v-btn
+									>
+								</div>
 
-						<div class="btn">
-							<v-btn small @click="printCard = true">Print FeedaCTS Card</v-btn>
+								<div class="btn">
+									<v-btn small @click="printCard = true"
+										>Print FeedaCTS Card</v-btn
+									>
+								</div>
+							</div>
 						</div>
+					</div>
+					<div class="rightCon">
+						<HistoryTable :teacher="teacher" />
 					</div>
 				</div>
+
+				<div class="mobileView"><DashboardMobile :data="data" /></div>
+
+				<MoreDetails
+					:moreDetails="moreDetails"
+					@updateDetails="updateDetails($event)"
+					@deleteDetails="deleteDetails($event)"
+					@closeDetails="closeDetails()"
+					:activity="selected_activity"
+				/>
+
+				<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
+				<EditTeacher
+					:editTeacher="editTeacher"
+					@closeDialog="closeDialog()"
+					@updateDialog="updateDialog($event)"
+					:data="teacher"
+				/>
+
+				<DeleteTeacher
+					:deleteTeacher="deleteTeacher"
+					@closeDeleteDialog="closeDeleteDialog($event)"
+					:teacher="teacher"
+				/>
+
+				<PrintCard
+					:printCard="printCard"
+					:teacherDetails="teacher"
+					@closePrintCard="closePrintCard"
+				/>
 			</div>
-			<div class="rightCon">
-				<HistoryTable />
-			</div>
+
+			<v-snackbar v-model="snackbar" :timeout="timeout">
+				{{ message }}
+
+				<template v-slot:action="{ attrs }">
+					<v-btn color="#5aa67a" text v-bind="attrs" @click="snackbar = false">
+						Close
+					</v-btn>
+				</template>
+			</v-snackbar>
 		</div>
-
-		<div class="mobileView"><DashboardMobile /></div>
-
-		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
-		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
-		<EditTeacher
-			:editTeacher="editTeacher"
-			@closeDialog="closeDialog()"
-			:teacher="teacher"
-		/>
-
-		<DeleteTeacher
-			:deleteTeacher="deleteTeacher"
-			@closeDeleteDialog="closeDeleteDialog()"
-			:teacher="teacher"
-		/>
-
-		<PrintCard
-			:printCard="printCard"
-			:teacherDetails="teacher"
-			@closePrintCard="closePrintCard"
-		/>
+		<div class="loading" v-if="loading">
+			<h2>Loading</h2>
+			<v-progress-circular
+				:width="3"
+				color="green"
+				indeterminate
+			></v-progress-circular>
+		</div>
+		<div class="showError" v-if="error">
+			<img src="../../../assets/undraw_bug_fixing_oc-7-a 1.png" alt="" />
+			<h3>Error Occured. Please refresh the page</h3>
+		</div>
 	</div>
 </template>
 
@@ -94,6 +138,7 @@
 	import DeleteTeacher from "../PopUpComponents/DeleteTeacher.vue";
 	import PrintCard from "../PopUpComponents/PrintCard.vue";
 	import HistoryTable from "../TeachersPageComponents/HistoryTable.vue";
+	import teacherAPI from "../../../apis/teacherAPI";
 	export default {
 		components: {
 			DashboardMobile,
@@ -106,14 +151,7 @@
 		},
 		data() {
 			return {
-				teacher: {
-					first_name: "Juan",
-					last_name: "Dela Cruz",
-					gender: "Male",
-					code: "codecode",
-					username: "iamjuan123",
-					password: "123123",
-				},
+				teacher: {},
 				contribData: [
 					{
 						date: "03/23/2022",
@@ -130,7 +168,36 @@
 				editTeacher: false,
 				deleteTeacher: false,
 				printCard: false,
+				loading: false,
+				fetched: false,
+				error: false,
+				data: [],
+				selected_activity: {},
+				snackbar: false,
+				timeout: 2000,
+				message: "",
 			};
+		},
+
+		async created() {
+			this.loading = true;
+			this.fetched = false;
+
+			try {
+				const teachers = await teacherAPI.prototype.getAllTeachers();
+				this.data = teachers.data;
+
+				this.data.forEach((d) => {
+					if (d.id == this.$route.params.teacher_id) {
+						this.teacher = d;
+					}
+				});
+				this.fetched = true;
+			} catch (error) {
+				this.error = true;
+			}
+
+			this.loading = false;
 		},
 
 		methods: {
@@ -143,8 +210,47 @@
 			closeDialog() {
 				this.editTeacher = false;
 			},
-			closeDeleteDialog() {
+			updateDialog(data) {
+				if (data) {
+					if (data == "Network Error") {
+						const result = "failed";
+						const message = "Network Error";
+						this.showSnackbar(result, message);
+					} else if (data == "Request failed with status code 404") {
+						const result = "failed";
+						const message = "Update Failed";
+						this.showSnackbar(result, message);
+					} else {
+						const result = "success";
+						const message = "Successfully updated teacher";
+						this.teacher = data;
+						this.showSnackbar(result, message);
+					}
+				}
+
+				this.editTeacher = false;
+			},
+
+			showSnackbar(result, message) {
+				if (result == "success") {
+					this.snackbar = true;
+					this.message = message;
+				}
+
+				if (result == "failed") {
+					this.snackbar = true;
+					this.message = message;
+				}
+			},
+			closeDeleteDialog(data) {
 				this.deleteTeacher = false;
+				if (data) {
+					if (data == "Network Error") {
+						this.showSnackbar("failed", "Network Error");
+					} else {
+						this.showSnackbar("failed", "Delete Failed. An Error Occured.");
+					}
+				}
 			},
 			closePrintCard() {
 				this.printCard = false;
@@ -228,6 +334,33 @@
 
 	.btn {
 		padding: 5px 0px;
+	}
+
+	.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 40px;
+		color: #007d48;
+		height: 70vh;
+	}
+
+	.loading h2 {
+		padding: 10px 20px;
+		font-size: 20px;
+	}
+
+	.showError {
+		margin: 100px 0px;
+		color: #007d48;
+	}
+
+	.showError h3 {
+		padding: 20px;
+	}
+
+	.showError img {
+		width: 250px;
 	}
 
 	@media only screen and (max-width: 1100px) {

@@ -30,7 +30,8 @@
 			</div>
 		</div>
 		<div class="contributionCon" v-if="selectContributionTable">
-			<ContributionTable />
+			{{ getContribution }}
+			<ContributionTable :contribData="contribData" />
 		</div>
 		<div class="allTeachersCon" v-if="!selectContributionTable">
 			<div class="searchBarCon">
@@ -44,6 +45,7 @@
 				></v-text-field>
 			</div>
 			<div class="allTeachers">
+				{{ getAllTeachers }}
 				<div
 					class="teacher"
 					v-for="(teacher, index) in renderTeachers"
@@ -55,15 +57,15 @@
 						>
 					</div>
 					<div class="detailsCon">
-						<div class="teacherName">Juan Dela Cruz</div>
-						<div class="gender">Male</div>
+						<div class="teacherName">{{ teacher.teacher }}</div>
+						<div class="gender">{{ teacher.gender }}</div>
 						<div class="btnCon">
 							<v-btn
 								rounded
 								outlined
 								color="#007D48"
 								small
-								to="teachers/profile"
+								:to="'teachers/profile/' + teacher.id"
 								>View Teacher</v-btn
 							>
 						</div>
@@ -73,7 +75,21 @@
 		</div>
 		<br />
 
-		<AddTeacher :addTeacher="addTeacher" @closeDialog="closeDialog()" />
+		<v-snackbar v-model="snackbar" :timeout="timeout">
+			{{ message }}
+
+			<template v-slot:action="{ attrs }">
+				<v-btn color="#5aa67a" text v-bind="attrs" @click="snackbar = false">
+					Close
+				</v-btn>
+			</template>
+		</v-snackbar>
+
+		<AddTeacher
+			:addTeacher="addTeacher"
+			@closeDialog="closeDialog($event)"
+			v-if="addTeacher"
+		/>
 	</div>
 </template>
 
@@ -81,207 +97,40 @@
 	import AddTeacher from "../PopUpComponents/AddTeacher.vue";
 	import ContributionTable from "../TeachersPageComponents/ContributionTable.vue";
 	export default {
+		props: {
+			data: Array,
+		},
 		components: { AddTeacher, ContributionTable },
 		data: () => ({
 			addTeacher: false,
 			selectContributionTable: true,
-			teachers: [
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					gender: "Male",
-				},
-			],
-			contribData: [
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-				{
-					teacher: "Juan Dela Cruz",
-					plastic: 5,
-					paper: 5,
-					cellophanes: 5,
-					other: 5,
-					total: 5,
-				},
-			],
+			teachers: [],
+			teachersData: [],
+			contribData: [],
 			searchTeacher: "",
+			snackbar: false,
+			message: "",
+			timeout: 3000,
 		}),
+		created() {
+			this.teachersData = this.data.slice();
+		},
 
 		methods: {
-			closeDialog() {
+			closeDialog(data) {
+				if (data) {
+					if (data == "Network Error") {
+						this.message = data;
+						this.snackbar = true;
+					} else if (data == "Failed. Username already exists") {
+						this.message = data;
+						this.snackbar = true;
+					} else {
+						this.message = "Added Teacher Successfully";
+						this.snackbar = true;
+						location.reload();
+					}
+				}
 				this.addTeacher = false;
 			},
 		},
@@ -294,6 +143,67 @@
 
 				return showTeachers;
 			},
+
+			getAllTeachers: function () {
+				this.teachersData.forEach((d) => {
+					let teacher = {};
+					teacher.teacher = d.first_name + " " + d.last_name;
+					teacher.gender = d.gender;
+					teacher.id = d.id;
+					this.teachers.push(teacher);
+				});
+			},
+
+			getContribution: function () {
+				this.teachersData.forEach((d) => {
+					let teacher = {};
+					teacher.teacher = d.first_name + " " + d.last_name;
+					teacher.id = d.id;
+					teacher.paper = 0;
+					teacher.cellophanes = 0;
+					teacher.plastic_bottles = 0;
+					teacher.others = 0;
+					teacher.segregated = 0;
+					teacher.partly_seg = 0;
+					teacher.not_seg = 0;
+					teacher.total_activities = 0;
+					d.activities.forEach((activity) => {
+						if (activity.categories.includes("Paper")) {
+							teacher.paper += 1;
+						}
+
+						if (activity.categories.includes("Cellophanes")) {
+							teacher.cellophanes += 1;
+						}
+						if (activity.categories.includes("Plastic Bottles")) {
+							teacher.plastic_bottles += 1;
+						}
+						if (activity.categories.includes("Others")) {
+							teacher.others += 1;
+						}
+
+						if (activity.status == "Segregated") {
+							teacher.segregated += 1;
+						}
+
+						if (activity.status == "Partly Segregated") {
+							teacher.partly_seg += 1;
+						}
+
+						if (activity.status == "Not Segregated") {
+							teacher.not_seg += 1;
+						}
+
+						teacher.total_activities += 1;
+					});
+
+					this.contribData.push(teacher);
+				});
+			},
+
+			// transferProp: function () {
+			// 	this.teachersData = this.data.slice();
+			// },
 		},
 	};
 </script>

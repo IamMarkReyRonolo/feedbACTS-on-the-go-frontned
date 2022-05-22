@@ -4,9 +4,10 @@
 			<v-card-title class="dialogTitle"> Delete Teacher? </v-card-title>
 
 			<v-card-text class="dialogContent">
-				This action cannot be undone. Do you want to delete this teacher named
+				This action cannot be undone. Do you want to delete this teacher name
 				<b>{{ this.teacher.first_name }} {{ this.teacher.last_name }}</b> , from
-				the system?
+				the system? All Activities associated with this teacher will be deleted
+				also.
 			</v-card-text>
 
 			<v-card-actions>
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+	import teacherAPI from "../../../apis/teacherAPI";
 	export default {
 		props: {
 			deleteTeacher: Boolean,
@@ -37,12 +39,18 @@
 		},
 
 		methods: {
-			deleteT() {
-				this.loading = true;
-				setTimeout(() => {
+			async deleteT() {
+				try {
+					this.loading = true;
+					const deleted = await teacherAPI.prototype.deleteTeacher(
+						this.teacher.id
+					);
 					this.loading = false;
-					this.$emit("closeDeleteDialog");
-				}, 1000);
+					this.$router.push("/");
+				} catch (error) {
+					this.$emit("closeDeleteDialog", error.message);
+					this.loading = false;
+				}
 			},
 		},
 	};

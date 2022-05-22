@@ -1,6 +1,7 @@
 <template>
 	<v-dialog v-model="editTeacher" max-width="400" persistent>
 		<v-card v-if="editTeacher">
+			{{ getTeacher }}
 			<v-btn
 				fab
 				x-small
@@ -89,17 +90,18 @@
 </template>
 
 <script>
+	import teacherAPI from "../../../apis/teacherAPI";
 	export default {
 		props: {
 			editTeacher: Boolean,
-			teacher: Object,
+			data: Object,
 		},
 		data() {
 			return {
 				loading: false,
 				gender: ["Male", "Female"],
 				show: false,
-
+				teacher: {},
 				rules: {
 					required: (value) => !!value || "Required.",
 				},
@@ -107,15 +109,25 @@
 		},
 
 		methods: {
-			saveDetails() {
-				this.loading = true;
-				setTimeout(() => {
+			async saveDetails() {
+				try {
+					this.loading = true;
+					const payload = Object.assign({}, this.teacher);
+
+					const updated = await teacherAPI.prototype.updateTeacherDetails(
+						payload.id,
+						payload
+					);
 					this.loading = false;
-					this.$emit("closeDialog");
-				}, 1000);
+					this.$emit("updateDialog", payload);
+				} catch (error) {
+					this.loading = false;
+					this.$emit("updateDialog", error.message);
+				}
 			},
 
 			close() {
+				this.teacher = Object.assign({}, this.data);
 				this.$emit("closeDialog");
 			},
 
@@ -141,6 +153,10 @@
 				} else {
 					return true;
 				}
+			},
+
+			getTeacher: function () {
+				this.teacher = Object.assign({}, this.data);
 			},
 		},
 	};

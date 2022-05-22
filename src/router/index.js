@@ -39,7 +39,7 @@ const routes = [
 			},
 			{
 				name: "teachersProfile",
-				path: "teachers/profile",
+				path: "teachers/profile/:teacher_id",
 				component: TeacherProfile,
 			},
 			{

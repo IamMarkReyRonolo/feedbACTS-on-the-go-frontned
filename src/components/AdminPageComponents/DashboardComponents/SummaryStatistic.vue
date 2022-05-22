@@ -21,6 +21,7 @@
 				>Trash Statistic</v-btn
 			>
 		</div>
+
 		<div class="contributors" v-if="selectContributors">
 			<div class="fetched" v-if="data.length != 0">
 				<div class="headerTitle">
@@ -38,7 +39,11 @@
 				</div>
 				<div class="list">
 					<div class="contributor" v-for="n in data" :key="n.id">
-						<v-btn class="hoverable" large to="/admin/teachers/profile">
+						<v-btn
+							class="hoverable"
+							large
+							:to="'/admin/teachers/profile/' + n.id"
+						>
 							<div class="name">
 								<v-icon small>mdi-account-circle</v-icon
 								><span style="font-size: 12px"
@@ -260,8 +265,12 @@
 	.contributors,
 	.statistic {
 		padding: 20px 0px;
-
 		height: 370px;
+	}
+
+	.list {
+		height: 320px;
+		overflow-y: auto;
 	}
 
 	.headerTitle,
