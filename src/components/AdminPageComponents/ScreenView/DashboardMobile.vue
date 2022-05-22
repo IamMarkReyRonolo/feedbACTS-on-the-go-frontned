@@ -61,6 +61,9 @@
 <script>
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	export default {
+		props: {
+			data: Array,
+		},
 		components: { MoreDetails },
 		data: () => ({ moreDetails: false }),
 		methods: {

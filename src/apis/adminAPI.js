@@ -22,7 +22,7 @@ export default class API {
 	}
 
 	async clickBuzzer() {
-		const result = await axios.patch(url + "/buzzer", updatedDetails);
+		const result = await axios.patch(url + "/buzzer");
 		return result;
 	}
 }

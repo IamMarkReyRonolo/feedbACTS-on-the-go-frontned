@@ -107,6 +107,8 @@
 </template>
 
 <script>
+	import adminAPI from "../apis/adminAPI";
+	import teacherAPI from "../apis/teacherAPI";
 	export default {
 		data: () => ({
 			valid: true,
@@ -139,29 +141,65 @@
 				}, 500);
 			},
 
-			login() {
+			async login() {
 				if (this.$refs.form.validate()) {
 					this.logInLoading = true;
-					setTimeout(() => {
-						if (this.loginAsTeacher) {
-							if (this.username == "teacher" && this.password == "teacher") {
-								this.$router.push("/teacher");
-							} else {
-								this.snackbar = true;
-								this.errorMessage = "Incorrect credentials";
-							}
-						} else {
-							if (this.username == "admin" && this.password == "admin") {
-								this.$router.push("/admin");
-							} else {
-								this.snackbar = true;
-								this.errorMessage = "Incorrect credentials";
-							}
-						}
-						this.logInLoading = false;
-					}, 2000);
+					const credentials = {
+						username: this.username,
+						password: this.password,
+					};
+					if (this.loginAsTeacher) {
+						await this.teacherLogin(credentials);
+					} else {
+						await this.adminLogin(credentials);
+					}
+					this.logInLoading = false;
 				}
 			},
+
+			async adminLogin(credentials) {
+				try {
+					const result = await adminAPI.prototype.signInAdmin(credentials);
+					localStorage.setItem("token", result.data.admin.token);
+					localStorage.setItem("user", "admin");
+					this.$router.push("/admin");
+				} catch (error) {
+					if (error.message == "Network Error") {
+						this.errorMessage = "Network Error";
+					} else {
+						this.errorMessage = "Incorrect credentials";
+					}
+					this.snackbar = true;
+				}
+			},
+
+			async teacherLogin(credentials) {
+				try {
+					const result = await teacherAPI.prototype.signInTeacher(credentials);
+					localStorage.setItem("token", result.data.user.token);
+					localStorage.setItem("user", "teacher");
+					this.$router.push("/teacher");
+				} catch (error) {
+					if (error.message == "Network Error") {
+						this.errorMessage = "Network Error";
+					} else {
+						this.errorMessage = "Incorrect credentials";
+					}
+					this.snackbar = true;
+				}
+			},
+		},
+
+		created() {
+			if (localStorage.getItem("token")) {
+				if (localStorage.getItem("user") == "admin") {
+					this.$router.push("/admin");
+				}
+
+				if (localStorage.getItem("user") == "teacher") {
+					this.$router.push("/teacher");
+				}
+			}
 		},
 	};
 </script>

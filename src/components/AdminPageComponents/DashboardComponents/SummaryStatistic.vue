@@ -1,5 +1,6 @@
 <template>
 	<div class="summaryStatistic">
+		{{ getTrashData }}
 		<div class="miniNav">
 			<v-btn
 				x-small
@@ -21,42 +22,51 @@
 			>
 		</div>
 		<div class="contributors" v-if="selectContributors">
-			<div class="headerTitle">
-				<div class="name">
-					<v-btn text small color="#064635">Name</v-btn>
-				</div>
+			<div class="fetched" v-if="data.length != 0">
+				<div class="headerTitle">
+					<div class="name">
+						<v-btn text small color="#064635">Name</v-btn>
+					</div>
 
-				<div class="consistency">
-					<v-btn text small color="#064635"
-						><span style="font-size: 9px" class="level">
-							Consistency Level</span
-						></v-btn
-					>
+					<div class="consistency">
+						<v-btn text small color="#064635"
+							><span style="font-size: 9px" class="level">
+								Consistency Level</span
+							></v-btn
+						>
+					</div>
+				</div>
+				<div class="list">
+					<div class="contributor" v-for="n in data" :key="n.id">
+						<v-btn class="hoverable" large to="/admin/teachers/profile">
+							<div class="name">
+								<v-icon small>mdi-account-circle</v-icon
+								><span style="font-size: 12px"
+									>{{ n.first_name }} {{ n.last_name }}</span
+								>
+							</div>
+
+							<div class="consistency">
+								<v-progress-linear
+									color="#064635"
+									height="15"
+									rounded
+									:value="getConsistency(n.activities.length)"
+									style="width: 80%"
+								>
+									<span style="color: white; font-size: 10px"
+										>{{ getConsistency(n.activities.length) }} %</span
+									></v-progress-linear
+								>
+							</div>
+						</v-btn>
+					</div>
 				</div>
 			</div>
-			<div class="list">
-				<div class="contributor" v-for="n in 7" :key="n">
-					<v-btn class="hoverable" large to="/admin/teachers/profile">
-						<div class="name">
-							<v-icon small>mdi-account-circle</v-icon
-							><span style="font-size: 12px">Mark Rey Ronolo</span>
-						</div>
 
-						<div class="consistency">
-							<v-progress-linear
-								v-model="progress"
-								color="#064635"
-								height="15"
-								rounded
-								style="width: 80%"
-							>
-								<span style="color: white; font-size: 10px"
-									>{{ progress }} %</span
-								></v-progress-linear
-							>
-						</div>
-					</v-btn>
-				</div>
+			<div class="empty" v-if="data.length == 0">
+				<img src="../../../assets/no teachers.png" alt="" />
+				<h3>No Teachers Yet</h3>
 			</div>
 		</div>
 		<div class="statistic" v-if="!selectContributors">
@@ -89,10 +99,32 @@
 				></v-progress-circular>
 			</div>
 			<div class="perType" v-if="selectType && !nloading">
-				<Pie :width="250" :height="250" :data="dataPerType" />
+				<Pie
+					:width="250"
+					:height="250"
+					:data="dataPerType"
+					v-if="activities.length != 0"
+				/>
+
+				<div class="empty" v-if="activities.length == 0">
+					<br />
+					<img src="../../../assets/no statistics.png" alt="" />
+					<h3>Statistics not available</h3>
+				</div>
 			</div>
 			<div class="perStatus" v-if="!selectType && !nloading">
-				<Pie :width="250" :height="250" :data="dataPerStatus" />
+				<Pie
+					:width="250"
+					:height="250"
+					:data="dataPerStatus"
+					v-if="activities.length != 0"
+				/>
+
+				<div class="empty" v-if="activities.length == 0">
+					<br />
+					<img src="../../../assets/no statistics.png" alt="" />
+					<h3>Statistics not available</h3>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -101,6 +133,10 @@
 <script>
 	import Pie from "../MainComponents/Pie.vue";
 	export default {
+		props: {
+			data: Array,
+			buzzer_count: Number,
+		},
 		components: {
 			Pie,
 		},
@@ -108,20 +144,8 @@
 			selectContributors: true,
 			selectType: true,
 			progress: 80,
-			dataPerType: {
-				paper: 20,
-				plastic_bottles: 40,
-				cellophanes: 30,
-				others: 10,
-				bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
-			},
-			dataPerStatus: {
-				segregated: 20,
-				partially_segregated: 40,
-				not_segregated: 40,
-				bg_color: ["#41B883", "#d6ab33", "#94e0be"],
-			},
 			nloading: false,
+			activities: [],
 		}),
 
 		methods: {
@@ -138,6 +162,84 @@
 						this.nloading = false;
 					}, 500);
 				}
+			},
+
+			getConsistency(length) {
+				return ((length / this.buzzer_count) * 100).toFixed(2);
+			},
+		},
+
+		computed: {
+			getTrashData: function () {
+				this.data.forEach((d) => {
+					d.activities.forEach((activity) => {
+						activity.teacher = d.first_name + " " + d.last_name;
+						this.activities.push(activity);
+					});
+				});
+			},
+
+			dataPerType: function () {
+				let paper = 0;
+				let plastic_bottles = 0;
+				let cellophanes = 0;
+				let others = 0;
+
+				this.activities.forEach((activity) => {
+					if (activity.categories.includes("Paper")) {
+						paper += 1;
+					}
+					if (activity.categories.includes("Plastic Bottles")) {
+						plastic_bottles += 1;
+					}
+					if (activity.categories.includes("Cellophanes")) {
+						cellophanes += 1;
+					}
+					if (activity.categories.includes("Others")) {
+						others += 1;
+					}
+				});
+
+				let total = paper + plastic_bottles + cellophanes + others;
+
+				let data = {
+					paper: ((paper / total) * 100).toFixed(2),
+					plastic_bottles: ((plastic_bottles / total) * 100).toFixed(2),
+					cellophanes: ((cellophanes / total) * 100).toFixed(2),
+					others: ((others / total) * 100).toFixed(2),
+					bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
+				};
+
+				return data;
+			},
+
+			dataPerStatus: function () {
+				let segregated = 0;
+				let partly_segregated = 0;
+				let not_segregated = 0;
+
+				this.activities.forEach((activity) => {
+					if (activity.status == "Segregated") {
+						segregated += 1;
+					}
+					if (activity.status == "Partly Segregated") {
+						partly_segregated += 1;
+					}
+					if (activity.status == "Not Segregated") {
+						not_segregated += 1;
+					}
+				});
+
+				let total = segregated + not_segregated + partly_segregated;
+
+				let data = {
+					segregated: ((segregated / total) * 100).toFixed(2),
+					partially_segregated: ((partly_segregated / total) * 100).toFixed(2),
+					not_segregated: ((not_segregated / total) * 100).toFixed(2),
+					bg_color: ["#41B883", "#d6ab33", "#94e0be"],
+				};
+
+				return data;
 			},
 		},
 	};
@@ -216,5 +318,18 @@
 	.perStatus,
 	.perType {
 		padding: 10px;
+	}
+
+	.empty {
+		margin: 20px 0px;
+	}
+
+	.empty h3 {
+		color: #007d48;
+		padding: 20px;
+	}
+
+	.empty img {
+		width: 200px;
 	}
 </style>

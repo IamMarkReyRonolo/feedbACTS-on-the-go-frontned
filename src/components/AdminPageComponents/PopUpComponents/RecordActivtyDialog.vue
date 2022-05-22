@@ -41,6 +41,7 @@
 					></v-select>
 				</div>
 
+				{{ getTeachers }}
 				<div class="detail">
 					<v-text-field
 						label="Teacher Code"
@@ -48,7 +49,6 @@
 						color="#5aa67a"
 						dense
 						v-model="activity.code"
-						:items="teachers"
 						:disabled="isdisabled"
 						:rules="[rules.required]"
 					></v-text-field>
@@ -59,7 +59,7 @@
 						label="Category"
 						outlined
 						color="#5aa67a"
-						v-model="activity.category"
+						v-model="activity.categories"
 						:items="categories"
 						multiple
 						small-chips
@@ -73,7 +73,7 @@
 						label="Segregated"
 						outlined
 						color="#5aa67a"
-						v-model="activity.segregated"
+						v-model="activity.status"
 						:items="segregated"
 						small-chips
 						:rules="[rules.required, rules.segregatedMapped]"
@@ -132,10 +132,11 @@
 
 <script>
 	import { QrcodeStream } from "vue-qrcode-reader";
-
+	import activityAPI from "../../../apis/activityAPI";
 	export default {
 		props: {
 			recordActivity: Boolean,
+			data: Array,
 		},
 		components: { QrcodeStream },
 
@@ -152,20 +153,13 @@
 					time: "",
 					teacher: "",
 					code: "",
-					category: [],
-					segregated: "",
+					categories: [],
+					status: "",
 					feedback: [],
 				},
 				categories: ["Paper", "Cellophanes", "Plastic Bottles", "Others"],
 				segregated: ["Yes", "Partly", "No"],
-				teachers: [
-					"Juan Dela Cruz",
-					"Juan Dela Craz",
-					"Juan Dela Cruqz",
-					"Juan Dela Crufz",
-					"Juan Dela Crusz",
-					"Mark Rey Ronolo",
-				],
+				teachers: [],
 				rules: {
 					required: (value) => this.validateRequired(value) || "Required.",
 					min: (v) => v.length >= 8 || "Min 8 characters",
@@ -216,8 +210,8 @@
 				this.error = "";
 				this.activity.teacher = "";
 				this.activity.code = "";
-				this.activity.category = [];
-				this.activity.segregated = "";
+				this.activity.categories = [];
+				this.activity.status = "";
 				this.activity.feedback = [];
 				this.isdisabled = false;
 				this.proceed = false;
@@ -227,34 +221,81 @@
 				this.clear();
 			},
 
-			addActivity() {
+			async addActivity() {
 				this.loading = true;
-				setTimeout(() => {
+
+				try {
+					const payload = Object.assign({}, this.activity);
+
+					if (this.activity.status == "Yes") {
+						payload.status = "Segregated";
+					}
+
+					if (this.activity.status == "No") {
+						payload.status = "Not Segregated";
+					}
+
+					if (this.activity.status == "Partly") {
+						payload.status = "Partly Segregated";
+					}
+
+					payload.date_created = this.getDate();
+					payload.time_created = this.getTime();
+					const teacherID = this.getTeacherId(payload.teacher);
+					const result = await activityAPI.prototype.createActivity(
+						teacherID,
+						payload
+					);
+					result.data.teacher = payload.teacher;
+					this.$emit("closeDialog", result.data);
 					this.loading = false;
 					this.clear();
-					this.$emit("closeDialog");
-				}, 1000);
+				} catch (error) {
+					this.$emit("closeDialog", error.message);
+					this.loading = false;
+					this.clear();
+				}
+			},
+			getDate() {
+				let today = new Date();
+				const dd = String(today.getDate()).padStart(2, "0");
+				const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+				const yyyy = today.getFullYear();
+
+				today = mm + "/" + dd + "/" + yyyy;
+				return today;
+			},
+
+			getTime() {
+				const today = new Date();
+				var time = today.getHours() + ":" + today.getMinutes();
+				return time;
+			},
+			getTeacherId(name) {
+				let id;
+				this.data.forEach((d) => {
+					let full_name = d.first_name + " " + d.last_name;
+					if (full_name == name) {
+						id = d.id;
+					}
+				});
+
+				return id;
 			},
 
 			onDecode(result) {
 				try {
 					this.result = JSON.parse(result);
-					console.log(this.result);
+
 					if ("teacher" in this.result && "code" in this.result) {
-						if (this.teachers.includes(this.result.teacher)) {
-							this.activity.teacher = this.result.teacher;
-							this.activity.code = this.result.code;
-							this.proceed = true;
-							this.isdisabled = true;
-						} else {
-							this.error = "Couldn't Identify QR Code";
-						}
+						this.activity.teacher = this.result.teacher;
+						this.activity.code = this.result.code;
+						this.proceed = true;
+						this.isdisabled = true;
 					} else {
-						console.log("invalid");
 						this.error = "QR Code invalid";
 					}
 				} catch (error) {
-					console.log(error);
 					this.error = "QR Code invalid";
 				}
 			},
@@ -307,16 +348,24 @@
 				if (
 					this.activity.teacher &&
 					this.activity.code &&
-					this.activity.category.length != 0 &&
-					this.activity.segregated &&
+					this.activity.categories.length != 0 &&
+					this.activity.status &&
 					this.activity.feedback.length != 0 &&
-					this.segregated.includes(this.activity.segregated) &&
-					this.checkCategoryValue(this.activity.category)
+					this.segregated.includes(this.activity.status) &&
+					this.checkCategoryValue(this.activity.categories)
 				) {
 					return true;
 				}
 
 				return false;
+			},
+
+			getTeachers: function () {
+				this.data.forEach((d) => {
+					let teacher = d.first_name + " " + d.last_name;
+
+					this.teachers.push(teacher);
+				});
 			},
 		},
 	};

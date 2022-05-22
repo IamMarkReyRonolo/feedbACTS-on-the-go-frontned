@@ -29,6 +29,7 @@
 </template>
 
 <script>
+	import adminAPI from "../../../apis/adminAPI";
 	export default {
 		props: {
 			clickBuzzer: Boolean,
@@ -40,12 +41,16 @@
 		},
 
 		methods: {
-			soundBuzzer() {
+			async soundBuzzer() {
 				this.loading = true;
-				setTimeout(() => {
-					this.loading = false;
-					this.$emit("closeBuzzer", true);
-				}, 1000);
+				try {
+					const result = await adminAPI.prototype.clickBuzzer();
+
+					this.$emit("closeBuzzer", "success");
+				} catch (error) {
+					this.$emit("closeBuzzer", "error");
+				}
+				this.loading = false;
 			},
 		},
 	};
