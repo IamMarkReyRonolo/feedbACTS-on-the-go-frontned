@@ -49,7 +49,7 @@ const routes = [
 			},
 
 			{
-				path: "report/reportid",
+				path: "report/:reportid",
 				component: ReportPage,
 			},
 		],

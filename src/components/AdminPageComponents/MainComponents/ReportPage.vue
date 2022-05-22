@@ -1,275 +1,203 @@
 <template>
-	<div class="report">
-		<div class="desktopView">
-			<div class="reportCon">
-				<h2>Report</h2>
+	<div>
+		<div class="report" v-if="fetched">
+			{{ dataPerType }}
+			{{ dataPerStatus }}
+			{{ getChartData }}
+			<div class="desktopView">
+				<br />
 
-				<div class="sec">
-					<h3>Title: Monthly Report</h3>
-					<br />
-					<div class="subtitle" style="color: #064635">
-						<b>Date</b>: March 20, 2022 - April 1, 2022
-					</div>
-					<br />
-					<div class="subtitle" style="color: #064635">
-						<b>Description</b>: Lorem ipsum dolor sit amet consectetur
-						adipisicing elit. Architecto blanditiis inventore, unde ut id
-						provident culpa maxime commodi voluptas labore.
-					</div>
-				</div>
-				<div class="sec">
-					<h3>Teachers' Contribution Consistency</h3>
-					<div class="stats">
-						<LineChart :width="300" :height="300" />
-					</div>
-				</div>
+				<VueHtml2pdf
+					:show-layout="true"
+					:float-layout="false"
+					:enable-download="true"
+					filename="Report"
+					:pdf-quality="2"
+					:manual-pagination="false"
+					pdf-format="legal"
+					pdf-orientation="landscape"
+					ref="html2Pdf"
+					pdf-content-width="100%"
+					:paginate-elements-by-height="500"
+					@startPagination="printLoading = true"
+					@hasDownloaded="printLoading = false"
+				>
+					<section slot="pdf-content">
+						<div class="reportCon">
+							<h2>Report</h2>
 
-				<div class="sec">
-					<h3>Total Trash Collected</h3>
-					<div class="contentCon">
-						<div class="dataCon">
-							<div class="con1">
-								<div class="data">
-									<div class="categoryTitle">Paper</div>
-									<div class="activityCount">
-										<div class="count">5</div>
-										<span>Activities</span>
-									</div>
+							<div class="sec">
+								<h3>Title: {{ reportData.report_title }}</h3>
+								<br />
+								<div class="subtitle" style="color: #064635">
+									<b>Date</b>: {{ reportData.date_started }} -
+									{{ reportData.date_ended }}
 								</div>
-								<div class="data">
-									<div class="categoryTitle">Cellophanes</div>
-									<div class="activityCount">
-										<div class="count">10</div>
-										<span>Activities</span>
+								<br />
+								<div class="subtitle" style="color: #064635">
+									<b>Description</b>: {{ reportData.report_details }}
+								</div>
+							</div>
+							<div class="sec">
+								<h3>Teachers' Contribution Consistency</h3>
+								<!-- <div class="stats">
+									<LineChart :width="300" :height="300" />
+								</div> -->
+
+								<div class="stats">
+									<BarChart :width="50" :height="300" :data="chartData" />
+								</div>
+							</div>
+
+							<div class="sec">
+								<h3>Total Trash Collected</h3>
+								<div class="contentCon">
+									<div class="dataCon">
+										<div class="con1">
+											<div class="data">
+												<div class="categoryTitle">Paper</div>
+												<div class="activityCount">
+													<div class="count">{{ values.paper }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+											<div class="data">
+												<div class="categoryTitle">Cellophanes</div>
+												<div class="activityCount">
+													<div class="count">{{ values.cellophanes }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="con1">
+											<div class="data">
+												<div class="categoryTitle">Plastic Bottles</div>
+												<div class="activityCount">
+													<div class="count">{{ values.plastic_bottles }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+											<div class="data">
+												<div class="categoryTitle">Others</div>
+												<div class="activityCount">
+													<div class="count">{{ values.others }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="totalTrashCon">
+										<Pie :width="300" :height="300" :data="perType" />
 									</div>
 								</div>
 							</div>
 
-							<div class="con1">
-								<div class="data">
-									<div class="categoryTitle">Plastic Bottles</div>
-									<div class="activityCount">
-										<div class="count">2</div>
-										<span>Activities</span>
+							<div class="sec">
+								<div class="contentCon">
+									<div class="totalTrashCon">
+										<Pie :width="300" :height="300" :data="perStatus" />
 									</div>
-								</div>
-								<div class="data">
-									<div class="categoryTitle">Others</div>
-									<div class="activityCount">
-										<div class="count">17</div>
-										<span>Activities</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="totalTrashCon">
-							<Pie :width="300" :height="300" :data="dataPerType" />
-						</div>
-					</div>
-				</div>
+									<div class="dataCon">
+										<div class="con1">
+											<div class="data">
+												<div class="categoryTitle">Segregated</div>
+												<div class="activityCount">
+													<div class="count">{{ values.segregated }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+											<div class="data">
+												<div class="categoryTitle" style="font-size: 14px">
+													Not Segregated
+												</div>
+												<div class="activityCount">
+													<div class="count">{{ values.not_segregated }}</div>
+													<span>Activities</span>
+												</div>
+											</div>
+										</div>
 
-				<div class="sec">
-					<div class="contentCon">
-						<div class="totalTrashCon">
-							<Pie :width="300" :height="300" :data="dataPerStatus" />
-						</div>
-						<div class="dataCon">
-							<div class="con1">
-								<div class="data">
-									<div class="categoryTitle">Segregated</div>
-									<div class="activityCount">
-										<div class="count">5</div>
-										<span>Activities</span>
-									</div>
-								</div>
-								<div class="data">
-									<div class="categoryTitle">Not Segregated</div>
-									<div class="activityCount">
-										<div class="count">10</div>
-										<span>Activities</span>
+										<div class="con1">
+											<div class="data">
+												<div class="categoryTitle" style="font-size: 14px">
+													Partly Segregated
+												</div>
+												<div class="activityCount">
+													<div class="count">
+														{{ values.partly_segregated }}
+													</div>
+													<span>Activities</span>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 
-							<div class="con1">
-								<div class="data">
-									<div class="categoryTitle" style="font-size: 14px">
-										Partly Segregated
-									</div>
-									<div class="activityCount">
-										<div class="count">2</div>
-										<span>Activities</span>
-									</div>
-								</div>
+							<div class="sec">
+								<h3>Contribution Table</h3>
+								<ContributionTable :data="reportData" />
 							</div>
 						</div>
-					</div>
-				</div>
+					</section>
+				</VueHtml2pdf>
 
-				<div class="sec">
-					<h3>Contribution Table</h3>
-					<ContributionTable />
-				</div>
+				<v-btn
+					@click="generateReport"
+					color="#5aa67a"
+					dark
+					:loading="printLoading"
+				>
+					Print Report</v-btn
+				>
+				<br />
+				<br />
+				<br />
+				<br />
 			</div>
-			<v-btn @click="generateReport" color="#5aa67a" dark :loading="loading">
-				Print Report</v-btn
-			>
 
-			<br />
-			<br />
-			<br />
-
-			<VueHtml2pdf
-				:show-layout="false"
-				:float-layout="true"
-				:enable-download="true"
-				filename="Report"
-				:pdf-quality="2"
-				:manual-pagination="false"
-				pdf-format="legal"
-				pdf-orientation="landscape"
-				ref="html2Pdf"
-				pdf-content-width="80%"
-				:paginate-elements-by-height="500"
-				@progress="loading = true"
-				@beforeDownload="loading = false"
-			>
-				<section slot="pdf-content">
-					<div class="reportCon">
-						<h2>Report</h2>
-
-						<div class="sec">
-							<h3>Title: Monthly Report</h3>
-							<br />
-							<div class="subtitle" style="color: #064635">
-								<b>Date</b>: March 20, 2022 - April 1, 2022
-							</div>
-							<br />
-							<div class="subtitle" style="color: #064635">
-								<b>Description</b>: Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Architecto blanditiis inventore, unde ut id
-								provident culpa maxime commodi voluptas labore.
-							</div>
-						</div>
-						<div class="sec">
-							<h3>Teachers' Contribution Consistency</h3>
-							<div class="stats">
-								<LineChart :width="300" :height="300" />
-							</div>
-						</div>
-						<br /><br /><br /><br />
-						<br /><br /><br /><br />
-						<div class="sec">
-							<h3>Total Trash Collected</h3>
-							<div class="contentCon">
-								<div class="dataCon">
-									<div class="con1">
-										<div class="data">
-											<div class="categoryTitle">Paper</div>
-											<div class="activityCount">
-												<div class="count">5</div>
-												<span>Activities</span>
-											</div>
-										</div>
-										<div class="data">
-											<div class="categoryTitle">Cellophanes</div>
-											<div class="activityCount">
-												<div class="count">10</div>
-												<span>Activities</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="con1">
-										<div class="data">
-											<div class="categoryTitle">Plastic Bottles</div>
-											<div class="activityCount">
-												<div class="count">2</div>
-												<span>Activities</span>
-											</div>
-										</div>
-										<div class="data">
-											<div class="categoryTitle">Others</div>
-											<div class="activityCount">
-												<div class="count">17</div>
-												<span>Activities</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="totalTrashCon">
-									<Pie :width="300" :height="300" :data="dataPerType" />
-								</div>
-							</div>
-						</div>
-
-						<div class="sec" style="margin-top: -20px">
-							<div class="contentCon">
-								<div class="totalTrashCon">
-									<Pie :width="300" :height="300" :data="dataPerStatus" />
-								</div>
-								<div class="dataCon">
-									<div class="con1">
-										<div class="data">
-											<div class="categoryTitle">Segregated</div>
-											<div class="activityCount">
-												<div class="count">5</div>
-												<span>Activities</span>
-											</div>
-										</div>
-										<div class="data">
-											<div class="categoryTitle">Not Segregated</div>
-											<div class="activityCount">
-												<div class="count">10</div>
-												<span>Activities</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="con1">
-										<div class="data">
-											<div class="categoryTitle" style="font-size: 14px">
-												Partly Segregated
-											</div>
-											<div class="activityCount">
-												<div class="count">2</div>
-												<span>Activities</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br /><br /><br />
-						<div class="sec">
-							<h3>Contribution Table</h3>
-							<ContributionTable />
-						</div>
-					</div>
-				</section>
-			</VueHtml2pdf>
+			<div class="mobileView">
+				<br />
+				<br />
+				<v-btn to="/" color="green" dark>Refresh</v-btn>
+			</div>
 		</div>
 
-		<div class="mobileView"><DashboardMobile /></div>
+		<div class="loading" v-if="loading">
+			<h2>Loading</h2>
+			<v-progress-circular
+				:width="3"
+				color="green"
+				indeterminate
+			></v-progress-circular>
+		</div>
+		<div class="showError" v-if="error">
+			<img src="../../../assets/undraw_bug_fixing_oc-7-a 1.png" alt="" />
+			<h3>Error Occured. Please refresh the page</h3>
+		</div>
 	</div>
 </template>
 
 <script>
 	import VueHtml2pdf from "vue-html2pdf";
-	import LineChart from "./Line.vue";
 	import Pie from "./Pie.vue";
-	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
-
+	import BarChart from "./BarChart.vue";
+	import reportAPI from "../../../apis/reportAPI";
 	import ContributionTable from "../ReportPageComponents/ContributionTable.vue";
+	import teacherAPI from "../../../apis/teacherAPI";
 	export default {
 		components: {
 			VueHtml2pdf,
-			LineChart,
 			Pie,
-			DashboardMobile,
+			BarChart,
 			ContributionTable,
 		},
 		data: () => ({
+			fetched: true,
+			loading: false,
+			error: false,
+			reportData: {},
 			contribData: [
 				{
 					teacher: "Juan Dela Cruz",
@@ -376,28 +304,135 @@
 					total: 5,
 				},
 			],
+			perType: [],
+			perStatus: [],
+			values: {
+				paper: 0,
+				plastic_bottles: 0,
+				cellophanes: 0,
+				others: 0,
+				segregated: 0,
+				not_segregated: 0,
+				partly_segregated: 0,
+			},
 			value: [
 				423, 446, 675, 510, 590, 610, 760, 423, 446, 675, 510, 590, 610, 760,
 			],
-			label: [1, 2, 3, 4, 5],
-			dataPerType: {
-				paper: 20,
-				plastic_bottles: 40,
-				cellophanes: 30,
-				others: 10,
-				bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
+			printLoading: false,
+			chartData: {
+				labels: [],
+				data: [],
 			},
-			dataPerStatus: {
-				segregated: 20,
-				partially_segregated: 40,
-				not_segregated: 40,
-				bg_color: ["#41B883", "#d6ab33", "#94e0be"],
-			},
-			loading: false,
+
+			teacherChartData: [],
 		}),
+		async created() {
+			try {
+				this.fetched = false;
+				this.loading = true;
+				const result = await reportAPI.prototype.getSpecificReport(
+					this.$route.params.reportid
+				);
+
+				this.reportData = result.data;
+				const payload = {
+					date_started: result.data.date_started,
+					date_ended: result.data.date_ended,
+				};
+
+				const teachers = await teacherAPI.prototype.getAllWithinRange(payload);
+
+				this.teacherChartData = teachers.data;
+				this.loading = false;
+				this.fetched = true;
+			} catch (error) {
+				this.loading = false;
+				this.error = true;
+			}
+		},
+
 		methods: {
 			generateReport() {
 				this.$refs.html2Pdf.generatePdf();
+			},
+		},
+
+		computed: {
+			getChartData: function () {
+				this.teacherChartData.forEach((data) => {
+					let name = data.first_name + " " + data.last_name;
+					this.chartData.labels.push(name);
+					this.chartData.data.push(data.activities.length);
+				});
+			},
+
+			dataPerType: function () {
+				let paper = 0;
+				let plastic_bottles = 0;
+				let cellophanes = 0;
+				let others = 0;
+
+				this.reportData.activities.forEach((activity) => {
+					if (activity.categories.includes("Paper")) {
+						paper += 1;
+					}
+					if (activity.categories.includes("Plastic Bottles")) {
+						plastic_bottles += 1;
+					}
+					if (activity.categories.includes("Cellophanes")) {
+						cellophanes += 1;
+					}
+					if (activity.categories.includes("Others")) {
+						others += 1;
+					}
+				});
+
+				let total = paper + plastic_bottles + cellophanes + others;
+				this.values.paper = paper;
+				this.values.plastic_bottles = plastic_bottles;
+				this.values.cellophanes = cellophanes;
+				this.values.others = others;
+				let data = {
+					paper: ((paper / total) * 100).toFixed(2),
+					plastic_bottles: ((plastic_bottles / total) * 100).toFixed(2),
+					cellophanes: ((cellophanes / total) * 100).toFixed(2),
+					others: ((others / total) * 100).toFixed(2),
+					bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
+				};
+
+				this.perType = data;
+			},
+
+			dataPerStatus: function () {
+				let segregated = 0;
+				let partly_segregated = 0;
+				let not_segregated = 0;
+
+				this.reportData.activities.forEach((activity) => {
+					if (activity.status == "Segregated") {
+						segregated += 1;
+					}
+					if (activity.status == "Partly Segregated") {
+						partly_segregated += 1;
+					}
+					if (activity.status == "Not Segregated") {
+						not_segregated += 1;
+					}
+				});
+
+				let total = segregated + not_segregated + partly_segregated;
+				this.values.segregated = segregated;
+				this.values.not_segregated = not_segregated;
+				this.values.partly_segregated = partly_segregated;
+
+				let data = {
+					segregated: ((segregated / total) * 100).toFixed(2),
+					partially_segregated: ((partly_segregated / total) * 100).toFixed(2),
+					not_segregated: ((not_segregated / total) * 100).toFixed(2),
+					bg_color: ["#41B883", "#d6ab33", "#94e0be"],
+				};
+
+				this.perStatus = data;
 			},
 		},
 	};
@@ -427,6 +462,7 @@
 		margin: 10px 0px;
 		border-radius: 20px;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		width: 80%;
 	}
 
 	.colored {
@@ -593,6 +629,33 @@
 
 	.printablePie {
 		widows: 50%;
+	}
+
+	.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 40px;
+		color: #007d48;
+		height: 70vh;
+	}
+
+	.loading h2 {
+		padding: 10px 20px;
+		font-size: 20px;
+	}
+
+	.showError {
+		margin: 100px 0px;
+		color: #007d48;
+	}
+
+	.showError h3 {
+		padding: 20px;
+	}
+
+	.showError img {
+		width: 250px;
 	}
 
 	@media only screen and (max-width: 1100px) {

@@ -16,6 +16,13 @@ export default class API {
 		return teachers;
 	}
 
+	async getAllWithinRange(payload) {
+		axios.defaults.headers.common["auth-token"] =
+			"Bearer " + localStorage.getItem("token");
+		const teachers = await axios.post(url + "/getAllWithinRange", payload);
+		return teachers;
+	}
+
 	async getSpecificTeacher() {
 		axios.defaults.headers.common["auth-token"] =
 			"Bearer " + localStorage.getItem("token");

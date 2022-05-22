@@ -17,9 +17,19 @@
 				the dates provided.
 			</p>
 		</div>
+
+		<v-snackbar v-model="snackbar" :timeout="timeout">
+			{{ message }}
+
+			<template v-slot:action="{ attrs }">
+				<v-btn color="#5aa67a" text v-bind="attrs" @click="snackbar = false">
+					Close
+				</v-btn>
+			</template>
+		</v-snackbar>
 		<GenerateReportDialog
 			:clickGenerateReport="clickGenerateReport"
-			@cancelReport="cancelReport()"
+			@closeReport="closeReport($event)"
 		/>
 	</div>
 </template>
@@ -30,9 +40,21 @@
 		components: { GenerateReportDialog },
 		data: () => ({
 			clickGenerateReport: false,
+			snackbar: false,
+			message: "",
+			timeout: 2000,
 		}),
 		methods: {
-			cancelReport() {
+			closeReport(data) {
+				if (data) {
+					if (data == "Network Error") {
+						this.message = data;
+					} else {
+						this.message = "Failed to generate report";
+					}
+
+					this.snackbar = true;
+				}
 				this.clickGenerateReport = false;
 			},
 		},

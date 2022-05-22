@@ -35,7 +35,7 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 
-				<v-btn color="green darken-1" text @click="cancel"> Cancel </v-btn>
+				<v-btn color="green darken-1" text @click="close"> Cancel </v-btn>
 
 				<v-btn
 					color="green darken-1"
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+	import reportAPI from "../../../apis/reportAPI";
 	export default {
 		props: {
 			clickGenerateReport: Boolean,
@@ -69,19 +70,53 @@
 		},
 
 		methods: {
-			generateReport() {
-				this.loading = true;
-				setTimeout(() => {
-					console.log(this.dates);
-					this.dates = [];
+			async generateReport() {
+				try {
+					this.loading = true;
+
+					const report = {
+						report_title: this.title,
+						report_details: this.details,
+						date_started: "",
+						date_ended: "",
+					};
+
+					report.date_started =
+						this.dates[0].split("-")[1] +
+						"/" +
+						this.dates[0].split("-")[2] +
+						"/" +
+						this.dates[0].split("-")[0];
+					report.date_ended =
+						this.dates[1].split("-")[1] +
+						"/" +
+						this.dates[1].split("-")[2] +
+						"/" +
+						this.dates[1].split("-")[0];
+
+					const reportGenerated = await reportAPI.prototype.createReport(
+						report
+					);
+
 					this.loading = false;
-				}, 1000);
+					this.clear();
+					this.$router.push("admin/report/" + reportGenerated.data.report.id);
+				} catch (error) {
+					this.clear();
+					this.$emit("closeReport", error.message);
+					this.loading = false;
+				}
 			},
-			cancel() {
+
+			close() {
+				this.clear();
+				this.$emit("closeReport");
+			},
+
+			clear() {
 				this.dates = [];
 				this.details = "";
 				this.title = "";
-				this.$emit("cancelReport");
 			},
 		},
 

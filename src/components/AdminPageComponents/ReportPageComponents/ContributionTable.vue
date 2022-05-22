@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<br />
+		{{ getContribution }}
 		<div class="contributionTable">
 			<h4 style="color: #064635">Trash Per Type</h4>
 			<div class="contributionCon">
@@ -30,30 +31,31 @@
 					<v-btn
 						large
 						style="width: 100%; padding: 0px"
-						v-for="n in 10"
-						:key="n"
-						to="/admin/teachers/profile"
+						v-for="(n, index) in contribData"
+						:key="index"
 						class="hoverableData"
 					>
 						<div class="heading" style="width: 30%">
 							<div class="contentdetails">
 								<v-icon small style="padding-right: 5px" color="#007D48"
 									>mdi-account-circle</v-icon
-								>Mark Rey Ronolo
+								>{{ n.teacher }}
 							</div>
 						</div>
 						<div class="heading" style="width: 70%">
 							<div class="contentdetails category">
-								<v-chip color="#007D48" dark small>10</v-chip>
+								<v-chip color="#007D48" dark small>{{ n.paper }}</v-chip>
 							</div>
 							<div class="contentdetails category">
-								<v-chip color="#007D48" dark small>10</v-chip>
+								<v-chip color="#007D48" dark small>{{ n.cellophanes }}</v-chip>
 							</div>
 							<div class="contentdetails category">
-								<v-chip color="#007D48" dark small>10</v-chip>
+								<v-chip color="#007D48" dark small>{{
+									n.plastic_bottles
+								}}</v-chip>
 							</div>
 							<div class="contentdetails category">
-								<v-chip color="#007D48" dark small>10</v-chip>
+								<v-chip color="#007D48" dark small>{{ n.others }}</v-chip>
 							</div>
 						</div>
 					</v-btn>
@@ -87,27 +89,26 @@
 					<v-btn
 						large
 						style="width: 100%; padding: 0px"
-						v-for="n in 10"
-						:key="n"
-						to="/admin/teachers/profile"
+						v-for="(n, index) in contribData"
+						:key="index"
 						class="hoverableData"
 					>
 						<div class="heading" style="width: 30%">
 							<div class="contentdetails">
 								<v-icon small style="padding-right: 5px" color="#007D48"
 									>mdi-account-circle</v-icon
-								>Mark Rey Ronolo
+								>{{ n.teacher }}
 							</div>
 						</div>
 						<div class="heading" style="width: 70%">
 							<div class="contentdetails status">
-								<v-chip color="#7AA51F" dark small>10</v-chip>
+								<v-chip color="#7AA51F" dark small>{{ n.segregated }}</v-chip>
 							</div>
 							<div class="contentdetails status">
-								<v-chip color="#7AA51F" dark small>10</v-chip>
+								<v-chip color="#7AA51F" dark small>{{ n.partly_seg }}</v-chip>
 							</div>
 							<div class="contentdetails status">
-								<v-chip color="#7AA51F" dark small>10</v-chip>
+								<v-chip color="#7AA51F" dark small>{{ n.not_seg }}</v-chip>
 							</div>
 						</div>
 					</v-btn>
@@ -120,7 +121,104 @@
 <script>
 	export default {
 		components: {},
-		data: () => ({}),
+		props: {
+			data: Object,
+		},
+		data: () => ({
+			list: [],
+			contribData: [],
+		}),
+		created() {
+			const copyData = Object.assign({}, this.data);
+
+			let teachers = [];
+			let obj = {
+				teacher: "",
+				activities: [],
+			};
+
+			for (let i = 0; i < copyData.activities.length; i++) {
+				let teacher =
+					copyData.activities[i].teacher.first_name +
+					" " +
+					copyData.activities[i].teacher.last_name;
+				if (!teachers.includes(teacher)) {
+					teachers.push(teacher);
+					obj.teacher = teacher.slice();
+					obj.activities.push({
+						categories: copyData.activities[i].categories,
+						status: copyData.activities[i].status,
+					});
+
+					this.list.push(obj);
+					obj = {
+						teacher: "",
+						activities: [],
+					};
+					teacher = "";
+				} else {
+					let d = {
+						categories: copyData.activities[i].categories,
+						status: copyData.activities[i].status,
+					};
+
+					this.list.forEach((data) => {
+						if (data.teacher == teacher) {
+							data.activities.push(d);
+						}
+					});
+				}
+			}
+		},
+
+		computed: {
+			getContribution: function () {
+				this.list.forEach((d) => {
+					let teacher = {};
+					teacher.teacher = d.teacher;
+					teacher.id = d.id;
+					teacher.paper = 0;
+					teacher.cellophanes = 0;
+					teacher.plastic_bottles = 0;
+					teacher.others = 0;
+					teacher.segregated = 0;
+					teacher.partly_seg = 0;
+					teacher.not_seg = 0;
+					teacher.total_activities = 0;
+					d.activities.forEach((activity) => {
+						if (activity.categories.includes("Paper")) {
+							teacher.paper += 1;
+						}
+
+						if (activity.categories.includes("Cellophanes")) {
+							teacher.cellophanes += 1;
+						}
+						if (activity.categories.includes("Plastic Bottles")) {
+							teacher.plastic_bottles += 1;
+						}
+						if (activity.categories.includes("Others")) {
+							teacher.others += 1;
+						}
+
+						if (activity.status == "Segregated") {
+							teacher.segregated += 1;
+						}
+
+						if (activity.status == "Partly Segregated") {
+							teacher.partly_seg += 1;
+						}
+
+						if (activity.status == "Not Segregated") {
+							teacher.not_seg += 1;
+						}
+
+						teacher.total_activities += 1;
+					});
+
+					this.contribData.push(teacher);
+				});
+			},
+		},
 	};
 </script>
 
