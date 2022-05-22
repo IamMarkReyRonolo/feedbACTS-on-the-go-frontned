@@ -97,71 +97,8 @@
 
 			<div class="lowerPart">
 				<h2>Activity History</h2>
-				<div class="categories">
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedAll"
-							:dark="!clickedAll"
-							@click="selectCategory('all')"
-						>
-							All
-						</v-btn>
-					</div>
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedSegregated"
-							:dark="!clickedSegregated"
-							@click="selectCategory('segregated')"
-						>
-							Segregated
-						</v-btn>
-					</div>
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedPartlySeg"
-							:dark="!clickedPartlySeg"
-							@click="selectCategory('partly')"
-						>
-							Partly Segregated
-						</v-btn>
-					</div>
-					<!-- <div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedCellophanes"
-							:dark="!clickedCellophanes"
-							@click="selectCategory('cellophanes')"
-						>
-							Cellophanes
-						</v-btn>
-					</div> -->
-					<div class="cat">
-						<v-btn
-							rounded
-							small
-							:text="!clickedNotSeg"
-							:dark="!clickedNotSeg"
-							@click="selectCategory('notSegregated')"
-						>
-							Not Segregated
-						</v-btn>
-					</div>
-				</div>
 			</div>
 		</div>
-
-		<BuzzerConfirmation
-			:clickBuzzer="clickBuzzer"
-			@closeBuzzer="closeBuzzer($event)"
-			@confirmBuzzer="confirmBuzzer()"
-		/>
 
 		<SettingsDialog
 			:clickSettings="clickSettings"
@@ -173,6 +110,21 @@
 			:changePass="changePass"
 			@closeDialog="closeDialog()"
 		/>
+
+		<BuzzerConfirmation
+			:clickBuzzer="clickBuzzer"
+			@closeBuzzer="closeBuzzer($event)"
+		/>
+
+		<v-snackbar v-model="snackbar" :timeout="timeout">
+			{{ message }}
+
+			<template v-slot:action="{ attrs }">
+				<v-btn color="#5aa67a" text v-bind="attrs" @click="snackbar = false">
+					Close
+				</v-btn>
+			</template>
+		</v-snackbar>
 	</div>
 </template>
 
@@ -196,10 +148,22 @@
 			clickedNotSeg: false,
 			timerIsOn: false,
 			time: "",
+			snackbar: false,
+			message: "",
+			timeout: 3000,
 		}),
 
 		methods: {
-			closeBuzzer(event) {
+			closeBuzzer(result) {
+				if (result == "success") {
+					this.snackbar = true;
+					this.message = "Successfully sounded buzzer";
+				}
+
+				if (result == "failed") {
+					this.snackbar = true;
+					this.message = "Failed to sound buzzer";
+				}
 				this.clickBuzzer = false;
 			},
 			confirmBuzzer() {
