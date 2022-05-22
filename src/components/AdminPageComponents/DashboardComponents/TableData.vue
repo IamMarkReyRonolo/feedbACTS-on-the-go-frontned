@@ -302,14 +302,15 @@
 					let hh = time.split(":")[0];
 					let mm = time.split(":")[1];
 					let session = "AM";
-					if (hh === 0) {
+					if (hh == 0) {
 						hh = 12;
-					}
-					if (hh == 12) {
-						session = "PM";
-					} else if (hh > 12) {
-						hh = hh - 12;
-						session = "PM";
+					} else {
+						if (hh == 12) {
+							session = "PM";
+						} else if (hh > 12) {
+							hh = hh - 12;
+							session = "PM";
+						}
 					}
 
 					return hh + ":" + mm + " " + session;

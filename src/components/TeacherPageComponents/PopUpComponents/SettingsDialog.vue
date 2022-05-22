@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="btn">
-				<v-btn dark large color="#5aa67a" to="/">Log Out</v-btn>
+				<v-btn dark large color="#5aa67a" @click="logOut">Log Out</v-btn>
 			</div>
 			<br />
 		</v-card>
@@ -36,6 +36,14 @@
 			return {
 				dates: [],
 			};
+		},
+
+		methods: {
+			logOut() {
+				localStorage.removeItem("user");
+				localStorage.removeItem("token");
+				this.$router.push("/");
+			},
 		},
 	};
 </script>

@@ -75,35 +75,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="mobileView">
-			<div class="upmostPart">
-				<div class="upperLeft">
-					<div class="mLogoCon">
-						<img src="../../assets/recycling.png" alt="" />
-					</div>
-					<p>FeedbACTS on the GO</p>
-				</div>
-				<div class="upperRight">
-					<v-btn text small dark fab @click="clickSettings = true">
-						<v-icon> mdi-cog </v-icon>
-					</v-btn>
-				</div>
-			</div>
-
-			<div class="middlePart">
-				<div class="left">
-					<h2>Jaun Dela Cruz</h2>
-					<p>Sacub National High School</p>
-				</div>
-
-				<div class="right">
-					<v-btn fab dark color="#064635" @click="clickBuzzer = true">
-						<v-icon dark size="40px"> mdi-bell </v-icon>
-					</v-btn>
-					<span>Notifications</span>
-				</div>
-			</div>
-		</div>
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
@@ -372,7 +343,7 @@
 	@media only screen and (max-width: 765px) {
 		/* For mobile phones: */
 		.headerCon {
-			min-height: 100px;
+			min-height: 0px;
 		}
 		.desktopView {
 			display: none;

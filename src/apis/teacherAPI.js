@@ -16,10 +16,10 @@ export default class API {
 		return teachers;
 	}
 
-	async getSpecificTeacher(teacher_id) {
+	async getSpecificTeacher() {
 		axios.defaults.headers.common["auth-token"] =
 			"Bearer " + localStorage.getItem("token");
-		const teacher = await axios.get(url + "/" + teacher_id);
+		const teacher = await axios.get(url + "/getSpecific");
 		return teacher;
 	}
 

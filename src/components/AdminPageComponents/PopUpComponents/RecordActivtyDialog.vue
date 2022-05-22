@@ -241,6 +241,8 @@
 
 					payload.date_created = this.getDate();
 					payload.time_created = this.getTime();
+					console.log("hey");
+					console.log(payload.time_created);
 					const teacherID = this.getTeacherId(payload.teacher);
 					const result = await activityAPI.prototype.createActivity(
 						teacherID,
@@ -268,7 +270,16 @@
 
 			getTime() {
 				const today = new Date();
-				var time = today.getHours() + ":" + today.getMinutes();
+
+				let minutes = 0;
+
+				if (today.getMinutes() < 10) {
+					minutes = "0" + today.getMinutes();
+				} else {
+					minutes = today.getMinutes();
+				}
+
+				const time = today.getHours() + ":" + minutes;
 				return time;
 			},
 			getTeacherId(name) {

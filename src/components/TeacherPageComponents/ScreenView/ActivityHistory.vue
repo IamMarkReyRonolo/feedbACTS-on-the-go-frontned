@@ -1,7 +1,7 @@
 <template>
 	<div class="mobileView">
 		<br />
-		<div class="activityTable">
+		<div class="activityTable" v-if="teacher.activities.length != 0">
 			<div class="tableHeader">
 				<div class="headerCon left">
 					<v-btn text x-small color="#064635" class="leftCon" width="40%"
@@ -20,40 +20,93 @@
 			<div class="tableContents">
 				<div
 					class="content"
-					v-for="n in 20"
-					:key="n"
-					@click="moreDetails = true"
+					v-for="(activity, index) in teacher.activities"
+					:key="index"
+					@click="selectActivity(activity)"
 				>
 					<div class="left">
-						<div class="details date">03/22/22</div>
-						<div class="details name">Not segregated</div>
+						<div class="details date">{{ activity.date_created }}</div>
+						<div class="details name">{{ activity.status }}</div>
 					</div>
 					<div class="right">
 						<div class="details trash">
 							<div class="chip">
-								<v-chip x-small color="#007D48" dark>Paper</v-chip>
+								<v-chip
+									x-small
+									color="#007D48"
+									dark
+									v-if="
+										activity.categories.includes('Paper') &&
+										!checkAll(activity.categories)
+									"
+									>Paper</v-chip
+								>
 							</div>
 							<div class="chip">
-								<v-chip x-small color="#7AA51F" dark>Cellophanes</v-chip>
+								<v-chip
+									x-small
+									color="#7AA51F"
+									dark
+									v-if="
+										activity.categories.includes('Cellophanes') &&
+										!checkAll(activity.categories)
+									"
+									>Cellophanes</v-chip
+								>
 							</div>
 							<div class="chip">
-								<v-chip x-small color="#407355" dark>Plastic Bottles</v-chip>
+								<v-chip
+									x-small
+									color="#407355"
+									dark
+									v-if="
+										activity.categories.includes('Plastic Bottles') &&
+										!checkAll(activity.categories)
+									"
+									>Plastic Bottles</v-chip
+								>
 							</div>
 
-							<!-- <div class="chip">
-								<v-chip x-small color="#FDC00B" dark>Other Trash</v-chip>
-							</div>
-
 							<div class="chip">
-								<v-chip x-small color="#007D48" dark>All Types</v-chip>
-							</div> -->
+								<v-chip
+									x-small
+									color="#FDC00B"
+									dark
+									v-if="
+										activity.categories.includes('Others') &&
+										!checkAll(activity.categories)
+									"
+									>Other Trash</v-chip
+								>
+							</div>
+							<div class="chip">
+								<v-chip
+									x-small
+									color="#407355"
+									dark
+									v-if="checkAll(activity.categories)"
+									>All</v-chip
+								>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
+		<div class="empty" v-if="teacher.activities.length == 0">
+			<img src="../../../assets/emptyTrash.png" alt="" />
+			<h5>
+				No records yet <br />
+				Participate in the next trash collection .
+			</h5>
+		</div>
+
+		<MoreDetails
+			:moreDetails="moreDetails"
+			@closeDetails="closeDetails()"
+			:activity="selected_activity"
+		/>
 	</div>
 </template>
 
@@ -61,12 +114,46 @@
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	export default {
 		components: { MoreDetails },
-		data: () => ({ moreDetails: false }),
+		props: {
+			teacher: Object,
+		},
+		data: () => ({
+			moreDetails: false,
+			selected_activity: {},
+			activities: [],
+			dashboardData: [],
+			teacherData: {},
+		}),
+
+		created() {
+			this.teacherData = Object.assign({}, this.teacher);
+			this.teacherData.activities.sort((a, b) =>
+				a.id > b.id ? -1 : b.id > a.id ? 1 : 0
+			);
+		},
+
 		methods: {
+			selectActivity(activity) {
+				activity.teacher =
+					this.teacher.first_name + " " + this.teacher.last_name;
+				this.selected_activity = activity;
+				this.moreDetails = true;
+			},
 			closeDetails() {
 				this.moreDetails = false;
 			},
+
+			checkAll(categories) {
+				return (
+					categories.includes("Others") &&
+					categories.includes("Plastic Bottles") &&
+					categories.includes("Cellophanes") &&
+					categories.includes("Paper")
+				);
+			},
 		},
+
+		computed: {},
 	};
 </script>
 
@@ -137,7 +224,7 @@
 		.date {
 			width: 40%;
 			text-align: left;
-			font-size: 10px;
+			font-size: 9px;
 		}
 
 		.name {
@@ -151,7 +238,6 @@
 		.trash {
 			width: 100%;
 			display: flex;
-			flex-wrap: wrap;
 		}
 
 		.trash .v-chip {
@@ -162,6 +248,21 @@
 			position: fixed;
 			right: 25px;
 			bottom: 40px;
+		}
+
+		.empty {
+			margin: 80px 0px;
+		}
+
+		.empty h5 {
+			color: #007d48;
+			padding: 25px 30px;
+			font-size: 14px;
+			font-weight: lighter;
+		}
+
+		.empty img {
+			width: 250px;
 		}
 	}
 </style>

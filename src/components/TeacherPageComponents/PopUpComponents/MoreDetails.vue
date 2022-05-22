@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="moreDetails" max-width="400" persistent>
+	<v-dialog v-model="moreDetails" max-width="400" persistent v-if="moreDetails">
 		<v-card>
 			<v-btn
 				fab
@@ -21,7 +21,7 @@
 							outlined
 							color="#5aa67a"
 							dense
-							v-model="activity.date"
+							v-model="activity.date_created"
 							disabled
 						></v-text-field>
 					</div>
@@ -31,41 +31,30 @@
 							outlined
 							color="#5aa67a"
 							dense
-							v-model="activity.time"
+							v-model="activity.time_created"
 							disabled
 						></v-text-field>
 					</div>
 				</div>
 
 				<div class="detail">
-					<v-select
+					<v-text-field
 						label="Teacher"
 						outlined
 						color="#5aa67a"
 						dense
 						v-model="activity.teacher"
-						:items="teachers"
 						:rules="[rules.required]"
 						readonly
-					></v-select>
+					></v-text-field>
 				</div>
 
 				<div class="detail">
-					<!-- <v-select
-						label="Category"
-						outlined
-						color="#5aa67a"
-						dense
-						v-model="activity.category"
-						:items="categories"
-						:rules="[rules.required]"
-					></v-select> -->
-
 					<v-combobox
 						label="Category"
 						outlined
 						color="#5aa67a"
-						v-model="activity.category"
+						v-model="activity.categories"
 						:items="categories"
 						multiple
 						small-chips
@@ -80,7 +69,7 @@
 						label="Segregated"
 						outlined
 						color="#5aa67a"
-						v-model="activity.segregated"
+						v-model="activity.status"
 						:items="segregated"
 						small-chips
 						:rules="[rules.required, rules.segregatedMapped]"
@@ -91,31 +80,18 @@
 
 				<div class="feedback">
 					<div class="detail">
-						<v-combobox
+						<v-textarea
 							v-model="activity.feedback"
-							:items="feedbacks"
-							:search-input.sync="search"
 							hide-selected
 							outlined
 							color="#5aa67a"
 							label="Feedback"
 							persistent-hint
-							small-chips
 							multiple
 							:rules="[rules.required]"
 							readonly
 						>
-							<template v-slot:no-data>
-								<v-list-item>
-									<v-list-item-content>
-										<v-list-item-title>
-											No results matching "<strong>{{ search }}</strong
-											>". Press <kbd>enter</kbd> to create a new one
-										</v-list-item-title>
-									</v-list-item-content>
-								</v-list-item>
-							</template>
-						</v-combobox>
+						</v-textarea>
 					</div>
 				</div>
 			</div>
@@ -129,20 +105,13 @@
 	export default {
 		props: {
 			moreDetails: Boolean,
+			activity: Object,
 		},
 		data() {
 			return {
 				updateLoading: false,
 				deleteLoading: false,
 				dates: [],
-				activity: {
-					date: "03/24/2022",
-					time: "10:30 AM",
-					teacher: "Juan Dela Cruz",
-					category: ["Plastic Bottles", "Cellophanes"],
-					segregated: "Yes",
-					feedback: ["Great job, properly segregated."],
-				},
 				categories: ["Paper", "Cellophanes", "Plastic Bottles", "Others"],
 				segregated: ["Yes", "Partly", "No"],
 				teachers: [

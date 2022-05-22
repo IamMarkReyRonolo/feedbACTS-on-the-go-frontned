@@ -12,25 +12,25 @@
 					<div class="name">
 						<div class="details">
 							<div class="label">First Name</div>
-							<div class="content">Juan</div>
+							<div class="content">{{ this.teacher.first_name }}</div>
 						</div>
 						<div class="details">
 							<div class="label">Last Name</div>
-							<div class="content">Dela Cruz</div>
+							<div class="content">{{ this.teacher.last_name }}</div>
 						</div>
 					</div>
 
 					<div class="details">
 						<div class="label">Gender</div>
-						<div class="content">Male</div>
+						<div class="content">{{ this.teacher.gender }}</div>
 					</div>
 					<div class="details">
 						<div class="label">Username</div>
-						<div class="content">akosijuan123</div>
+						<div class="content">{{ this.teacher.username }}</div>
 					</div>
 					<div class="details">
 						<div class="label">Code</div>
-						<div class="content">123123</div>
+						<div class="content">{{ this.teacher.code }}</div>
 					</div>
 					<div class="detailsFunctionCon">
 						<div class="btn">
@@ -38,97 +38,35 @@
 								>View QR Code</v-btn
 							>
 						</div>
-
-						<div class="btn mobile">
-							<v-btn small @click="printCard = true">Print FeedaCTS Card</v-btn>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
-		<PrintCard :printCard="printCard" @closePrintCard="closePrintCard" />
 	</div>
 </template>
 
 <script>
-	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
-	import PrintCard from "../PopUpComponents/PrintCard.vue";
+
 	export default {
 		components: {
-			MoreDetails,
 			ViewQRCode,
-			PrintCard,
+		},
+
+		props: {
+			teacher: Object,
 		},
 		data() {
 			return {
-				teacher: {
-					first_name: "Juan",
-					last_name: "Dela Cruz",
-					gender: "Male",
-					code: "codecode",
-					username: "iamjuan123",
-					password: "123123",
-				},
-				contribData: [
-					{
-						date: "03/23/2022",
-						time: "10:30 AM",
-						plastic: 5,
-						paper: 5,
-						cellophanes: 5,
-						other: 5,
-						total: 5,
-					},
-				],
-
-				dataPerType: {
-					paper: 20,
-					plastic_bottles: 40,
-					cellophanes: 30,
-					others: 10,
-					bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
-				},
-				dataPerStatus: {
-					segregated: 20,
-					partially_segregated: 40,
-					not_segregated: 40,
-					bg_color: ["#41B883", "#d6ab33", "#94e0be"],
-				},
-				moreDetails: false,
 				showQR: false,
-				printCard: false,
-				nloading: false,
-				selectType: true,
 			};
 		},
 
 		methods: {
-			closeDetails() {
-				this.moreDetails = false;
-			},
 			closeQR() {
 				this.showQR = false;
-			},
-			closePrintCard() {
-				this.printCard = false;
-			},
-			select(params) {
-				this.nloading = true;
-				if (params == "type") {
-					setTimeout(() => {
-						this.selectType = true;
-						this.nloading = false;
-					}, 500);
-				} else {
-					setTimeout(() => {
-						this.selectType = false;
-						this.nloading = false;
-					}, 500);
-				}
 			},
 		},
 

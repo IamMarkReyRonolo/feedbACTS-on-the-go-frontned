@@ -12,25 +12,25 @@
 					<div class="name">
 						<div class="details">
 							<div class="label">First Name</div>
-							<div class="content">Juan</div>
+							<div class="content">{{ teacher.first_name }}</div>
 						</div>
 						<div class="details">
 							<div class="label">Last Name</div>
-							<div class="content">Dela Cruz</div>
+							<div class="content">{{ teacher.last_name }}</div>
 						</div>
 					</div>
 
 					<div class="details">
 						<div class="label">Gender</div>
-						<div class="content">Male</div>
+						<div class="content">{{ teacher.gender }}</div>
 					</div>
 					<div class="details">
 						<div class="label">Username</div>
-						<div class="content">akosijuan123</div>
+						<div class="content">{{ teacher.username }}</div>
 					</div>
 					<div class="details">
 						<div class="label">Code</div>
-						<div class="content">123123</div>
+						<div class="content">{{ teacher.code }}</div>
 					</div>
 					<div class="detailsFunctionCon">
 						<div class="btn">
@@ -78,19 +78,36 @@
 							></v-progress-circular>
 						</div>
 						<div class="perType" v-if="selectType && !nloading">
-							<Pie :width="150" :height="150" :data="dataPerType" />
+							<Pie
+								:width="150"
+								:height="150"
+								:data="dataPerType"
+								v-if="teacher.activities.length != 0"
+							/>
+							<div class="empty" v-if="teacher.activities.length == 0">
+								<br />
+								<img src="../../../assets/no statistics.png" alt="" />
+								<h3>Statistics not available</h3>
+							</div>
 						</div>
 						<div class="perStatus" v-if="!selectType && !nloading">
-							<Pie :width="150" :height="150" :data="dataPerStatus" />
+							<Pie
+								:width="150"
+								:height="150"
+								:data="dataPerStatus"
+								v-if="teacher.activities.length != 0"
+							/>
+							<div class="empty" v-if="teacher.activities.length == 0">
+								<br />
+								<img src="../../../assets/no statistics.png" alt="" />
+								<h3>Statistics not available</h3>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="mobileView"><DashboardMobile /></div>
-
-		<MoreDetails :moreDetails="moreDetails" @closeDetails="closeDetails()" />
 		<ViewQRCode :showQR="showQR" @closeQR="closeQR()" :value="getQRValue" />
 		<PrintCard
 			:printCard="printCard"
@@ -101,60 +118,31 @@
 </template>
 
 <script>
-	import DashboardMobile from "../ScreenView/DashboardMobile.vue";
-	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
 	import ViewQRCode from "../PopUpComponents/ViewQRCode.vue";
 	import PrintCard from "../PopUpComponents/PrintCard.vue";
 	import Pie from "./Pie.vue";
 	export default {
 		components: {
-			DashboardMobile,
-			MoreDetails,
 			ViewQRCode,
 			Pie,
 			PrintCard,
 		},
+		props: {
+			teacherData: Object,
+		},
 		data() {
 			return {
-				teacher: {
-					first_name: "Juan",
-					last_name: "Dela Cruz",
-					gender: "Male",
-					code: "codecode",
-					username: "iamjuan123",
-					password: "123123",
-				},
-				contribData: [
-					{
-						date: "03/23/2022",
-						time: "10:30 AM",
-						plastic: 5,
-						paper: 5,
-						cellophanes: 5,
-						other: 5,
-						total: 5,
-					},
-				],
-
-				dataPerType: {
-					paper: 20,
-					plastic_bottles: 40,
-					cellophanes: 30,
-					others: 10,
-					bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
-				},
-				dataPerStatus: {
-					segregated: 20,
-					partially_segregated: 40,
-					not_segregated: 40,
-					bg_color: ["#41B883", "#d6ab33", "#94e0be"],
-				},
+				teacher: {},
 				moreDetails: false,
 				showQR: false,
 				printCard: false,
 				nloading: false,
 				selectType: true,
 			};
+		},
+
+		created() {
+			this.teacher = Object.assign({}, this.teacherData);
 		},
 
 		methods: {
@@ -190,6 +178,69 @@
 					code: this.teacher.code,
 				};
 				return JSON.stringify(qrValue);
+			},
+
+			dataPerType: function () {
+				let paper = 0;
+				let plastic_bottles = 0;
+				let cellophanes = 0;
+				let others = 0;
+
+				this.teacher.activities.forEach((activity) => {
+					if (activity.categories.includes("Paper")) {
+						paper += 1;
+					}
+					if (activity.categories.includes("Plastic Bottles")) {
+						plastic_bottles += 1;
+					}
+					if (activity.categories.includes("Cellophanes")) {
+						cellophanes += 1;
+					}
+					if (activity.categories.includes("Others")) {
+						others += 1;
+					}
+				});
+
+				let total = paper + plastic_bottles + cellophanes + others;
+
+				let data = {
+					paper: ((paper / total) * 100).toFixed(2),
+					plastic_bottles: ((plastic_bottles / total) * 100).toFixed(2),
+					cellophanes: ((cellophanes / total) * 100).toFixed(2),
+					others: ((others / total) * 100).toFixed(2),
+					bg_color: ["#007D48", "#407355", "#7AA51F", "#FDC00B"],
+				};
+
+				return data;
+			},
+
+			dataPerStatus: function () {
+				let segregated = 0;
+				let partly_segregated = 0;
+				let not_segregated = 0;
+
+				this.teacher.activities.forEach((activity) => {
+					if (activity.status == "Segregated") {
+						segregated += 1;
+					}
+					if (activity.status == "Partly Segregated") {
+						partly_segregated += 1;
+					}
+					if (activity.status == "Not Segregated") {
+						not_segregated += 1;
+					}
+				});
+
+				let total = segregated + not_segregated + partly_segregated;
+
+				let data = {
+					segregated: ((segregated / total) * 100).toFixed(2),
+					partially_segregated: ((partly_segregated / total) * 100).toFixed(2),
+					not_segregated: ((not_segregated / total) * 100).toFixed(2),
+					bg_color: ["#41B883", "#d6ab33", "#94e0be"],
+				};
+
+				return data;
 			},
 		},
 	};
@@ -297,7 +348,18 @@
 	.teacherDetails {
 		min-height: 300px;
 	}
+	.empty {
+		margin: 20px 0px;
+	}
 
+	.empty h3 {
+		color: #007d48;
+		padding: 20px;
+	}
+
+	.empty img {
+		width: 200px;
+	}
 	@media only screen and (max-width: 1100px) {
 		.mainCon {
 			padding: 0px 0px;

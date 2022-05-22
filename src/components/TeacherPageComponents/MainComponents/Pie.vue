@@ -97,10 +97,6 @@
 			};
 		},
 
-		created() {
-			console.log("yep");
-		},
-
 		computed: {
 			getData: function () {
 				const labels = Object.keys(this.data).filter(
