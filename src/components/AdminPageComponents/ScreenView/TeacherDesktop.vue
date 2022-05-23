@@ -44,7 +44,8 @@
 					v-model="searchTeacher"
 				></v-text-field>
 			</div>
-			<div class="allTeachers">
+
+			<div class="allTeachers" v-if="renderTeachers.length != 0">
 				{{ getAllTeachers }}
 				<div
 					class="teacher"
@@ -71,6 +72,10 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="empty" v-if="renderTeachers.length == 0">
+				<img src="../../../assets/emptyTrash.png" alt="" />
+				<h4>Nothing to show. I suggest you might add some teachers</h4>
 			</div>
 		</div>
 		<br />
@@ -279,6 +284,22 @@
 	.searchBarCon {
 		width: 400px;
 		margin: auto;
+	}
+
+	.empty {
+		text-align: center;
+
+		margin: 100px auto;
+	}
+
+	.empty h4 {
+		color: #007d48;
+		font-weight: lighter;
+		padding: 20px;
+	}
+
+	.empty img {
+		width: 300px;
 	}
 
 	@media only screen and (max-width: 1100px) {

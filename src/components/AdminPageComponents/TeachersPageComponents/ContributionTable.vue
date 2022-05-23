@@ -1,6 +1,6 @@
 <template>
 	<div class="contributionTable">
-		<div class="contributionCon">
+		<div class="contributionCon" v-if="contributions.length != 0">
 			<div class="tableHeader">
 				<div class="heading" style="width: 20%">
 					<div class="details">
@@ -80,6 +80,11 @@
 					</div>
 				</v-btn>
 			</div>
+		</div>
+
+		<div class="empty" v-if="contributions.length == 0">
+			<img src="../../../assets/emptyTrash.png" alt="" />
+			<h4>No data yet. Start by creating teachers.</h4>
 		</div>
 	</div>
 </template>
@@ -173,5 +178,21 @@
 		background-color: #5aa67a;
 		transition: 0.3s ease;
 		color: white;
+	}
+
+	.empty {
+		text-align: center;
+
+		margin: 100px auto;
+	}
+
+	.empty h4 {
+		color: #007d48;
+		font-weight: lighter;
+		padding: 20px;
+	}
+
+	.empty img {
+		width: 300px;
 	}
 </style>

@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:3000/api/report";
+const url = "https://e-buzzer-tms-server.herokuapp.com/api/report";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 
