@@ -425,6 +425,7 @@
 				this.showResult = false;
 				this.success = false;
 				this.proceed = false;
+				this.loading = false;
 			},
 		},
 

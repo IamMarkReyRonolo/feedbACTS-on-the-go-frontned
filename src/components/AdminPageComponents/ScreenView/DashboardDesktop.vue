@@ -69,6 +69,7 @@
 				if (result == "success") {
 					this.snackbar = true;
 					this.message = "Successfully sounded buzzer";
+					location.reload();
 				}
 
 				if (result == "failed") {

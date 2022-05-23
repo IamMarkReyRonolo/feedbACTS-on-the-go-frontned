@@ -27,13 +27,14 @@
 								disabled
 							></v-text-field>
 						</div>
+
 						<div class="detail">
 							<v-text-field
 								label="Time"
 								outlined
 								color="#5aa67a"
 								dense
-								v-model="selected_activity.time_created"
+								v-model="getTime"
 								disabled
 								type="time"
 							></v-text-field>
@@ -257,6 +258,16 @@
 
 			getActivity() {
 				this.selected_activity = Object.assign({}, this.activity);
+			},
+
+			getTime() {
+				let time = this.selected_activity.time_created;
+
+				if (time.split(":")[0] < 10) {
+					time = 0 + "" + this.selected_activity.time_created;
+				}
+
+				return time;
 			},
 		},
 	};

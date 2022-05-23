@@ -226,6 +226,7 @@
 						}
 
 						this.showSnackbar(result, message);
+						location.reload();
 					}
 				}
 
@@ -253,6 +254,7 @@
 						}
 
 						this.showSnackbar(result, message);
+						location.reload();
 					}
 				}
 
@@ -280,6 +282,7 @@
 
 						this.activities = sortedActivity;
 						this.showSnackbar(result, message);
+						location.reload();
 					}
 				}
 				this.recordActivity = false;
