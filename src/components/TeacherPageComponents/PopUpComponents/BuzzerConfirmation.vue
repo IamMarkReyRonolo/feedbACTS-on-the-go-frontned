@@ -7,29 +7,31 @@
 					x-small
 					color="green darken-1"
 					dark
-					@click="$emit('closeBuzzer', false)"
+					@click="$emit('closeNotification', false)"
 					class="closeBtn"
 				>
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 				<v-card-title class="dialogTitle"> Notifications </v-card-title>
 				<div class="notifs">
-					<div class="notif" v-for="n in 5" :key="n">
+					<div class="notif">
 						<v-btn x-large outlined color="#65c18c">
 							<v-icon size="40px">mdi-check-circle-outline</v-icon>
 							<div class="notifDetails">
-								<span>Trash Collected Success</span>
-								<h6>Category Plastic</h6>
+								<span style="font-size: 10px"
+									>Your Trash Has Been Recorded</span
+								>
+								<h6>Congratulations</h6>
 								<div class="dateDetails">03/21/22</div>
 							</div>
 						</v-btn>
 					</div>
 
-					<div class="notif" v-for="n in 5" :key="n">
+					<div class="notif">
 						<v-btn x-large outlined color="#65c18c">
 							<v-icon size="40px">mdi-gesture-double-tap</v-icon>
 							<div class="notifDetails">
-								<span>Buzzer Sounded</span>
+								<span style="font-size: 10px">Buzzer Sounded</span>
 								<h6>Participate</h6>
 								<div class="dateDetails">03/21/22</div>
 							</div>
@@ -112,6 +114,10 @@
 		text-align: left;
 		width: 100%;
 		margin-top: 5px;
+	}
+
+	.notifDetails span {
+		font-size: 8px;
 	}
 
 	.notifDetails h6 {

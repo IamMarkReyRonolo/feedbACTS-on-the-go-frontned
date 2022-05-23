@@ -24,7 +24,9 @@
 
 				<div class="right">
 					<v-btn fab dark color="#064635" @click="clickBuzzer = true">
-						<v-icon dark size="40px"> mdi-bell </v-icon>
+						<v-icon dark size="40px" @click="clickNotifications = true">
+							mdi-bell
+						</v-icon>
 					</v-btn>
 					<span>Notifications</span>
 				</div>
@@ -85,6 +87,11 @@
 			<Statistics v-if="clickedPlastic" :teacher="teacherData" />
 			<ActivityHistory v-if="clickedAll" :teacher="teacherData" />
 		</div>
+
+		<Notification
+			:clickBuzzer="clickNotifications"
+			@closeNotification="closeNotification"
+		/>
 	</div>
 </template>
 
@@ -92,8 +99,9 @@
 	import ActivityHistory from "./ActivityHistory.vue";
 	import Statistics from "./Statistics.vue";
 	import Profile from "./Profile.vue";
+	import Notification from "../PopUpComponents/BuzzerConfirmation.vue";
 	export default {
-		components: { ActivityHistory, Statistics, Profile },
+		components: { ActivityHistory, Statistics, Profile, Notification },
 		props: {
 			teacher: Object,
 		},
@@ -103,6 +111,7 @@
 			clickedPlastic: false,
 			clickedPaper: false,
 			teacherData: {},
+			clickNotifications: false,
 		}),
 		methods: {
 			selectCategory(category) {
@@ -137,6 +146,9 @@
 					this.clickedCellophanes = false;
 					this.clickedOthers = true;
 				}
+			},
+			closeNotification() {
+				this.clickNotifications = false;
 			},
 		},
 		computed: {

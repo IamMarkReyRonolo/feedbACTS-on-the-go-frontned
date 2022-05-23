@@ -78,7 +78,7 @@
 
 		<BuzzerConfirmation
 			:clickBuzzer="clickBuzzer"
-			@closeBuzzer="closeBuzzer($event)"
+			@closeNotification="closeBuzzer($event)"
 			@confirmBuzzer="confirmBuzzer()"
 		/>
 
