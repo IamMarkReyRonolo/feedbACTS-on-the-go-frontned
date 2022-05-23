@@ -45,7 +45,7 @@
 				></v-text-field>
 			</div>
 
-			<div class="allTeachers" v-if="renderTeachers.length != 0">
+			<div class="allTeachers" v-if="data.length != 0">
 				{{ getAllTeachers }}
 				<div
 					class="teacher"
@@ -73,7 +73,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="empty" v-if="renderTeachers.length == 0">
+			<div class="empty" v-if="data.length == 0">
 				<img src="../../../assets/emptyTrash.png" alt="" />
 				<h4>Nothing to show. I suggest you might add some teachers</h4>
 			</div>

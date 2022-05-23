@@ -72,9 +72,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 40px;
+		padding: 20px;
 		color: #007d48;
-		height: 70vh;
+		height: 50vh;
 	}
 
 	.loading h2 {

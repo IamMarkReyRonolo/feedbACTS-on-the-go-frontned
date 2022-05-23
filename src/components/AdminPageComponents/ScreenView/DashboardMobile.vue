@@ -452,6 +452,7 @@
 
 		.empty {
 			margin: 50px 0px;
+			text-align: center;
 		}
 
 		.empty h3 {

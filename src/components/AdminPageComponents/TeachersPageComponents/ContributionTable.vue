@@ -1,5 +1,6 @@
 <template>
 	<div class="contributionTable">
+		{{ sortedContributions() }}
 		<div class="contributionCon" v-if="contributions.length != 0">
 			<div class="tableHeader">
 				<div class="heading" style="width: 20%">
@@ -35,7 +36,6 @@
 			</div>
 
 			<div class="tableContents">
-				{{ sortedContributions() }}
 				<v-btn
 					large
 					style="width: 100%; padding: 0px"

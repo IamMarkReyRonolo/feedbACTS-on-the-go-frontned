@@ -312,6 +312,7 @@
 
 		.mobileView {
 			display: block;
+			text-align: center;
 		}
 	}
 </style>
