@@ -100,7 +100,7 @@
 
 					this.loading = false;
 					this.clear();
-					this.$router.push("admin/report/" + reportGenerated.data.report.id);
+					this.$router.push("/admin/report/" + reportGenerated.data.report.id);
 				} catch (error) {
 					this.clear();
 					this.$emit("closeReport", error.message);

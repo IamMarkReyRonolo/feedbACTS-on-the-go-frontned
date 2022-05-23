@@ -69,7 +69,7 @@
 				if (result == "success") {
 					this.snackbar = true;
 					this.message = "Successfully sounded buzzer";
-					location.reload();
+					this.buzzer_count += 1;
 				}
 
 				if (result == "failed") {
