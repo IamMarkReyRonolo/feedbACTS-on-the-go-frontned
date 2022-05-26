@@ -38,7 +38,7 @@
 						<v-btn
 							large
 							class="hoverableData"
-							@click="selectActivity(activity)"
+							@click.exact="selectActivity(activity)"
 						>
 							<div class="details dateTime">
 								<div>{{ activity.date_created }}</div>
@@ -128,6 +128,16 @@
 									>No</v-chip
 								>
 							</div>
+
+							<div class="feedBackBtn">
+								<v-btn
+									small
+									rounded
+									color="#FFFFFF"
+									@click="showFeedback(activity.feedback)"
+									>View Feedback</v-btn
+								>
+							</div>
 						</v-btn>
 					</div>
 				</div>
@@ -143,14 +153,21 @@
 			@closeDetails="closeDetails()"
 			:activity="selected_activity"
 		/>
+
+		<FeedbackPopUp
+			:viewFeedback="showfeedback"
+			:feedback="feedback"
+			@closeFeedback="closeFeedback"
+		/>
 	</div>
 </template>
 
 <script>
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
+	import FeedbackPopUp from "../PopUpComponents/FeedbackPopUp.vue";
 
 	export default {
-		components: { MoreDetails },
+		components: { MoreDetails, FeedbackPopUp },
 		props: {
 			teacher: Object,
 		},
@@ -159,17 +176,28 @@
 			selected_activity: {},
 			activities: [],
 			dashboardData: [],
+			showfeedback: false,
+			feedback: [],
 		}),
 
 		methods: {
+			showFeedback(feedback) {
+				this.showfeedback = true;
+				this.feedback = feedback;
+			},
 			selectActivity(activity) {
-				activity.teacher =
-					this.teacher.first_name + " " + this.teacher.last_name;
-				this.selected_activity = activity;
-				this.moreDetails = true;
+				if (!this.showfeedback) {
+					activity.teacher =
+						this.teacher.first_name + " " + this.teacher.last_name;
+					this.selected_activity = activity;
+					this.moreDetails = true;
+				}
 			},
 			closeDetails() {
 				this.moreDetails = false;
+			},
+			closeFeedback() {
+				this.showfeedback = false;
 			},
 
 			getTime(time) {
@@ -315,6 +343,19 @@
 
 	.empty img {
 		width: 300px;
+	}
+
+	.feedBackBtn {
+		position: absolute;
+		right: 10px;
+	}
+
+	.feedBackBtn .v-btn {
+		color: #4f7e63;
+		border: 1px solid #4f7e63;
+		font-size: 8px;
+		padding: 10px;
+		font-weight: bolder;
 	}
 	@media only screen and (max-width: 1100px) {
 		.dateTime {

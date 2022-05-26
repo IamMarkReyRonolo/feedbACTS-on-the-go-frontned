@@ -90,6 +90,16 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="feedBackBtn">
+						<v-btn
+							x-small
+							rounded
+							color="#FFFFFF"
+							@click="showFeedback(activity.feedback)"
+							>View Feedback</v-btn
+						>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -107,13 +117,20 @@
 			@closeDetails="closeDetails()"
 			:activity="selected_activity"
 		/>
+
+		<FeedbackPopUp
+			:viewFeedback="showfeedback"
+			:feedback="feedback"
+			@closeFeedback="closeFeedback"
+		/>
 	</div>
 </template>
 
 <script>
 	import MoreDetails from "../PopUpComponents/MoreDetails.vue";
+	import FeedbackPopUp from "../PopUpComponents/FeedbackPopUp.vue";
 	export default {
-		components: { MoreDetails },
+		components: { MoreDetails, FeedbackPopUp },
 		props: {
 			teacher: Object,
 		},
@@ -123,6 +140,8 @@
 			activities: [],
 			dashboardData: [],
 			teacherData: {},
+			showfeedback: false,
+			feedback: [],
 		}),
 
 		created() {
@@ -133,12 +152,23 @@
 		},
 
 		methods: {
-			selectActivity(activity) {
-				activity.teacher =
-					this.teacher.first_name + " " + this.teacher.last_name;
-				this.selected_activity = activity;
-				this.moreDetails = true;
+			showFeedback(feedback) {
+				this.showfeedback = true;
+				this.feedback = feedback;
 			},
+			selectActivity(activity) {
+				if (!this.showfeedback) {
+					activity.teacher =
+						this.teacher.first_name + " " + this.teacher.last_name;
+					this.selected_activity = activity;
+					this.moreDetails = true;
+				}
+			},
+
+			closeFeedback() {
+				this.showfeedback = false;
+			},
+
 			closeDetails() {
 				this.moreDetails = false;
 			},
@@ -161,7 +191,7 @@
 	@media only screen and (max-width: 765px) {
 		.tableHeader,
 		.tableContents {
-			padding: 0px 10px;
+			padding: 0px 0px;
 		}
 
 		.tableHeader {
@@ -177,13 +207,13 @@
 		}
 
 		.left {
-			width: 50%;
+			width: 45%;
 			display: flex;
 			align-items: center;
 		}
 
 		.right {
-			width: 50%;
+			width: 55%;
 		}
 
 		.tableContents {
@@ -236,7 +266,7 @@
 		}
 
 		.trash {
-			width: 100%;
+			width: 55%;
 			display: flex;
 		}
 
@@ -263,6 +293,19 @@
 
 		.empty img {
 			width: 250px;
+		}
+
+		.feedBackBtn {
+			position: absolute;
+			right: 20px;
+		}
+
+		.feedBackBtn .v-btn {
+			color: #4f7e63;
+			border: 1px solid #4f7e63;
+			font-size: 6px;
+			padding: 5px;
+			font-weight: bolder;
 		}
 	}
 </style>

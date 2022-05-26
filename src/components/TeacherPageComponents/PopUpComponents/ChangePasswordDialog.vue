@@ -116,14 +116,13 @@
 						current_password: this.currentPassword,
 						new_password: this.newPassword,
 					};
-					console.log(payload);
+
 					const result = await teacherAPI.prototype.updateUserPassword(payload);
 					this.clear();
 					this.message = "Successfully changed the password.";
 					this.snackbar = true;
 					this.loading = false;
 				} catch (error) {
-					console.log(error);
 					if (error.message == "Network Error") {
 						this.message = "Network Error";
 					} else {
