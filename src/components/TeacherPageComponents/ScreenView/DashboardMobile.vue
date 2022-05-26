@@ -19,7 +19,10 @@
 			<div class="middlePart">
 				<div class="left">
 					<h2>{{ teacherData.first_name }} {{ teacherData.last_name }}</h2>
-					<p>Sacub National High School</p>
+					<p style="font-size: 12px">
+						{{ teacherData.grade_level }} - {{ teacherData.section }}
+					</p>
+					<p style="font-size: 12px">Sacub National High School</p>
 				</div>
 
 				<div class="right">

@@ -49,6 +49,28 @@
 
 				<div class="detail">
 					<v-text-field
+						label="Grade Level"
+						outlined
+						color="#5aa67a"
+						dense
+						v-model="teacher.grade_level"
+						:rules="[rules.required]"
+					></v-text-field>
+				</div>
+
+				<div class="detail">
+					<v-text-field
+						label="Section"
+						outlined
+						color="#5aa67a"
+						dense
+						v-model="teacher.section"
+						:rules="[rules.required]"
+					></v-text-field>
+				</div>
+
+				<div class="detail">
+					<v-text-field
 						label="Username"
 						outlined
 						color="#5aa67a"
@@ -101,6 +123,8 @@
 					first_name: "",
 					last_name: "",
 					gender: "",
+					grade_level: "",
+					section: "",
 					username: "",
 					password: "",
 				},
@@ -157,6 +181,8 @@
 				this.teacher.first_name = "";
 				this.teacher.last_name = "";
 				this.teacher.gender = "";
+				this.teacher.grade_level = "";
+				this.teacher.section = "";
 				this.teacher.username = "";
 				this.teacher.password = "";
 			},
@@ -168,6 +194,8 @@
 					this.teacher.first_name &&
 					this.teacher.last_name &&
 					this.teacher.gender &&
+					this.teacher.grade_level &&
+					this.teacher.section &&
 					this.teacher.username &&
 					this.teacher.password
 				) {

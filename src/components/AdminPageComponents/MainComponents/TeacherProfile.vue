@@ -43,6 +43,12 @@
 								<div class="content">{{ teacher.gender }}</div>
 							</div>
 							<div class="details">
+								<div class="label">Grade - Section</div>
+								<div class="content">
+									{{ teacher.grade_level }} - {{ teacher.section }}
+								</div>
+							</div>
+							<div class="details">
 								<div class="label">Username</div>
 								<div class="content">{{ teacher.username }}</div>
 							</div>
