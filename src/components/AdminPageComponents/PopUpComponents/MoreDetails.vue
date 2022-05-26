@@ -104,6 +104,7 @@
 								small-chips
 								multiple
 								:rules="[rules.required]"
+								height="100px"
 							>
 								<template v-slot:no-data>
 									<v-list-item>
