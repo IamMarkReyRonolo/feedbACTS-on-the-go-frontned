@@ -64,10 +64,21 @@
 			</div>
 			<br />
 		</v-card>
+
+		<v-snackbar v-model="snackbar" :timeout="timeout">
+			{{ message }}
+
+			<template v-slot:action="{ attrs }">
+				<v-btn color="#5aa67a" text v-bind="attrs" @click="snackbar = false">
+					Close
+				</v-btn>
+			</template>
+		</v-snackbar>
 	</v-dialog>
 </template>
 
 <script>
+	import teacherAPI from "../../../apis/teacherAPI";
 	export default {
 		props: {
 			changePass: Boolean,
@@ -85,6 +96,9 @@
 				shouldNotEvaluated0: true,
 				shouldNotEvaluated1: true,
 				shouldNotEvaluated2: true,
+				snackbar: false,
+				message: "",
+				timeout: 3000,
 				rules: {
 					required: (value) => !!value || "Required.",
 					min: (v) => v.length >= 8 || "Min 8 characters",
@@ -95,24 +109,43 @@
 		},
 
 		methods: {
-			changePassword() {
-				this.loading = true;
-				setTimeout(() => {
-					this.currentPassword = "";
-					this.newPassword = "";
-					this.repeatPassword = "";
+			async changePassword() {
+				try {
+					this.loading = true;
+					const payload = {
+						current_password: this.currentPassword,
+						new_password: this.newPassword,
+					};
+					console.log(payload);
+					const result = await teacherAPI.prototype.updateUserPassword(payload);
+					this.clear();
+					this.message = "Successfully changed the password.";
+					this.snackbar = true;
 					this.loading = false;
-					this.$emit("closeDialog");
-				}, 1000);
+				} catch (error) {
+					console.log(error);
+					if (error.message == "Network Error") {
+						this.message = "Network Error";
+					} else {
+						this.message = "Current Password is wrong.";
+					}
+
+					this.snackbar = true;
+					this.loading = false;
+				}
 			},
 
-			closeDialog() {
+			clear() {
 				this.currentPassword = "";
 				this.newPassword = "";
 				this.repeatPassword = "";
 				this.shouldNotEvaluated0 = true;
 				this.shouldNotEvaluated1 = true;
 				this.shouldNotEvaluated2 = true;
+			},
+
+			closeDialog() {
+				this.clear();
 				this.$emit("closeDialog");
 			},
 		},

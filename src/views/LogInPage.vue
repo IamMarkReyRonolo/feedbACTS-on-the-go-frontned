@@ -36,7 +36,7 @@
 						</div>
 						<br />
 						<div class="btnsCon">
-							<v-btn text large color="#064635" @click="login">
+							<v-btn color="#064635" dark large @click="login">
 								<span v-if="!logInLoading"> LOG IN</span>
 								<v-progress-circular
 									indeterminate
@@ -44,21 +44,21 @@
 									v-if="logInLoading"
 								></v-progress-circular
 							></v-btn>
-							<p>OR</p>
+							<p style="padding-top: 20px">OR</p>
 
 							<v-btn
-								color="#064635"
-								dark
+								color="#5AA67A"
+								text
 								v-if="!this.loginAsTeacher"
 								@click="switchUser('teacher')"
-								>Teacher Log in</v-btn
+								>Go To Teacher Log in</v-btn
 							>
 							<v-btn
-								color="#064635"
-								dark
+								color="#5AA67A"
+								text
 								v-if="this.loginAsTeacher"
 								@click="switchUser('admin')"
-								>Admin Log in</v-btn
+								>Go To Admin Log in</v-btn
 							>
 						</div>
 					</v-form>

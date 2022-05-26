@@ -18,6 +18,7 @@ export default class API {
 
 	async updateAdminPassword(updatedDetails) {
 		const result = await axios.patch(url + "/update", updatedDetails);
+		console.log(result);
 		return result;
 	}
 

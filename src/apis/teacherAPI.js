@@ -40,6 +40,12 @@ export default class API {
 		return teacher;
 	}
 
+	async updateUserPassword(updatedDetails) {
+		const result = await axios.patch(url + "/update/password", updatedDetails);
+		console.log(result);
+		return result;
+	}
+
 	async deleteTeacher(teacher_id) {
 		const teacher = await axios.delete(url + "/" + teacher_id);
 		return teacher;

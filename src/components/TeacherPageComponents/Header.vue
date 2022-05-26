@@ -4,7 +4,6 @@
 			<div class="upmostCon">
 				<div class="nameCon">
 					<v-icon dark size="30px">mdi-account-circle</v-icon>
-					<p>Juan Dela Cruz</p>
 				</div>
 
 				{{ currentTime }}

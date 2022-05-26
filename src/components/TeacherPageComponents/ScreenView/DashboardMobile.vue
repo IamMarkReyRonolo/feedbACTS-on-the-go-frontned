@@ -92,6 +92,17 @@
 			:clickBuzzer="clickNotifications"
 			@closeNotification="closeNotification"
 		/>
+
+		<SettingsDialog
+			:clickSettings="clickSettings"
+			@closeSettings="closeSettings"
+			@changePassword="changePassword()"
+		/>
+
+		<ChangePasswordDialog
+			:changePass="changePass"
+			@closeDialog="closeDialog()"
+		/>
 	</div>
 </template>
 
@@ -100,8 +111,17 @@
 	import Statistics from "./Statistics.vue";
 	import Profile from "./Profile.vue";
 	import Notification from "../PopUpComponents/BuzzerConfirmation.vue";
+	import ChangePasswordDialog from "../PopUpComponents/ChangePasswordDialog.vue";
+	import SettingsDialog from "../PopUpComponents/SettingsDialog.vue";
 	export default {
-		components: { ActivityHistory, Statistics, Profile, Notification },
+		components: {
+			ActivityHistory,
+			Statistics,
+			Profile,
+			Notification,
+			SettingsDialog,
+			ChangePasswordDialog,
+		},
 		props: {
 			teacher: Object,
 		},
@@ -112,8 +132,20 @@
 			clickedPaper: false,
 			teacherData: {},
 			clickNotifications: false,
+			clickSettings: false,
+			changePass: false,
 		}),
 		methods: {
+			changePassword() {
+				this.clickSettings = false;
+				this.changePass = true;
+			},
+			closeDialog() {
+				this.changePass = false;
+			},
+			closeSettings() {
+				this.clickSettings = false;
+			},
 			selectCategory(category) {
 				if (category == "all") {
 					this.clickedAll = true;
