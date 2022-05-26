@@ -4,7 +4,7 @@
 	"theme_color": "#5AA67A",
 	"icons": [
 		{
-			"src": "./img/icons2/recycle-bin(1)-256.png",
+			"src": "./img/icons2/recycle-bin(2)-128.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
@@ -14,7 +14,7 @@
 			"type": "image/png"
 		},
 		{
-			"src": "./img/icons2/recycle-bin(1)-256.png",
+			"src": "./img/icons2/recycle-bin(2)-128.png",
 			"sizes": "192x192",
 			"type": "image/png",
 			"purpose": "maskable"
