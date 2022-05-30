@@ -28,7 +28,7 @@ const routes = [
 		component: AdminPage,
 		children: [
 			{
-				name: "dashboard",
+				name: "admin",
 				path: "/",
 				component: Dashboard,
 			},
@@ -43,7 +43,7 @@ const routes = [
 				component: TeacherProfile,
 			},
 			{
-				name: "history",
+				name: "report",
 				path: "history",
 				component: HistoryPage,
 			},

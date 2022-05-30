@@ -183,17 +183,17 @@
 			},
 
 			navigate(routeName) {
-				if (routeName == "dashboard") {
+				if (routeName == "dashboard" && this.$route.name != "admin") {
 					this.clickedDashboard = true;
 					this.clickedTeachers = false;
 					this.clickedHistory = false;
 					this.$router.push("/admin/");
-				} else if (routeName == "teachers") {
+				} else if (routeName == "teachers" && this.$route.name != "teachers") {
 					this.clickedDashboard = false;
 					this.clickedTeachers = true;
 					this.clickedHistory = false;
 					this.$router.push("/admin/teachers");
-				} else {
+				} else if (routeName == "history" && this.$route.name != "report") {
 					this.clickedDashboard = false;
 					this.clickedTeachers = false;
 					this.clickedHistory = true;
