@@ -24,12 +24,11 @@
 					</p>
 					<p style="font-size: 12px">Sacub National High School</p>
 				</div>
-
+				{{ hasNotif }}
 				<div class="right">
 					<v-btn fab dark color="#064635" @click="clickBuzzer = true">
-						<v-icon dark size="40px" @click="clickNotifications = true">
-							mdi-bell
-						</v-icon>
+						<v-icon dark size="40px" @click="clickedNotif"> mdi-bell </v-icon>
+						<div class="dot" v-if="dot"></div>
 					</v-btn>
 					<span>Notifications</span>
 				</div>
@@ -94,6 +93,7 @@
 		<Notification
 			:clickBuzzer="clickNotifications"
 			@closeNotification="closeNotification"
+			:notifications="notifications"
 		/>
 
 		<SettingsDialog
@@ -116,6 +116,7 @@
 	import Notification from "../PopUpComponents/BuzzerConfirmation.vue";
 	import ChangePasswordDialog from "../PopUpComponents/ChangePasswordDialog.vue";
 	import SettingsDialog from "../PopUpComponents/SettingsDialog.vue";
+	import notificationAPI from "../../../apis/notificationAPI";
 	export default {
 		components: {
 			ActivityHistory,
@@ -137,8 +138,14 @@
 			clickNotifications: false,
 			clickSettings: false,
 			changePass: false,
+			notifications: [],
+			dot: false,
 		}),
 		methods: {
+			clickedNotif() {
+				this.clickNotifications = true;
+				this.dot = false;
+			},
 			changePassword() {
 				this.clickSettings = false;
 				this.changePass = true;
@@ -186,9 +193,22 @@
 				this.clickNotifications = false;
 			},
 		},
+
+		async created() {
+			this.notifications = await notificationAPI.prototype.getNotifications();
+			this.notifications = this.notifications.data;
+			this.notifications.sort((a, b) => b.id - a.id);
+		},
 		computed: {
 			getTeacherData: function () {
 				this.teacherData = Object.assign({}, this.teacher);
+			},
+			hasNotif: function () {
+				this.notifications.forEach((notif) => {
+					if (notif.status == "new") {
+						this.dot = true;
+					}
+				});
 			},
 		},
 	};
@@ -289,6 +309,16 @@
 
 	.cat {
 		margin-right: 2px;
+	}
+
+	.dot {
+		width: 12px;
+		height: 12px;
+		background-color: red;
+		border-radius: 100%;
+		position: absolute;
+		top: -10px;
+		right: 0px;
 	}
 
 	/* .middlePart h2,

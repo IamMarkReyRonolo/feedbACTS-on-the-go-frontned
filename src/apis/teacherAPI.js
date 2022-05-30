@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://e-buzzer-tms-server.herokuapp.com/api/user";
+const url = "https://feedbacts-server.herokuapp.com/api/user";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 
@@ -42,7 +42,7 @@ export default class API {
 
 	async updateUserPassword(updatedDetails) {
 		const result = await axios.patch(url + "/update/password", updatedDetails);
-		console.log(result);
+
 		return result;
 	}
 

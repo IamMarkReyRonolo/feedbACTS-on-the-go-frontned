@@ -13,54 +13,94 @@
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 				<v-card-title class="dialogTitle"> Notifications </v-card-title>
-				<div class="notifs">
-					<div class="notif">
-						<v-btn x-large outlined color="#65c18c">
+				<div class="notifs" v-if="notifications.length != 0">
+					<div
+						class="notif"
+						v-for="(notif, index) in notifications"
+						:key="index"
+					>
+						<v-btn
+							x-large
+							:outlined="notif.status != 'new'"
+							color="#65c18c"
+							v-if="notif.notification_type != 'buzzer'"
+							:dark="notif.status == 'new'"
+							@click="viewAndUpdate(notif)"
+						>
 							<v-icon size="40px">mdi-check-circle-outline</v-icon>
 							<div class="notifDetails">
 								<span style="font-size: 10px"
 									>Your Trash Has Been Recorded</span
 								>
 								<h6>Congratulations</h6>
-								<div class="dateDetails">03/21/22</div>
+								<div class="dateDetails">{{ notif.date_created }}</div>
 							</div>
 						</v-btn>
-					</div>
 
-					<div class="notif">
-						<v-btn x-large outlined color="#65c18c">
+						<v-btn
+							x-large
+							:outlined="notif.status != 'new'"
+							color="#65c18c"
+							:dark="notif.status == 'new'"
+							v-if="notif.notification_type == 'buzzer'"
+							@click="viewAndUpdate(notif)"
+						>
 							<v-icon size="40px">mdi-gesture-double-tap</v-icon>
 							<div class="notifDetails">
 								<span style="font-size: 10px">Buzzer Sounded</span>
 								<h6>Participate</h6>
-								<div class="dateDetails">03/21/22</div>
+								<div class="dateDetails">{{ notif.date_created }}</div>
 							</div>
 						</v-btn>
 					</div>
 				</div>
+				<div class="empty" v-if="notifications.length == 0">Empty</div>
 			</div>
 		</v-card>
+
+		<NotificationSelect
+			:data="data"
+			:showNotif="showNotif"
+			@closeNotif="closeNotif($event)"
+		></NotificationSelect>
 	</v-dialog>
 </template>
 
 <script>
+	import NotificationSelect from "./NotificationSelect.vue";
+	import notificationAPI from "../../../apis/notificationAPI";
 	export default {
 		props: {
 			clickBuzzer: Boolean,
+			notifications: Array,
 		},
+		components: { NotificationSelect },
 		data() {
 			return {
 				loading: false,
+				showNotif: false,
+				data: {},
 			};
 		},
 
 		methods: {
-			soundBuzzer() {
-				this.loading = true;
-				setTimeout(() => {
-					this.loading = false;
-					this.$emit("closeBuzzer", true);
-				}, 1000);
+			viewAndUpdate(data) {
+				this.data = data;
+				this.showNotif = true;
+			},
+
+			async closeNotif(params) {
+				try {
+					this.showNotif = false;
+
+					if (params != "old") {
+						const result = await notificationAPI.prototype.updateNotif(
+							this.data.id
+						);
+
+						this.data.status = "old";
+					}
+				} catch (error) {}
 			},
 		},
 	};
@@ -85,18 +125,21 @@
 	.notifCon {
 		height: 600px;
 		background-color: white;
-		overflow-y: auto;
 		padding-bottom: 10px;
 	}
 
-	.notif {
+	.notifs {
+		overflow-y: auto;
 		margin: 5px 20px;
+		height: 500px;
+		padding: 0px 10px;
 	}
 	.notif .v-btn {
 		width: 100%;
 		display: flex;
 		justify-content: left;
 		align-items: center;
+		margin: 1px 0px;
 	}
 
 	.notif .v-btn span {
@@ -126,7 +169,6 @@
 	}
 
 	.dateDetails {
-		color: #5aa67a;
 		font-size: 10px;
 		text-align: right;
 		padding-bottom: 5px;
@@ -138,6 +180,13 @@
 		display: flex;
 		justify-content: left;
 		align-items: center;
+	}
+
+	.empty {
+		color: #5aa67a;
+		font-size: 20px;
+		font-weight: bold;
+		padding: 20px;
 	}
 
 	/* @media only screen and (max-width: 500px) {

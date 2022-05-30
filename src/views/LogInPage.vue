@@ -1,5 +1,6 @@
 <template>
 	<div class="logInPage">
+		<!-- {{ listenforinstall }} -->
 		<v-row no-gutters>
 			<v-col cols="12" md="5"
 				><div class="logInContainer" v-if="!load">
@@ -90,8 +91,12 @@
 							><div class="imgCon">
 								<img src="../assets/Ellipse2.png" alt="" srcset="" /></div
 						></v-col>
-					</v-row></div
-			></v-col>
+						<div class="installationBtn" v-if="installation">
+							<v-btn @click="installApp()" color="#C7EDBB">Install App</v-btn>
+						</div>
+					</v-row>
+				</div></v-col
+			>
 		</v-row>
 
 		<v-snackbar v-model="snackbar" :timeout="timeout">
@@ -124,6 +129,7 @@
 			rules: {
 				required: (value) => !!value || "Required.",
 			},
+			installation: null,
 		}),
 
 		methods: {
@@ -188,6 +194,19 @@
 					this.snackbar = true;
 				}
 			},
+
+			installApp() {
+				if (this.installation) {
+					this.installation.prompt();
+					this.installation.userChoice.then((choice) => {
+						if (choice.outcome == "accepted") {
+							//they installed
+							this.installation = null;
+						} else {
+						}
+					});
+				}
+			},
 		},
 
 		created() {
@@ -200,6 +219,11 @@
 					this.$router.push("/teacher");
 				}
 			}
+
+			self.addEventListener("beforeinstallprompt", (ev) => {
+				ev.preventDefault();
+				this.installation = ev;
+			});
 		},
 	};
 </script>
@@ -208,6 +232,12 @@
 	.logInPage {
 		display: flex;
 		height: 100%;
+	}
+
+	.installationBtn {
+		position: absolute;
+		bottom: 5%;
+		right: 5%;
 	}
 
 	.logInContainer {
@@ -322,6 +352,11 @@
 			display: flex;
 			text-align: center;
 			flex-direction: column;
+		}
+
+		.installationBtn {
+			position: absolute;
+			bottom: 2%;
 		}
 	}
 </style>

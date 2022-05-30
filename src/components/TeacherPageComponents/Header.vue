@@ -11,9 +11,11 @@
 					<div class="time">{{ time }}</div>
 					<div class="date">{{ currentDate }}</div>
 				</div>
+				{{ hasNotif }}
 				<div class="btns">
-					<v-btn fab dark color="#064635" @click="clickBuzzer = true" x-small>
+					<v-btn fab dark color="#064635" @click="clickNotify" x-small>
 						<v-icon dark size="20px"> mdi-bell </v-icon>
+						<div class="dot" v-if="dot"></div>
 					</v-btn>
 					<v-btn text dark @click="clickSettings = true"
 						><span>Settings</span>
@@ -76,9 +78,10 @@
 		</div>
 
 		<BuzzerConfirmation
-			:clickBuzzer="clickBuzzer"
+			:clickBuzzer="clickNotifications"
 			@closeNotification="closeBuzzer($event)"
 			@confirmBuzzer="confirmBuzzer()"
+			:notifications="notifications"
 		/>
 
 		<SettingsDialog
@@ -98,6 +101,7 @@
 	import BuzzerConfirmation from "./PopUpComponents/BuzzerConfirmation.vue";
 	import SettingsDialog from "./PopUpComponents/SettingsDialog.vue";
 	import ChangePasswordDialog from "./PopUpComponents/ChangePasswordDialog.vue";
+	import notificationAPI from "../../apis/notificationAPI";
 	export default {
 		components: { BuzzerConfirmation, SettingsDialog, ChangePasswordDialog },
 		data: () => ({
@@ -109,11 +113,18 @@
 			clickedHistory: false,
 			timerIsOn: false,
 			time: "",
+			notifications: [],
+			dot: false,
+			clickNotifications: false,
 		}),
 
 		methods: {
+			clickNotify() {
+				this.clickNotifications = true;
+				this.dot = false;
+			},
 			closeBuzzer(event) {
-				this.clickBuzzer = false;
+				this.clickNotifications = false;
 			},
 			confirmBuzzer() {
 				this.clickBuzzer = false;
@@ -151,10 +162,20 @@
 			},
 		},
 
-		created() {
+		async created() {
 			this.timerIsOn = true;
+			this.notifications = await notificationAPI.prototype.getNotifications();
+			this.notifications = this.notifications.data;
+			this.notifications.sort((a, b) => b.id - a.id);
 		},
 		computed: {
+			hasNotif: function () {
+				this.notifications.forEach((notif) => {
+					if (notif.status == "new") {
+						this.dot = true;
+					}
+				});
+			},
 			getName: function () {
 				const routeN = this.$router.currentRoute.name;
 				if (routeN == "dashboard") {
@@ -309,6 +330,16 @@
 
 	.actualDateTime {
 		padding: 0px 20px;
+	}
+
+	.dot {
+		width: 7px;
+		height: 7px;
+		background-color: red;
+		border-radius: 100%;
+		position: absolute;
+		top: -5px;
+		right: 0px;
 	}
 
 	@media only screen and (max-width: 1100px) {

@@ -133,6 +133,7 @@
 <script>
 	import { QrcodeStream } from "vue-qrcode-reader";
 	import activityAPI from "../../../apis/activityAPI";
+	import notificationAPI from "../../../apis/notificationAPI";
 	export default {
 		props: {
 			recordActivity: Boolean,
@@ -248,6 +249,26 @@
 						teacherID,
 						payload
 					);
+
+					let messages = "";
+
+					this.activity.feedback.forEach((f) => {
+						messages += f + " ";
+					});
+
+					const notif = {
+						notif: {
+							notification_type: "feedback",
+							message: messages,
+							date_created: this.getDate(),
+							teacher_id: teacherID + "",
+						},
+					};
+
+					const notification =
+						await notificationAPI.prototype.createNotification(notif);
+
+					console.log(notification);
 					result.data.teacher = payload.teacher;
 					this.$emit("closeDialog", result.data);
 					this.loading = false;

@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://e-buzzer-tms-server.herokuapp.com/api/admin";
+const url = "https://feedbacts-server.herokuapp.com/api/admin";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 
@@ -18,12 +18,12 @@ export default class API {
 
 	async updateAdminPassword(updatedDetails) {
 		const result = await axios.patch(url + "/update", updatedDetails);
-		console.log(result);
+
 		return result;
 	}
 
-	async clickBuzzer() {
-		const result = await axios.patch(url + "/buzzer");
+	async clickBuzzer(payload) {
+		const result = await axios.post("http://localhost:3000/subscribe", payload);
 		return result;
 	}
 }

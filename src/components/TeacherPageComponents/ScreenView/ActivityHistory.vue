@@ -89,16 +89,16 @@
 								>
 							</div>
 						</div>
-					</div>
 
-					<div class="feedBackBtn">
-						<v-btn
-							x-small
-							rounded
-							color="#FFFFFF"
-							@click="showFeedback(activity.feedback)"
-							>View Feedback</v-btn
-						>
+						<div class="feedBackBtn">
+							<v-btn
+								x-small
+								rounded
+								color="#FFFFFF"
+								@click="showFeedback(activity.feedback)"
+								>View Feedback</v-btn
+							>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -214,10 +214,13 @@
 
 		.right {
 			width: 55%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
 
 		.tableContents {
-			height: 60vh;
+			height: 65vh;
 			overflow-y: auto;
 		}
 
@@ -296,8 +299,7 @@
 		}
 
 		.feedBackBtn {
-			position: absolute;
-			right: 20px;
+			right: 10px;
 		}
 
 		.feedBackBtn .v-btn {
