@@ -28,10 +28,6 @@
 				if (localStorage.getItem("user") == "admin") {
 					this.$router.push("/admin");
 				}
-
-				if (localStorage.getItem("user") == "teacher") {
-					this.$router.push("/teacher");
-				}
 			} else {
 				this.$router.push("/");
 			}

@@ -23,7 +23,10 @@ export default class API {
 	}
 
 	async clickBuzzer(payload) {
-		const result = await axios.post("http://localhost:3000/subscribe", payload);
+		const result = await axios.post(
+			"https://feedbacts-server.herokuapp.com/subscribe",
+			payload
+		);
 		return result;
 	}
 }
