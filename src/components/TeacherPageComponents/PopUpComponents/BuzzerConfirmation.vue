@@ -130,7 +130,7 @@
 
 	.notifs {
 		overflow-y: auto;
-		margin: 5px 20px;
+		margin: 10px 5px;
 		height: 500px;
 		padding: 0px 10px;
 	}
