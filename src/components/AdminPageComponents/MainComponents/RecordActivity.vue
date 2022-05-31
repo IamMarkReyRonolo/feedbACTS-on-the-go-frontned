@@ -100,14 +100,20 @@
 									color="#5aa67a"
 									label="Feedback"
 									persistent-hint
-									small-chips
+									style="font-size: 12px"
 									multiple
 									:rules="[rules.required]"
 								>
 									<template v-slot:no-data>
 										<v-list-item>
 											<v-list-item-content>
-												<v-list-item-title>
+												<v-list-item-title
+													style="
+														font-size: 12px;
+														height: 80px !important;
+														white-space: pre-wrap !important;
+													"
+												>
 													No results matching "<strong>{{ search }}</strong
 													>". Press <kbd>enter</kbd> to create a new one
 												</v-list-item-title>
@@ -232,6 +238,9 @@
 					"Great job, properly segregated.",
 					"Please segregate your trash next time.",
 					"Some of your trash aren't segregated properly",
+					"Your cellophane trash is not segregated. Please segregate. Thanks",
+					"Your paper trash is not segregated. Please segregate. Thanks",
+					"Your plastic bottle trash is not segregated. Please segregate. Thanks",
 				],
 				model: "",
 				search: null,
@@ -507,5 +516,18 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.v-list-item__content {
+		height: 80px !important;
+		background-color: #5aa67a;
+	}
+	.v-list-item__title {
+		font-size: 10px;
+		white-space: pre-wrap !important;
+	}
+	.v-list-item__content > * {
+		line-height: 1.1 !important;
+		flex: 1 0 100% !important;
 	}
 </style>

@@ -92,8 +92,8 @@
 							color="#5aa67a"
 							label="Feedback"
 							persistent-hint
-							small-chips
 							multiple
+							style="font-size: 12px"
 							:rules="[rules.required]"
 						>
 							<template v-slot:no-data>
@@ -174,6 +174,9 @@
 					"Great job, properly segregated.",
 					"Please segregate your trash next time.",
 					"Some of your trash aren't segregated properly",
+					"Your cellophane trash is not segregated. Please segregate. Thanks",
+					"Your paper trash is not segregated. Please segregate. Thanks",
+					"Your plastic bottle trash is not segregated. Please segregate. Thanks",
 				],
 				model: "",
 				search: null,

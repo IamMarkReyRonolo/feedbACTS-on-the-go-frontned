@@ -1,6 +1,7 @@
 <template>
 	<div class="summaryStatistic">
 		{{ getTrashData }}
+		{{ getConsistencyData }}
 		<div class="miniNav">
 			<v-btn
 				x-small
@@ -38,7 +39,7 @@
 					</div>
 				</div>
 				<div class="list">
-					<div class="contributor" v-for="n in data" :key="n.id">
+					<div class="contributor" v-for="n in consistencies" :key="n.id">
 						<v-btn
 							class="hoverable"
 							large
@@ -56,11 +57,11 @@
 									color="#064635"
 									height="15"
 									rounded
-									:value="getConsistency(n.activities.length)"
+									:value="n.consistency"
 									style="width: 80%"
 								>
 									<span style="color: white; font-size: 10px"
-										>{{ getConsistency(n.activities.length) }} %</span
+										>{{ n.consistency }} %</span
 									></v-progress-linear
 								>
 							</div>
@@ -151,6 +152,7 @@
 			progress: 80,
 			nloading: false,
 			activities: [],
+			consistencies: [],
 		}),
 
 		methods: {
@@ -181,6 +183,17 @@
 						activity.teacher = d.first_name + " " + d.last_name;
 						this.activities.push(activity);
 					});
+				});
+			},
+
+			getConsistencyData: function () {
+				this.data.forEach((d) => {
+					d.consistency = this.getConsistency(d.activities.length);
+					this.consistencies.push(d);
+				});
+
+				this.consistencies.sort((a, b) => {
+					return b.consistency - a.consistency;
 				});
 			},
 
