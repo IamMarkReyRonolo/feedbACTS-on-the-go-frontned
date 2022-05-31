@@ -91,7 +91,7 @@
 							><div class="imgCon">
 								<img src="../assets/Ellipse2.png" alt="" srcset="" /></div
 						></v-col>
-						<div class="installationBtn" v-if="installation">
+						<div class="installationBtn">
 							<v-btn @click="installApp()" color="#C7EDBB">Install App</v-btn>
 						</div>
 					</v-row>
@@ -196,16 +196,14 @@
 			},
 
 			installApp() {
-				if (this.installation) {
-					this.installation.prompt();
-					this.installation.userChoice.then((choice) => {
-						if (choice.outcome == "accepted") {
-							//they installed
-							this.installation = null;
-						} else {
-						}
-					});
-				}
+				this.installation.prompt();
+				this.installation.userChoice.then((choice) => {
+					if (choice.outcome == "accepted") {
+						//they installed
+						this.installation = null;
+					} else {
+					}
+				});
 			},
 		},
 
