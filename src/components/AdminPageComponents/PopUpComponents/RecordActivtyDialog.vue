@@ -242,33 +242,12 @@
 
 					payload.date_created = this.getDate();
 					payload.time_created = this.getTime();
-					console.log("hey");
-					console.log(payload.time_created);
 					const teacherID = this.getTeacherId(payload.teacher);
 					const result = await activityAPI.prototype.createActivity(
 						teacherID,
 						payload
 					);
 
-					let messages = "";
-
-					this.activity.feedback.forEach((f) => {
-						messages += f + " ";
-					});
-
-					const notif = {
-						notif: {
-							notification_type: "feedback",
-							message: messages,
-							date_created: this.getDate(),
-							teacher_id: teacherID + "",
-						},
-					};
-
-					const notification =
-						await notificationAPI.prototype.createNotification(notif);
-
-					console.log(notification);
 					result.data.teacher = payload.teacher;
 					this.$emit("closeDialog", result.data);
 					this.loading = false;

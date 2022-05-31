@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://feedbacts-server.herokuapp.com/api/user";
+const url = "https://test-app-feedbacts.herokuapp.com/api/user";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 

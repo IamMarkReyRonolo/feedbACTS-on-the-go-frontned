@@ -44,25 +44,15 @@
 			async soundBuzzer() {
 				this.loading = true;
 				try {
-					let sw = await navigator.serviceWorker.ready;
-					let push = await sw.pushManager.subscribe({
-						userVisibleOnly: true,
-						applicationServerKey:
-							"BNZlVfipnCvx2AZD-_Nxht5xnqfzh2DUsP0Vic6hjF88i-S-CwBXWN8F9IoVEWyFHJuwOvDm0TIB4kXKzSg1RAk",
-					});
-
-					const payload = {
-						push_subscription: push,
-						notif: {
-							notification_type: "buzzer",
-							message:
-								"Calling all teachers for trash collection. If you have any trash to deposit please proceed to the designated area along with your FeedbACTS Card.",
-							date_created: this.getDate(),
-							teacher_id: "all",
-						},
+					const notif = {
+						notification_type: "buzzer",
+						message:
+							"Calling all teachers for trash collection. If you have any trash to deposit please proceed to the designated area along with your FeedbACTS Card.",
+						date_created: this.getDate(),
+						teacher_id: "all",
 					};
 
-					const result = await adminAPI.prototype.clickBuzzer(payload);
+					const result = await adminAPI.prototype.clickBuzzer({ notif: notif });
 
 					this.$emit("closeBuzzer", "success");
 				} catch (error) {

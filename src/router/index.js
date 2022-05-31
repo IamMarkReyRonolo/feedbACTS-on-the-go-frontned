@@ -68,9 +68,11 @@ const routes = [
 	{
 		path: "/teacher",
 		component: TeacherUserPage,
+
 		children: [
 			{
 				path: "/",
+				name: "dashboard",
 				component: TeacherDashboard,
 			},
 		],

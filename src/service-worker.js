@@ -93,12 +93,22 @@ precacheAndRoute(self.__WB_MANIFEST);
 // });
 
 self.addEventListener("push", (event) => {
-	const options = {
-		body: "Calling all teachers for trash collection. If you have any trash to deposit please proceed to the designated area along with your FeedbACTS Card.",
-		icon: "./img/icons2/recycle-bin-512.png",
-		vibrate: [100, 50, 100],
-		tag: "vibration-smaple",
-	};
+	let options = {};
+	if (event.data.text() == "Buzzer") {
+		options = {
+			body: "Calling all teachers for trash collection. If you have any trash to deposit please proceed to the designated area along with your FeedbACTS Card.",
+			icon: "./img/icons2/recycle-bin-512.png",
+			vibrate: [100, 50, 100],
+			tag: "vibration-smaple",
+		};
+	} else {
+		options = {
+			body: "Your trash has been recorded. You may read the feedback from admin.",
+			icon: "./img/icons2/recycle-bin-512.png",
+			vibrate: [100, 50, 100],
+			tag: "vibration-smaple",
+		};
+	}
 
 	event.waitUntil(
 		self.registration.showNotification("Buzzer Sounded", options)

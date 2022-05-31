@@ -143,21 +143,11 @@
 			},
 
 			navigate(routeName) {
-				if (routeName == "recent") {
+				if (routeName == "recent" && this.$route.name != "dashboard") {
 					this.clickedDashboard = true;
 					this.clickedTeachers = false;
 					this.clickedHistory = false;
 					this.$router.push("/teacher/");
-				} else if (routeName == "profile") {
-					this.clickedDashboard = false;
-					this.clickedTeachers = true;
-					this.clickedHistory = false;
-					this.$router.push("/teacher/profile");
-				} else {
-					this.clickedDashboard = false;
-					this.clickedTeachers = false;
-					this.clickedHistory = true;
-					this.$router.push("/teacher/notifications");
 				}
 			},
 		},

@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://feedbacts-server.herokuapp.com/api/admin";
+const url = "https://test-app-feedbacts.herokuapp.com/api/admin";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 
@@ -22,11 +22,9 @@ export default class API {
 		return result;
 	}
 
-	async clickBuzzer(payload) {
-		const result = await axios.post(
-			"https://feedbacts-server.herokuapp.com/subscribe",
-			payload
-		);
+	async clickBuzzer(notif) {
+		console.log(notif);
+		const result = await axios.patch(url + "/buzzer/", notif);
 		return result;
 	}
 }

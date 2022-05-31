@@ -139,7 +139,7 @@
 		display: flex;
 		justify-content: left;
 		align-items: center;
-		margin: 1px 0px;
+		margin: 3px 0px;
 	}
 
 	.notif .v-btn span {
