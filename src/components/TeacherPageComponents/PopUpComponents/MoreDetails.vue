@@ -12,7 +12,6 @@
 				<v-icon>mdi-close</v-icon>
 			</v-btn>
 			<v-card-title class="dialogTitle"> Activity Details </v-card-title>
-
 			<div class="main">
 				<div class="upperDetails">
 					<div class="detail">
@@ -31,8 +30,9 @@
 							outlined
 							color="#5aa67a"
 							dense
-							v-model="activity.time_created"
+							v-model="getTime"
 							disabled
+							type="time"
 						></v-text-field>
 					</div>
 				</div>
@@ -191,6 +191,19 @@
 					return true;
 				}
 				return false;
+			},
+			getTime() {
+				let seconds = new Date(this.activity.createdAt).getSeconds();
+				if (parseInt(seconds) < 10) {
+					seconds = "0" + seconds;
+				}
+				let time = this.activity.time_created + ":" + seconds;
+
+				if (time.split(":")[0] < 10) {
+					time = 0 + "" + this.activity.time_created;
+				}
+
+				return time;
 			},
 		},
 	};
