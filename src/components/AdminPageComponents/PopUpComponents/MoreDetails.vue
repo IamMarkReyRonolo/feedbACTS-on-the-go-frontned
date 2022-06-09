@@ -264,7 +264,11 @@
 			},
 
 			getTime() {
-				let time = this.selected_activity.time_created;
+				let seconds = new Date(this.selected_activity.createdAt).getSeconds();
+				if (parseInt(seconds) < 10) {
+					seconds = "0" + seconds;
+				}
+				let time = this.selected_activity.time_created + ":" + seconds;
 
 				if (time.split(":")[0] < 10) {
 					time = 0 + "" + this.selected_activity.time_created;
