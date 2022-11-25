@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://test-app-feedbacts.herokuapp.com/api/admin";
+const url = "https://feedbacts.onrender.com/api/admin";
 axios.defaults.headers.common["auth-token"] =
 	"Bearer " + localStorage.getItem("token");
 
